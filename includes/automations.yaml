@@ -956,31 +956,26 @@
     service: light.toggle
     entity_id: light.living_room, light.dining_room
 
-# Turn on heater after 9pm if temperature is below 20
+# Turn on heater and kettle after 9pm if temperature is below 20
 - alias: "Turn on heater and kettle at 9pm if temperature is below 20"
-  id: 'heater_on_9pm_temperature_below_20'
+  id: 'heater_kettle_on_9pm_temperature_below_20'
   hide_entity: True
   initial_state: 'on'
   trigger:
     platform: time
     at: '21:00:00'
   condition:
-    condition: and
-    conditions:
-      - condition: numeric_state
-        entity_id: 'sensor.temperature'
-        below: '20'
+    - condition: numeric_state
+      entity_id: 'sensor.temperature'
+      below: '20'
+    - condition: or
+      conditions:
       - condition: state
-        entity_id: 'switch.plug_bedroomheater_switch'
-        state: 'off'
-      - condition: or
-        conditions:
-        - condition: state
-          entity_id: binary_sensor.bora_bayesian
-          state: 'on'
-        - condition: state
-          entity_id: binary_sensor.graham_bayesian
-          state: 'on'
+        entity_id: binary_sensor.bora_bayesian
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.graham_bayesian
+        state: 'on'
   action:
     - service: switch.turn_on
       entity_id: switch.plug_bedroomheater_switch
