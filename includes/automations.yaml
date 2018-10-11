@@ -1068,7 +1068,6 @@
 # Bora S8 Bluetooth Occupancy - True
 - alias: 'Bora S8 Bluetooth Occupancy - True'
   id: 's8_bluetooth_occupancy_true'
-  hide_entity: True
   initial_state: 'on'
   hide_entity: true
   trigger:
@@ -1083,7 +1082,6 @@
 # Bora S8 Bluetooth Occupancy - False
 - alias: 'Bora S8 Bluetooth Occupancy - False'
   id: 's8_bluetooth_occupancy_false'
-  hide_entity: True
   initial_state: 'on'
   hide_entity: true
   trigger:
@@ -1098,7 +1096,6 @@
 # Graham Pixel Bluetooth Occupancy - True
 - alias: 'Graham Pixel Bluetooth Occupancy - True'
   id: 'pixel_bluetooth_occupancy_true'
-  hide_entity: True
   initial_state: 'on'
   hide_entity: true
   trigger:
@@ -1113,7 +1110,6 @@
 # Graham Pixel Bluetooth Occupancy - False
 - alias: 'Graham Pixel Bluetooth Occupancy - False'
   id: 'pixel_bluetooth_occupancy_false'
-  hide_entity: True
   initial_state: 'on'
   hide_entity: true
   trigger:
