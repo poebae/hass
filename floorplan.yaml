@@ -1,0 +1,105 @@
+name: Floorplan
+image: /local/custom_ui/floorplan/floorplan.svg
+stylesheet: /local/custom_ui/floorplan/floorplan.css
+warnings:
+pan_zoom:
+last_motion_entity: sensor.template_last_motion
+last_motion_class: last-motion
+
+groups:
+
+# Lights
+  - name: Lights Hue
+    entities:
+      - light.bedroom
+      - light.living_room
+      - light.dining_room
+      - light.study
+      - light.kitchen
+    states:
+      - state: 'on'
+        class: 'light-on'
+      - state: 'off'
+        class: 'light-off'
+    action:
+      service: toggle
+    # rgb_template: '
+      # return "off-state";
+
+# Motion Sensors
+  - name: Motion Sensors
+    entities:
+      - sensor.study_motion
+      - sensor.kitchen_motion
+    states:
+      - state: 'on'
+        class: 'motion-on'
+      - state: 'off'
+        class: 'motion-off'
+
+# Doors
+  - name: Door Sensors
+    entities:
+      - sensor.bedroom_door_closed
+    states:
+      - state: 'on'
+        class: 'door-closed'
+      - state: 'off'
+        class: 'door-open'
+
+# Cameras
+
+  - name: Cameras
+    entities:
+      - camera.living_room
+    states:
+      - state: 'idle'
+        class: 'camera-idle'
+
+# Media Players
+
+  - name: Media Players
+    entities:
+      - media_player.molly_dongle
+    states:
+      - state: 'off'
+        class: 'tv-off'
+      - state: 'idle'
+        class: 'tv-on'
+      - state: 'paused'
+        class: 'tv-on'
+      - state: 'playing'
+        class: 'tv-on'
+    action:
+      service: toggle
+
+  # - name: Dark Sky Sensors
+    # entities:
+      # - sensor.weather_icon
+    # image_template: '
+      # var imageName = "";
+      # switch (entity.state) {
+        # case "clear-day":
+          # imageName = "day";
+          # break;
+        # case "clear-night":
+          # imageName = "night";
+          # break;
+        # case "partly-cloudy-day":
+          # imageName = "cloudy-day-1";
+          # break;
+        # case "partly-cloudy-night":
+          # imageName = "cloudy-night-1";
+          # break;
+        # case "cloudy":
+          # imageName = "cloudy";
+          # break;
+        # case "rain":
+          # imageName = "rainy-1";
+          # break;
+        # case "snow":
+          # imageName = "snowy-1";
+          # break;
+      # }
+      # return "/local/custom_ui/floorplan/images/weather/" + imageName + ".svg";
+      # '

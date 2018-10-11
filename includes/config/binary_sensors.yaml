@@ -1,0 +1,56 @@
+  # - platform: mqtt
+    # state_topic: dummy/floorplan/sensor
+    # name: floorplan
+
+  - platform: workday
+    country: AU
+    province: NSW
+
+  - platform: 'bayesian'
+    prior: 0.50
+    name: 'Graham Bayesian'
+    device_class: 'presence'
+    probability_threshold: 0.79
+    observations:
+      - entity_id: 'sensor.graham_nearwifi'
+        prob_given_true: 0.40
+        prob_given_false: 0.10
+        platform: 'state'
+        to_state: 'true'
+      - entity_id: 'input_boolean.pixel_bluetooth_occupancy'
+        prob_given_true: 0.99
+        prob_given_false: 0.10
+        platform: 'state'
+        to_state: 'on'
+      - entity_id: 'device_tracker.google_maps_116993081434204761650'
+        prob_given_true: 0.40
+        prob_given_false: 0.10
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'binary_sensor.motion_study_occupancy'
+        prob_given_true: 0.30
+        prob_given_false: 0.20
+        platform: 'state'
+        to_state: 'on'
+
+  - platform: 'bayesian'
+    prior: 0.50
+    name: 'Bora Bayesian'
+    device_class: 'presence'
+    probability_threshold: 0.79
+    observations:
+      - entity_id: 'sensor.bora_nearwifi'
+        prob_given_true: 0.40
+        prob_given_false: 0.10
+        platform: 'state'
+        to_state: 'true'
+      - entity_id: 'input_boolean.s8_bluetooth_occupancy'
+        prob_given_true: 0.99
+        prob_given_false: 0.10
+        platform: 'state'
+        to_state: 'on'
+      - entity_id: 'device_tracker.google_maps_111604514484536138497'
+        prob_given_true: 0.40
+        prob_given_false: 0.10
+        platform: 'state'
+        to_state: 'home'

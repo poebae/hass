@@ -1,0 +1,39 @@
+  exclude:
+    entities:
+      - sensor.date
+      - sensor.date__time
+      - sensor.study_motion
+      - sensor.kitchen_motion
+      - sensor.study_motion
+      - sensor.livingroom_motion
+      - sensor.bedroom_door_closed
+      - sensor.bedroomdoor_battery
+      - sensor.bedroomdoor_state
+      - sensor.bedroomswitch_battery
+      - sensor.graham_pixel_batt
+      - sensor.graham_pixel_battery
+      - sensor.bora_s8_batt
+      - sensor.bora_s8_battery
+      - sensor.steam_76561198051415178
+      - sensor.steam_76561198296910319
+      - sensor.steam_game
+      - sensor.ingame
+      - binary_sensor.motion_study_occupancy
+      - binary_sensor.motion_living
+      - binary_sensor.motion_kitchen
+      - binary_sensor.door_bedroom
+      - sensor.button_bedroom
+      - sensor.wall_bedroom
+      - sensor.wall_kitchen
+      - sensor.wall_living
+      - sensor.wall_study
+      - sensor.temperature
+      - automation.bora_s8_bluetooth_occupancy__false
+      - automation.bora_s8_bluetooth_occupancy__true
+      - automation.graham_pixel_bluetooth_occupancy__false
+      - automation.graham_pixel_bluetooth_occupancy__true
+
+    domains:
+      - sun
+      - group
+      - weather

@@ -1,0 +1,39 @@
+{
+    "data": {
+        "entries": [
+            {
+                "connection_class": "local_push",
+                "data": {},
+                "domain": "mqtt",
+                "entry_id": "407565ad0a754e5ab277418a456de773",
+                "source": "import",
+                "title": "configuration.yaml",
+                "version": 1
+            },
+            {
+                "connection_class": "local_poll",
+                "data": {
+                    "bridge_id": "001788FFFE7656A4",
+                    "host": "192.168.1.120",
+                    "username": "Hh-bX8eAAKXaQ0xlTFsGkdtZ9tIS-txV2ByCuwFi"
+                },
+                "domain": "hue",
+                "entry_id": "465d87deb3d545fd9cce63adafc1bcd1",
+                "source": "import",
+                "title": "Molly Hue",
+                "version": 1
+            },
+            {
+                "connection_class": "local_push",
+                "data": {},
+                "domain": "cast",
+                "entry_id": "f98ba77683a44f1cbfa03c9717a915a7",
+                "source": "import",
+                "title": "Google Cast",
+                "version": 1
+            }
+        ]
+    },
+    "key": "core.config_entries",
+    "version": 1
+}

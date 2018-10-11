@@ -1,0 +1,247 @@
+{
+    "data": {
+        "devices": [
+            {
+                "config_entries": [
+                    "465d87deb3d545fd9cce63adafc1bcd1"
+                ],
+                "connections": [
+                    [
+                        "mac",
+                        "00:17:88:76:56:a4"
+                    ]
+                ],
+                "hub_device_id": null,
+                "id": "0061258fc32340e39b04fb6854c26b3c",
+                "identifiers": [
+                    [
+                        "hue",
+                        "001788FFFE7656A4"
+                    ]
+                ],
+                "manufacturer": "Signify",
+                "model": "BSB002",
+                "name": "Molly Hue",
+                "sw_version": "1808300701"
+            },
+            {
+                "config_entries": [
+                    "465d87deb3d545fd9cce63adafc1bcd1"
+                ],
+                "connections": [],
+                "hub_device_id": "0061258fc32340e39b04fb6854c26b3c",
+                "id": "ab417fe1b6744d0ab5b86d2c3d6152dc",
+                "identifiers": [
+                    [
+                        "hue",
+                        "00:17:88:01:02:9e:d4:f1-0b"
+                    ]
+                ],
+                "manufacturer": "Philips",
+                "model": "Hue ambiance lamp",
+                "name": "Molly Dining Room 1",
+                "sw_version": "5.105.0.21536"
+            },
+            {
+                "config_entries": [
+                    "465d87deb3d545fd9cce63adafc1bcd1"
+                ],
+                "connections": [],
+                "hub_device_id": "0061258fc32340e39b04fb6854c26b3c",
+                "id": "d01de2549a0842c2897faa6279d8a7bc",
+                "identifiers": [
+                    [
+                        "hue",
+                        "00:17:88:01:02:9e:d6:2f-0b"
+                    ]
+                ],
+                "manufacturer": "Philips",
+                "model": "Hue ambiance lamp",
+                "name": "Molly Living Room 2",
+                "sw_version": "5.105.0.21536"
+            },
+            {
+                "config_entries": [
+                    "465d87deb3d545fd9cce63adafc1bcd1"
+                ],
+                "connections": [],
+                "hub_device_id": "0061258fc32340e39b04fb6854c26b3c",
+                "id": "ad98b881ee5346fdab707482076976fb",
+                "identifiers": [
+                    [
+                        "hue",
+                        "00:17:88:01:03:43:01:ca-0b"
+                    ]
+                ],
+                "manufacturer": "Philips",
+                "model": "Hue ambiance lamp",
+                "name": "Molly Living Room 1",
+                "sw_version": "5.105.0.21536"
+            },
+            {
+                "config_entries": [
+                    "465d87deb3d545fd9cce63adafc1bcd1"
+                ],
+                "connections": [],
+                "hub_device_id": "0061258fc32340e39b04fb6854c26b3c",
+                "id": "72412d2e66fc4fa9973e049ab17d9c07",
+                "identifiers": [
+                    [
+                        "hue",
+                        "00:17:88:01:03:43:bc:a9-0b"
+                    ]
+                ],
+                "manufacturer": "Philips",
+                "model": "Hue ambiance lamp",
+                "name": "Molly Dining Room 2",
+                "sw_version": "5.105.0.21536"
+            },
+            {
+                "config_entries": [
+                    "465d87deb3d545fd9cce63adafc1bcd1"
+                ],
+                "connections": [],
+                "hub_device_id": "0061258fc32340e39b04fb6854c26b3c",
+                "id": "c0fb9b06cf184cc0be091835bdcc4f11",
+                "identifiers": [
+                    [
+                        "hue",
+                        "00:17:88:01:03:43:bc:8b-0b"
+                    ]
+                ],
+                "manufacturer": "Philips",
+                "model": "Hue ambiance lamp",
+                "name": "Molly Kitchen 2",
+                "sw_version": "5.105.0.21536"
+            },
+            {
+                "config_entries": [
+                    "465d87deb3d545fd9cce63adafc1bcd1"
+                ],
+                "connections": [],
+                "hub_device_id": "0061258fc32340e39b04fb6854c26b3c",
+                "id": "7f98d55777cd414f873d27e8259a7ca0",
+                "identifiers": [
+                    [
+                        "hue",
+                        "00:17:88:01:03:56:f7:8f-0b"
+                    ]
+                ],
+                "manufacturer": "Philips",
+                "model": "Hue white lamp",
+                "name": "Molly Bedroom 2",
+                "sw_version": "1.29.0_r21169"
+            },
+            {
+                "config_entries": [
+                    "465d87deb3d545fd9cce63adafc1bcd1"
+                ],
+                "connections": [],
+                "hub_device_id": "0061258fc32340e39b04fb6854c26b3c",
+                "id": "8e25ee47f53940959e40fd466d5a7530",
+                "identifiers": [
+                    [
+                        "hue",
+                        "00:17:88:01:03:13:82:f0-0b"
+                    ]
+                ],
+                "manufacturer": "Philips",
+                "model": "Hue white lamp",
+                "name": "Molly Bedroom 1",
+                "sw_version": "1.29.0_r21169"
+            },
+            {
+                "config_entries": [
+                    "465d87deb3d545fd9cce63adafc1bcd1"
+                ],
+                "connections": [],
+                "hub_device_id": "0061258fc32340e39b04fb6854c26b3c",
+                "id": "a4c1b4a8bdee47529c0af1d4f8a500a8",
+                "identifiers": [
+                    [
+                        "hue",
+                        "00:17:88:01:04:eb:35:de-0b"
+                    ]
+                ],
+                "manufacturer": "Philips",
+                "model": "Hue white lamp",
+                "name": "Molly Kitchen 1",
+                "sw_version": "1.29.0_r21169"
+            },
+            {
+                "config_entries": [
+                    "465d87deb3d545fd9cce63adafc1bcd1"
+                ],
+                "connections": [],
+                "hub_device_id": "0061258fc32340e39b04fb6854c26b3c",
+                "id": "79f25bc024a84a7fa2d6eb199d34bcd8",
+                "identifiers": [
+                    [
+                        "hue",
+                        "00:17:88:01:03:63:f1:b9-0b"
+                    ]
+                ],
+                "manufacturer": "Philips",
+                "model": "Hue white lamp",
+                "name": "Molly Study",
+                "sw_version": "1.29.0_r21169"
+            },
+            {
+                "config_entries": [
+                    "f98ba77683a44f1cbfa03c9717a915a7"
+                ],
+                "connections": [],
+                "hub_device_id": null,
+                "id": "eca37ca77b1841bd8f6bf625f2e895b5",
+                "identifiers": [
+                    [
+                        "cast",
+                        "be65fc35b1610720255a0f9ed1e3e92f"
+                    ]
+                ],
+                "manufacturer": "Google Inc.",
+                "model": "Google Home",
+                "name": "Molly Home",
+                "sw_version": null
+            },
+            {
+                "config_entries": [
+                    "f98ba77683a44f1cbfa03c9717a915a7"
+                ],
+                "connections": [],
+                "hub_device_id": null,
+                "id": "51948dd7e3f945d5a505473b12f5ce61",
+                "identifiers": [
+                    [
+                        "cast",
+                        "ed6720418ac4b201d16d8536045a5469"
+                    ]
+                ],
+                "manufacturer": "Google Inc.",
+                "model": "Google Home Mini",
+                "name": "Molly Mini",
+                "sw_version": null
+            },
+            {
+                "config_entries": [
+                    "f98ba77683a44f1cbfa03c9717a915a7"
+                ],
+                "connections": [],
+                "hub_device_id": null,
+                "id": "603e77892e234a979749f5847280540f",
+                "identifiers": [
+                    [
+                        "cast",
+                        "56816c699dbe11fea54bd5766fda678a"
+                    ]
+                ],
+                "manufacturer": "Google Inc.",
+                "model": "Eureka Dongle",
+                "name": "Molly Dongle",
+                "sw_version": null
+            }
+        ]
+    },
+    "key": "core.device_registry",
+    "version": 1
+}

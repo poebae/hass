@@ -1,0 +1,92 @@
+homeassistant:
+  name: Molly's House
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: !secret elevation
+  unit_system: metric
+  time_zone: Australia/Sydney
+  auth_providers:
+   - type: homeassistant
+   - type: trusted_networks
+   - type: legacy_api_password
+
+  customize: !include includes/customize.yaml
+  customize_glob: !include customize_glob.yaml
+
+http:
+  api_password: !secret api_password
+  base_url: !secret base_url
+  trusted_networks:
+    - 192.168.1.0/24
+
+  # whitelist_external_dirs:
+    # - '/home/graham/homeassistant'
+
+# Floor plan
+panel_custom:
+  - name: floorplan
+    sidebar_title: Floorplan
+    sidebar_icon: mdi:floor-plan
+    url_path: floorplan
+    config: !include floorplan.yaml
+
+# Telegram
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_key
+    allowed_chat_ids:
+      - !secret graham_telegram_id
+      - !secret bora_telegram_id
+
+automation: !include includes/automations.yaml
+group: !include includes/groups.yaml
+input_select: !include includes/input_select.yaml
+input_boolean: !include includes/input_boolean.yaml
+script: !include includes/scripts.yaml
+sensor: !include includes/sensors.yaml
+
+# CONFIG
+binary_sensor: !include includes/config/binary_sensors.yaml
+camera: !include includes/config/camera.yaml
+cast: !include includes/config/cast.yaml
+cloud: !include includes/config/cloud.yaml
+device_tracker: !include includes/config/device_tracker.yaml
+history: !include includes/config/history.yaml
+logbook: !include includes/config/logbook.yaml
+mqtt: !include includes/config/mqtt.yaml
+notify: !include includes/config/notify.yaml
+switch: !include includes/config/switch.yaml
+variable: !include includes/config/variable.yaml
+weather: !include includes/config/weather.yaml
+zone: !include includes/config/zones.yaml
+
+logger:
+  default: warn
+
+recorder:
+  purge_keep_days: 3
+  exclude:
+    entities:
+      - sensor.date
+
+frontend:
+  extra_html_url:
+    - /local/custom_ui/state-card-floorplan.html
+
+  themes: !include_dir_merge_named themes/
+
+hue:
+  bridges:
+    - host: 192.168.1.120
+      allow_unreachable: true
+
+tts:
+  - platform: google
+    cache: false
+
+
+ffmpeg:
+map:
+config:
+sun:
+discovery:

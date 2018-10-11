@@ -1,0 +1,158 @@
+#########
+# VIEWS #
+#########
+
+  default_view:
+    icon: mdi:home
+    view: yes
+    entities:
+      - group.lights
+      - group.family
+      - group.health
+      - group.switches
+      - group.transit
+      - camera.living_room
+      - group.binarysensors
+      - group.weather
+      - group.weathernight
+
+###################
+# DEVICE TRACKING #
+###################
+
+  graham: binary_sensor.graham_bayesian
+  bora: binary_sensor.bora_bayesian
+
+#########
+# HOME #
+########
+
+# Lights
+  lights:
+    name: Lights
+    entities:
+      - light.bedroom
+      - light.living_room
+      - light.dining_room
+      - light.kitchen
+      - light.study
+
+  bedroom_light:
+    name: Bedroom Light
+    entities:
+     - light.molly_bedroom_1
+     - light.molly_bedroom_2
+
+  living_room_light:
+    name: Living Room Light
+    entities:
+     - light.molly_living_room_1
+     - light.molly_living_room_2
+
+  dining_room_light:
+    name: Dining Room Light
+    entities:
+     - light.molly_dining_room_1
+     - light.molly_dining_room_2
+
+# Family
+  family:
+    name: Family
+    entities:
+      - sensor.graham_geocode
+      - sensor.bora_geocode
+
+# Health
+  health:
+    name: Graham Health
+    entities:
+      - sensor.weight
+      - sensor.bmi
+      - sensor.body_fat
+      - sensor.charge_2_battery
+
+# Switches
+  switches:
+    name: Switches
+    entities:
+      - switch.plug_kettle_switch
+      - switch.plug_bedroomheater_switch
+      - switch.plug_studyheater_switch
+
+# Transit
+  transit:
+    name: Transit
+    entities:
+      - sensor.drive_to_college
+      - sensor.next_train_to_central
+
+# Binary Sensors
+  binarysensors:
+    name: Sensors
+    entities:
+      - binary_sensor.door_bedroom
+      - binary_sensor.motion_study_occupancy
+      - binary_sensor.motion_living
+      - binary_sensor.motion_kitchen
+
+# Weather
+  weather:
+    name: Weather
+    entities:
+      - input_boolean.weather
+
+#########
+# TOOLS #
+#########
+
+# Themes
+  theme:
+    name: Theme
+    entities:
+      - input_select.hass_template
+
+# System Monitor
+  system_monitor:
+    name: System Monitor
+    entities:
+      - sensor.disk_use_percent_
+      - sensor.memory_free
+      - sensor.processor_use
+      - sensor.network_in_wlp8s0
+      - sensor.network_out_wlp8s0
+      - sensor.last_boot
+
+# Pi-Hole
+  # pihole:
+    # name: Pi-Hole
+    # entities:
+      # - sensor.pihole_ads_blocked_today
+      # - sensor.pihole_ads_percentage_blocked_today
+      # - sensor.pihole_dns_queries_cached
+      # - sensor.pihole_dns_queries_forwarded
+      # - sensor.pihole_dns_queries_today
+      # - sensor.pihole_dns_unique_clients
+      # - sensor.pihole_dns_unique_domains  
+
+#################
+# MEDIA PLAYERS #
+#################
+
+# Media Players
+  mediaplayers:
+    name: Media Players
+    entities:
+      - media_player.molly_dongle
+      - media_player.molly_home
+      - media_player.molly_mini
+
+####################
+# NOT IN FRONT END #
+####################
+
+# Floor Plan
+  zones:
+    name: Zones
+    entities:
+      - binary_sensor.floorplan
+      - sensor.template_last_motion

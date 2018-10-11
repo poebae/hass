@@ -1,0 +1,7 @@
+  - platform: ffmpeg
+    input: -rtsp_transport tcp -i rtsp://192.168.1.50:8554/unicast
+    name: Living Room
+
+  - platform: generic
+    still_image_url: http://192.168.1.50/cgi-bin/currentpic.cgi
+    name: Living Room Snap

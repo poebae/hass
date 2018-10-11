@@ -1,0 +1,78 @@
+  - name: Home
+    latitude: -33.817042
+    longitude: 151.088441
+    radius: 100
+    icon: mdi:home
+
+  - name: Work
+    latitude: -33.883128
+    longitude: 151.221292
+    radius: 200
+    icon: mdi:human-female
+
+  - name: College
+    latitude: -33.880061
+    longitude: 151.106177
+    radius: 170
+    icon: mdi:school
+
+# TRAIN STATIONS
+  - name: Rhodes
+    latitude: -33.830491
+    longitude: 151.087081
+    radius: 400
+    icon: mdi:train
+
+  - name: Concord West
+    latitude: -33.848482
+    longitude: 151.085535
+    radius: 400
+    icon: mdi:train
+
+  - name: North Strathfield
+    latitude: -33.858773
+    longitude: 151.088146
+    radius: 400
+    icon: mdi:train
+
+  - name: Strathfield
+    latitude: -33.871414
+    longitude: 151.094296
+    radius: 400
+    icon: mdi:train
+
+  - name: Burwood
+    latitude: -33.876729
+    longitude: 151.103973
+    radius: 400
+    icon: mdi:train
+
+  - name: Redfern
+    latitude: -33.892002
+    longitude: 151.198985
+    radius: 400
+    icon: mdi:train
+
+  - name: Central
+    latitude: -33.882398
+    longitude: 151.206625
+    radius: 400
+    icon: mdi:train
+
+  - name: Town Hall
+    latitude: -33.873325
+    longitude: 151.207159
+    radius: 400
+    icon: mdi:train
+
+  # - name: Burwood -> Redfern
+    # latitude: -33.894017
+    # longitude: 151.150000
+    # radius: 3800
+
+# OVERSEAS
+
+  # - name: Bali
+    # latitude: -8.476136
+    # longitude: 115.208794
+    # radius: 30000

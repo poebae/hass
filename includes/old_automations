@@ -1,0 +1,1181 @@
+# Light on: bedroom - 6:40am
+- alias: Light on - bedroom at 6:40am
+  id: 'sunrise_light'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: "06:40:00"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: light.bedroom
+      state: 'off'
+    - condition: state
+      entity_id: device_tracker.google_maps_111604514484536138497
+      state: 'home'
+    - condition: state
+      entity_id: 'binary_sensor.workday_sensor'
+      state: 'on'
+  action:
+    - service: light.turn_on
+      entity_id: light.bedroom
+      data:
+        brightness: 1
+    - delay: '00:00:01'
+    - service: light.turn_on
+      entity_id: light.bedroom
+      data:
+        brightness: 254
+        transition: 900
+
+# Light on: living room (evening)
+- alias: 'Light on - living room (evening)'
+  id: 'lights on in the evening'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-00:30:00"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.living_room
+        state: 'off'
+      - condition: state
+        entity_id: group.all_devices
+        state: 'home'
+  action:
+    service: light.turn_on
+    entity_id: light.living_room
+
+# Light on: living room (someone home)
+- alias: Light on - living room (someone home)
+  id: 'lights on when home'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+      platform: state
+      entity_id: group.all_devices
+      from: 'not_home'
+      to: 'home'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.living_room
+        state: 'off'
+      - condition: time
+        after: "15:00:00"
+        before: "07:00:00"
+  action:
+    service: hue.hue_activate_scene
+    data_template:
+      group_name: "Living Room"
+      scene_name: "LivingBright"
+
+# Lights and heaters off: all (nobody home)
+- alias: Lights and heaters off - all (nobody home)
+  id: 'nobody_home_lights_heaters_off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: group.all_devices
+    to: 'not_home'
+    for:
+      minutes: 1
+  action:
+    - service: light.turn_off
+      entity_id: group.all_lights
+    - service: switch.turn_off
+      entity_id: switch.plug_bedroomheater_switch
+    - service: switch.turn_off
+      entity_id: switch.plug_studyheater_switch
+
+# Light on: study (motion detected)
+- alias: Light on - study (motion detected)
+  id: 'study_motion'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_study_occupancy
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.study
+        state: 'off'
+      - condition: state
+        entity_id: group.all_devices
+        state: 'home'
+  action:
+    service: light.turn_on
+    entity_id: light.study
+
+# Light on: study (someone comes home, motion already detected)
+- alias: Light on - study (someone comes home, motion already detected)
+  id: 'study_someonehome_motion'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+      platform: state
+      entity_id: group.all_devices
+      from: 'not_home'
+      to: 'home'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.study
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.motion_study_occupancy
+        state: 'on'
+  action:
+    service: light.turn_on
+    entity_id: light.study
+
+# Light off: study (no motion)
+- alias: Light off - study (no motion)
+  id: 'study_nomotion'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_study_occupancy
+    from: 'on'
+    to: 'off'
+    for:
+      minutes: 10
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: light.study
+      state: 'on'
+    - condition: state
+      entity_id: sensor.ingame
+      state: 'no'
+    - condition: numeric_state
+      entity_id: sensor.ha_uptime
+      above: 0.4
+  action:
+    - service: light.turn_off
+      entity_id: light.study
+    - service: switch.turn_off
+      entity_id: switch.plug_158d00024d8cc9
+
+# Light on: kitchen (motion detected)
+- alias: Light on - kitchen (motion detected)
+  id: 'kitchen_motion'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_kitchen
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: time
+        after: "17:00:00"
+        before: "23:00:00"
+      - condition: state
+        entity_id: group.all_devices
+        state: 'home'
+      - condition: state
+        entity_id: light.kitchen
+        state: 'off'
+  action:
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: "Kitchen"
+        scene_name: "KitchenBright"
+
+# Light on: kitchen (someone comes home, motion already detected)
+- alias: Light on - kitchen (someone comes home, motion already detected)
+  id: 'kitchen_someonehome_motion'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+      platform: state
+      entity_id: group.all_devices
+      from: 'not_home'
+      to: 'home'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.kitchen
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.motion_kitchen
+        state: 'on'
+  action:
+    service: light.turn_on
+    entity_id: light.kitchen
+
+# Light on: kitchen night light
+- alias: Light on - kitchen night light
+  id: 'kitchen_nightlight_on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_kitchen
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: group.all_devices
+      state: 'home'
+    - condition: time
+      after: "23:00:00"
+      before: "07:30:00"
+    - condition: state
+      entity_id: light.kitchen
+      state: 'off'
+  action:
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: "Kitchen"
+        scene_name: "KitchenDim"
+
+# Light off: kitchen (no motion)
+- alias: Light off - kitchen (no motion)
+  id: 'kitchen_nomotion'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_kitchen
+    from: 'on'
+    to: 'off'
+  condition:
+      condition: state
+      entity_id: light.kitchen
+      state: 'on'
+  action:
+    service: light.turn_off
+    entity_id: light.kitchen
+
+# Light on: living room (motion detected)
+- alias: Light on - living room (motion detected)
+  id: 'livingroom_motion'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_living
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "17:00:00"
+      before: "23:00:00"
+    - condition: state
+      entity_id: light.living_room
+      state: 'off'
+    - condition: state
+      entity_id: group.all_devices
+      state: 'home'
+  action:
+    service: hue.hue_activate_scene
+    data_template:
+      group_name: "Living Room"
+      scene_name: "LivingBright"
+
+# Light on: study (someone comes home, motion already detected)
+- alias: Light on - living room (someone comes home, motion already detected)
+  id: 'livingroom_someonehome_motion'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+      platform: state
+      entity_id: group.all_devices
+      from: 'not_home'
+      to: 'home'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.living_room
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.motion_living
+        state: 'on'
+  action:
+    service: light.turn_on
+    entity_id: light.living_room
+
+# Light off: living/dining room (no motion)
+- alias: Light off - living/dining room (no motion)
+  id: 'livingdining_nomotion'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_living
+    from: 'on'
+    to: 'off'
+  condition:
+    - condition: template
+      value_template: "{{ not is_state('device_tracker.google_maps_111604514484536138497', 'home') }}"
+    - condition: time
+      after: "07:30:00"
+      before: "23:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: light.living_room
+        state: 'on'
+      - condition: state
+        entity_id: light.dining_room
+        state: 'on'
+  action:
+    - service: light.turn_off
+      entity_id: light.living_room
+    - service: light.turn_off
+      entity_id: light.dining_room
+
+# Light on: living room night light
+- alias: Light on - living room night light
+  id: 'livingroom_nightlight_on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_living
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "23:00:00"
+      before: "07:30:00"
+    - condition: state
+      entity_id: light.living_room
+      state: 'off'
+    - condition: state
+      entity_id: group.all_devices
+      state: 'home'
+  action:
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: "Living Room"
+        scene_name: "LivingDim"
+
+# Light off: living room night light (no motion)
+- alias: Light off - living room night light (no motion)
+  id: 'livingroom_nighlight_nomotion'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_living
+    from: 'on'
+    to: 'off'
+  condition:
+    - condition: time
+      after: "23:00:00"
+      before: "07:30:00"
+    - condition: state
+      entity_id: binary_sensor.door_bedroom
+      state: 'on'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: light.living_room
+        state: 'on'
+      - condition: state
+        entity_id: light.dining_room
+        state: 'on'
+  action:
+    - service: light.turn_off
+      entity_id: light.living_room
+    - service: light.turn_off
+      entity_id: light.dining_room
+
+# Everyone leaves but the bedroom door is open
+- alias: 'Warning: left the house with the door open'
+  id: 'warning_left_house_door_open'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: group.all_devices
+    from: 'home'
+    to: 'not_home'
+  condition:
+      condition: state
+      entity_id: binary_sensor.door_bedroom
+      state: 'on'
+  action:
+    - service: notify.graham_telegram
+      data:
+        message: "You left the house with the bedroom door open"
+
+# Door opened while nobody home
+- alias: 'Warning: door opened while nobody was home'
+  id: 'warning_door_opened_while_nobody_home'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.door_bedroom
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: group.all_devices
+    state: 'not_home'
+  action:
+    - service: notify.graham_telegram
+      data:
+        message: "Nobody is home but the bedroom door opened."
+
+# Flash study and living room when birdie arrives at work
+- alias: Birdie arrives at work
+  id: 'birdie_arrive_work'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: zone
+    entity_id: device_tracker.google_maps_111604514484536138497
+    zone: zone.work
+    event: enter
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: group.all_devices
+      state: 'home'
+    - condition: time
+      after: "08:00:00"
+      before: "10:00:00"
+    - condition: state
+      entity_id: 'binary_sensor.workday_sensor'
+      state: 'on'
+  action:
+    entity_id: light.study, light.living_room
+    service: light.turn_on
+    data:
+      flash: short
+
+# Flash study and living room when birdie leaves work
+- alias: Birdie leaves work
+  id: 'birdie_leaves_work'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+  - platform: zone
+    entity_id: device_tracker.google_maps_111604514484536138497
+    zone: zone.work
+    event: leave
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: group.all_devices
+      state: 'home'
+    - condition: time
+      after: "16:30:00"
+      before: "22:00:00"
+    - condition: state
+      entity_id: 'binary_sensor.workday_sensor'
+      state: 'on'
+  action:
+    service: light.turn_on
+    entity_id: light.study, light.living_room
+    data:
+      flash: short
+
+# Flash study and living room, and turn living room lights on when birdie is almost home
+- alias: Birdie almost home
+  id: 'birdie_almost_home'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+  - platform: zone
+    entity_id: device_tracker.google_maps_111604514484536138497
+    zone: zone.rhodes
+    event: enter
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: group.all_devices
+      state: 'home'
+    - condition: time
+      after: "16:30:00"
+      before: "22:00:00"
+    - condition: state
+      entity_id: 'binary_sensor.workday_sensor'
+      state: 'on'
+  action:
+    - service: light.turn_on
+      entity_id: light.study, light.living_room
+      data:
+        flash: short
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Living Room"
+        scene_name: "LivingBright"
+    - service: light.turn_on
+      entity_id: light.dining_room
+    - service: tts.google_say
+      entity_id: media_player.molly_home
+      data:
+        message: 'Bora is at Rhodes and will be home soon!'
+
+# Flash study and living room, and turn living room lights on when birdie is almost home
+- alias: Birdie landed in Bali!
+  id: 'birdie_landed_bali'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+  - platform: zone
+    entity_id: device_tracker.google_maps_111604514484536138497
+    zone: zone.bali
+    event: enter
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: group.all_devices
+      state: 'home'
+  action:
+    - service: light.turn_on
+      entity_id: light.study, light.living_room
+      data:
+        flash: short
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Living Room"
+        scene_name: "LivingBright"
+    - service: notify.graham_telegram
+      data:
+        message: "Birdie landed in Bali!"
+    - service: tts.google_say
+      entity_id: media_player.molly_home
+      data:
+        message: 'Birdie landed in Bali!'
+
+##########
+# XIAOMI #
+##########
+
+# Door open, bedroom light on
+- alias: 'Door open: bedroom light on'
+  id: 'door_open_bedroom_light_on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.door_bedroom
+    from: 'off'
+    to: 'on'
+  condition:
+    - condition: state
+      entity_id: group.all_devices
+      state: 'home'
+    - condition: numeric_state
+      entity_id: sensor.ha_uptime
+      above: 0.4
+  action:
+    - service: light.turn_on
+      entity_id: light.bedroom
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: "Bedroom"
+        scene_name: "BedroomBright"
+
+# Door closed, bedroom light off
+- alias: 'Door closed: bedroom light off'
+  id: 'door_closed_bedroom_light_off'
+  hide_entity: True
+  initial_state: 'on'
+  condition:
+    - condition: state
+      entity_id: group.all_devices
+      state: 'home'
+    - condition: numeric_state
+      entity_id: sensor.ha_uptime
+      above: 0.4
+
+  trigger:
+    platform: state
+    entity_id: binary_sensor.door_bedroom
+    from: 'on'
+    to: 'off'
+  action:
+    - service: light.turn_on
+      entity_id: light.bedroom
+    - service: light.turn_off
+      entity_id: light.bedroom
+
+# Bedroom button single click: light on
+- alias: 'Bedroom button: light on'
+  id: 'bedroom_button_light_on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.bedroom
+        state: 'off'
+      - condition: numeric_state
+        entity_id: sensor.ha_uptime
+        above: 0.4
+  action:
+    service: hue.hue_activate_scene
+    data_template:
+      group_name: "Bedroom"
+      scene_name: "BedroomBright"
+
+# Bedroom button single click: light off
+- alias: 'Bedroom button: light off'
+  id: 'bedroom_button_light_off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    condition: and
+    conditions:
+      - condition: template 
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.bedroom
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.ha_uptime
+        above: 0.4
+  action:
+    service: light.turn_off
+    entity_id: light.bedroom
+
+# Bedroom button double click: all lights off
+- alias: 'Bedroom button: double click all lights off'
+  id: 'bedroom_button_all_lights_off_double_click'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    condition: template 
+    value_template: "{{ 'double' == trigger.payload_json.click }}"
+  action:
+    - service: light.turn_off
+      entity_id: light.bedroom
+    - service: light.turn_off
+      entity_id: light.kitchen
+    - service: light.turn_off
+      entity_id: light.living_room
+    - service: light.turn_off
+      entity_id: light.dining_room
+
+# Bedroom button triple click: heater toggle
+- alias: 'Bedroom button: triple click heater toggle'
+  id: 'bedroom_button_triple_click_heater_toggle'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    condition: and
+    conditions:
+      - condition: template 
+        value_template: "{{ 'triple' == trigger.payload_json.click }}"
+      - condition: numeric_state
+        entity_id: sensor.ha_uptime
+        above: 0.4
+  action:
+    - service_template: >
+        {% if is_state("switch.plug_bedroomheater_switch", "off") %}
+          switch.turn_on
+        {% else %}
+          switch.turn_off
+        {% endif %}
+      entity_id: switch.plug_bedroomheater_switch
+    - service: tts.google_say
+      entity_id: media_player.molly_mini
+      data_template:
+        message: >
+          {% if is_state("switch.plug_bedroomheater_switch", "off") %}
+            message: 'Turning on the heater'
+          {% else %}
+            message: 'Turning off the heater'
+          {% endif %}
+
+# Bedroom button long press: boil kettle
+- alias: 'Bedroom button: long press boil kettle'
+  id: 'bedroom_button_long_press_boil_kettle'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    - condition: template 
+      value_template: "{{ 'long_release' == trigger.payload_json.click }}"
+    - condition: numeric_state
+      entity_id: sensor.ha_uptime
+      above: 0.4
+  action:
+    - service_template: >
+        {% if is_state("switch.plug_kettle_switch", "off") %}
+          switch.turn_on
+        {% else %}
+          switch.turn_off
+        {% endif %}
+      entity_id: switch.plug_kettle_switch
+    - service: tts.google_say
+      entity_id: media_player.molly_mini
+      data_template:
+        message: >
+          {% if is_state("switch.plug_kettle_switch", "off") %}
+            message: 'Turning on the kettle'
+          {% else %}
+            message: 'Turning off the kettle'
+          {% endif %}
+
+# Bedroom wall switch: light on
+- alias: 'Bedroom switch: light on'
+  id: 'bedroom_switch_light_on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_bedroom'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.bedroom
+        state: 'off'
+      - condition: numeric_state
+        entity_id: sensor.ha_uptime
+        above: 0.4
+  action:
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: "Bedroom"
+        scene_name: "BedroomBright"
+
+# Bedroom wall switch: light off
+- alias: 'Bedroom switch: light off'
+  id: 'bedroom_switch_light_off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_bedroom'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.bedroom
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.ha_uptime
+        above: 0.4
+  action:
+    service: light.turn_off
+    entity_id: light.bedroom
+
+# Kitchen wall switch: light on
+- alias: 'Kitchen switch: light on'
+  id: 'kitchen_switch_light_on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_kitchen'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.kitchen
+        state: 'off'
+      - condition: numeric_state
+        entity_id: sensor.ha_uptime
+        above: 0.4
+  action:
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: "Kitchen"
+        scene_name: "KitchenBright"
+
+# Kitchen wall switch: light off
+- alias: 'Kitchen switch: light off'
+  id: 'kitchen_switch_light_off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_kitchen'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.kitchen
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.ha_uptime
+        above: 0.4
+  action:
+    service: light.turn_off
+    entity_id: light.kitchen
+
+# Study wall switch: light toggle
+- alias: 'Study switch: light toggle'
+  id: 'study_switch_light_toggle'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_study'
+  condition:
+    - condition: template
+      value_template: "{{ 'single' == trigger.payload_json.click }}"
+    - condition: numeric_state
+      entity_id: sensor.ha_uptime
+      above: 0.4
+  action:
+    service: light.toggle
+    entity_id: light.study
+
+# Living room left wall switch: living room light on
+- alias: 'Left switch: living room on'
+  id: 'left_switch_living_room_on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_living'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'left' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.living_room
+        state: 'off'
+      - condition: numeric_state
+        entity_id: sensor.ha_uptime
+        above: 0.4
+  action:
+    service: hue.hue_activate_scene
+    data_template:
+      group_name: "Living Room"
+      scene_name: "LivingBright"
+
+# Living room left wall switch: living room light off
+- alias: 'Left switch: living room off'
+  id: 'left_switch_living_room_off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_living'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'left' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.living_room
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.ha_uptime
+        above: 0.4
+  action:
+    service: light.turn_off
+    entity_id: light.living_room
+
+# Living room right wall switch: dining room light on
+- alias: 'Right switch: dining room on'
+  id: 'right_switch_dining_room_on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_living'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'right' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.dining_room
+        state: 'off'
+      - condition: numeric_state
+        entity_id: sensor.ha_uptime
+        above: 0.4
+  action:
+    service: hue.hue_activate_scene
+    data_template:
+      group_name: "Dining Room"
+      scene_name: "DiningBright"
+
+# Living room right wall switch: dining room light off
+- alias: 'Right switch: dining room off'
+  id: 'right_switch_dining_room_off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_living'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'right' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.dining_room
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.ha_uptime
+        above: 0.4
+  action:
+    service: light.turn_off
+    entity_id: light.dining_room
+
+# Living room right both switchs: toggle living/dining
+- alias: 'Both switches: living/dining room toggle'
+  id: 'both_switches_living_dining_room_toggle'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_living'
+  condition:
+    condition: template
+    value_template: "{{ 'both' == trigger.payload_json.click }}"
+  action:
+    service: light.toggle
+    entity_id: light.living_room, light.dining_room
+
+# Toggle receiver power - Chromecast Idle -> Playing
+- alias: "Toggle receiver power - Chromecast Idle -> Playing"
+  id: 'toggle_receiver_power_chromecast_idle_to_playing'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: media_player.molly_dongle
+    from: 'idle'
+    to: 'playing'
+  action:
+    - service: script.turn_on
+      entity_id: script.receiver_power
+    - service: script.turn_on
+      entity_id: script.receiver_android
+
+# Toggle receiver power - Chromecast Off
+- alias: "Toggle receiver power - Chromecast Playing -> Off"
+  id: 'toggle_receiver_power_chromecast_playing_to_off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: media_player.molly_dongle
+    to: 'off'
+  action:
+    - service: script.turn_on
+      entity_id: script.receiver_power
+    - service: script.turn_on
+      entity_id: script.tv_power
+
+# Startup Script
+- alias: 'Startup Script'
+  id: 'startup_script'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+   - platform: homeassistant
+     event: start
+  action:
+    - service: frontend.set_theme
+      data:
+        name: midnight
+    - service: sensor.update_speedtest
+    - delay:
+        seconds: 5
+    - service: switch.turn_off
+      entity_id: switch.plug_kettle_switch
+
+# Theme switcher
+- alias: 'Automatic Theme Change'
+  id: 'automatic_theme_change'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: input_select.hass_template
+  action:
+    - service: frontend.set_theme
+      data_template:
+        name: "{{ states.input_select.hass_template.state }}"
+
+# Android notification - turn receiver on
+- alias: Android notification - turn Receiver On
+  id: android_notification_turn_receiver_on
+  initial_state: 'on'
+  trigger:
+  - event_data:
+      action: turn_receiver_on
+    event_type: fcm_android_notifications.clicked
+    platform: event
+  condition: []
+  action:
+    service: script.turn_on
+    entity_id: script.receiver_power
+
+# Turn on heater at 9pm if temperature is below 20
+- alias: "Turn on Heater at 9pm if temperature is below 20"
+  id: 'heater_on_9pm_temperature_below_20'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: '21:00:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ states.weather.yweather.attributes.temperature < 20 }}'
+      - condition: state
+        entity_id: 'switch.plug_bedroomheater_switch'
+        state: 'off'
+      - condition: state
+        entity_id: group.all_devices
+        state: 'home'
+  action:
+    service: switch.turn_on
+    entity_id:  switch.plug_bedroomheater_switch
+
+# Bedroom heater off when door closes and birdie is away
+- alias: Bedroom heater off - door closes, birdie away
+  id: 'bedroom_heater_off_door_closes_birdie_away'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.door_bedroom
+    from: 'on'
+    to: 'off'
+  condition:
+    - condition: template
+      value_template: "{{ not is_state('device_tracker.google_maps_111604514484536138497', 'home') }}"
+    - condition: state
+      entity_id: switch.plug_bedroomheater_switch
+      state: 'on'
+  action:
+    service: switch.turn_off
+    entity_id: switch.plug_bedroomheater_switch
+
+# Bedroom heater off when birdie leaves and the door is closed
+- alias: Bedroom heater off - birdie away, door closes
+  id: 'bedroom_heater_off_birdie_away_door_closes'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: zone
+    entity_id: device_tracker.google_maps_111604514484536138497
+    zone: zone.home
+    event: leave
+  condition:
+    - condition: state
+      entity_id: binary_sensor.door_bedroom
+      state: 'off'
+  action:
+    service: switch.turn_off
+    entity_id: switch.plug_bedroomheater_switch
+
+# Graham Bluetooth Occupancy True
+- alias: Graham Bluetooth Occupancy True
+  id: 'graham_bluetooth_occupancy_true'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.graham_pixel
+      above: 90
+  action:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: input_boolean.graham_bluetooth_occupancy
+
+# Graham Bluetooth Occupancy True
+- alias: Graham Bluetooth Occupancy False
+  id: 'graham_bluetooth_occupancy_false'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.graham_pixel
+      below: 10
+  action:
+    - service: homeassistant.turn_off
+      data:
+        entity_id: input_boolean.graham_bluetooth_occupancy
+
+# Bora Bluetooth Occupancy True
+- alias: Bora Bluetooth Occupancy True
+  id: 'bora_bluetooth_occupancy_true'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.bora_s8
+      above: 90
+  action:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: input_boolean.bora_bluetooth_occupancy
+
+# Bora Bluetooth Occupancy True
+- alias: Bora Bluetooth Occupancy False
+  id: 'bora_bluetooth_occupancy_false'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.bora_s8
+      below: 10
+  action:
+    - service: homeassistant.turn_off
+      data:
+        entity_id: input_boolean.bora_bluetooth_occupancy

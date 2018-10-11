@@ -1,0 +1,10 @@
+  - name: graham_telegram
+    platform: telegram
+    chat_id: !secret graham_telegram_id
+
+  - name: bora_telegram
+    platform: telegram
+    chat_id: !secret bora_telegram_id
+
+  - name: android
+    platform: fcm-android

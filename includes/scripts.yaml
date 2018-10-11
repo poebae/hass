@@ -1,0 +1,174 @@
+# Receiver off Android notification
+receiver_android:
+  alias: "Receiver power toggled notification"
+  sequence:
+    - service: notify.android
+      data:
+        message: Receiver power toggled
+        data:
+          actions:
+            - action: turn_receiver_on
+              title: Turn receiver on
+          tag: 1
+    - delay: '00:00:10'
+    - service: notify.android
+      data:
+        message: Receiver power toggled
+        data:
+          tag: 1
+          dismiss: true
+#send cam
+living_cam:
+  alias: "Living Room cam - Android notification"
+  sequence:
+    - service: notify.android
+      data:
+        target: "unnamed device"
+        message: "Living Room Cam"
+        data:
+          image: "http://192.168.1.50/cgi-bin/currentpic.cgi"
+
+
+tv_power:
+  alias: TV Power
+  sequence:
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgAyAW49DQ8OKw0QDRANDw4PDRANDw4PDQ8ODw0QDQ8OLAsRDg8NDw0QDBENDw4PDRAMEA0tDBANEAwQDRAMEQwQDRANEA0sDBEMLQwtDC0NLQwQDRAMLQwRDC0MLQ0tDC0MEA0tDAAJnG88DBANLQwQDRAMEQwQDRAMEA0QDBEMEA0QDBEMLQwQDRAMEQwQDRAMEQwQDRAMEQwtDBANEAwRDBANEAwRDBANEAwtDBEMLQwtDC4MLQwRDBAMLQ0QDC0NLQwtDC0MEQwtDAAJnG87DREMLQwRDBANEAwQDRAMEQwQDRAMEQwQDRAMLQwRDBANEAwRDBANEAwRDBANEAwtDBEMEA0QDBEMEA0QDBEMEA0sDRAMLQ0tDC0MLQ0QDBANLQwQDS0MLQwtDC0NEAwtDQANBQAAAAAAAA=="
+
+receiver_power:
+  alias: Receiver Power
+  sequence:
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBQAAABJpURExM3EhMSOBI4EjcTOBISEzcSExI4EhMSExITEhITOBI3EzcSOBI4EjcTExITEhITEhMTERMTEhMSEjgTNhM4EgAFHwABJ0oSAA0FAAAAAAAAAAA="
+
+receiver_video:
+  alias: Receiver Video Mode
+  sequence:
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBQAAABJpURExM3EhMSOBI4EjcTOBISEzgRExI4EhMSExITEhMSOBI3EzcSOBITEjgSExITEhMSEhMTEhMROBMSEjgSOBI4EgAFHwABJksSAA0FAAAAAAAAAAA="
+
+receiver_volume_down:
+  alias: Receiver Volume Down
+  sequence:
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABJ5QSExM3EhMSNxM4EjcTNxITEzcSExM2ExMSExISExITNhQ3EjgSExI4EjcTEhMTERMTEhMSEjgTEhITEjgSNxM3EwANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABJ5QSExM3EhMSNxM4EjcTNxITEzcSExM2ExMSExISExITNhQ3EjgSExI4EjcTEhMTERMTEhMSEjgTEhITEjgSNxM3EwANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABJ5QSExM3EhMSNxM4EjcTNxITEzcSExM2ExMSExISExITNhQ3EjgSExI4EjcTEhMTERMTEhMSEjgTEhITEjgSNxM3EwANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABJ5QSExM3EhMSNxM4EjcTNxITEzcSExM2ExMSExISExITNhQ3EjgSExI4EjcTEhMTERMTEhMSEjgTEhITEjgSNxM3EwANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABJ5QSExM3EhMSNxM4EjcTNxITEzcSExM2ExMSExISExITNhQ3EjgSExI4EjcTEhMTERMTEhMSEjgTEhITEjgSNxM3EwANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABJ5QSExM3EhMSNxM4EjcTNxITEzcSExM2ExMSExISExITNhQ3EjgSExI4EjcTEhMTERMTEhMSEjgTEhITEjgSNxM3EwANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABJ5QSExM3EhMSNxM4EjcTNxITEzcSExM2ExMSExISExITNhQ3EjgSExI4EjcTEhMTERMTEhMSEjgTEhITEjgSNxM3EwANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABJ5QSExM3EhMSNxM4EjcTNxITEzcSExM2ExMSExISExITNhQ3EjgSExI4EjcTEhMTERMTEhMSEjgTEhITEjgSNxM3EwANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABJ5QSExM3EhMSNxM4EjcTNxITEzcSExM2ExMSExISExITNhQ3EjgSExI4EjcTEhMTERMTEhMSEjgTEhITEjgSNxM3EwANBQ=="
+
+receiver_volume_up:
+  alias: Receiver Volume Up
+  sequence:
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABKJMTExI3ExMROBM3EjgSOBITEjcTExE4ExISExITExISOBITEjcTExE4EzcSExMSEhMSOBISEzgSEhMSEzcSOBI4EgANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABKJMTExI3ExMROBM3EjgSOBITEjcTExE4ExISExITExISOBITEjcTExE4EzcSExMSEhMSOBISEzgSEhMSEzcSOBI4EgANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABKJMTExI3ExMROBM3EjgSOBITEjcTExE4ExISExITExISOBITEjcTExE4EzcSExMSEhMSOBISEzgSEhMSEzcSOBI4EgANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABKJMTExI3ExMROBM3EjgSOBITEjcTExE4ExISExITExISOBITEjcTExE4EzcSExMSEhMSOBISEzgSEhMSEzcSOBI4EgANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABKJMTExI3ExMROBM3EjgSOBITEjcTExE4ExISExITExISOBITEjcTExE4EzcSExMSEhMSOBISEzgSEhMSEzcSOBI4EgANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABKJMTExI3ExMROBM3EjgSOBITEjcTExE4ExISExITExISOBITEjcTExE4EzcSExMSEhMSOBISEzgSEhMSEzcSOBI4EgANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABKJMTExI3ExMROBM3EjgSOBITEjcTExE4ExISExITExISOBITEjcTExE4EzcSExMSEhMSOBISEzgSEhMSEzcSOBI4EgANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABKJMTExI3ExMROBM3EjgSOBITEjcTExE4ExISExITExISOBITEjcTExE4EzcSExMSEhMSOBISEzgSEhMSEzcSOBI4EgANBQ=="
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBIAAABKJMTExI3ExMROBM3EjgSOBITEjcTExE4ExISExITExISOBITEjcTExE4EzcSExMSEhMSOBISEzgSEhMSEzcSOBI4EgANBQ=="
+
+fan_power:
+  alias: Fan Power
+  sequence:
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBiACYRJhALLCYRJhALLAwrCysMKwsrCywm6CYQJhELLCYQJhELKwwrDCsKLAwrCywm5yYRJhEKLCYRJhALKg0sCiwLLAsrCywm6CYQJxALLCYQJhELLAosCywLKwssCywmAA0FAAAAAAAA"
+
+fan_speed:
+  alias: Fan Speed
+  sequence:
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBOACYQJhELLCYQJhELKwwrCywKKg0sJw8LAAEBKBEmEAssJhEmEAssCywLKwwrDSkoDw0AAQEmECYRDSomECYRCysNKA8oDCwNKigPDAANBQAAAAAAAAAAAAA="
+
+fan_mode:
+  alias: Fan Mode
+  sequence:
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBOACYRJhELKyYRJhALLAwrCiwLLCYRCysMAAECJhEmEAssJhEnDwssCywLKwwrJhALLAsAAQMmECcQCywmECYRCysMKwssCywmEAssCwANBQAAAAAAAAAAAAA="
+
+fan_timer:
+  alias: Fan Timer
+  sequence:
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBOACgPKA4NKigPKA4NKgssCiwoDwsrCywMAAECKA4mEQ0qKA4oDw0qDCoMKygODSkMLAoAAQMoDyYRDCooDyYRDCoLLA0pKA8LLAwqDQANBQAAAAAAAAAAAAA="
+
+fan_osc:
+  alias: Fan Oscillation
+  sequence:
+    - service: switch.broadlink_send_packet_192_168_1_12
+      data:
+        packet:
+          - "JgBOACgOKA8NKigOKA8NKgwqKA8NKQ0qDCsMAAECJw8mEQwqJhEmEQwqDSooDwwqCywMKwwAAQEoDygPCiwoDygODSoNKiYQDSoMKg0qDQANBQAAAAAAAAAAAAA="

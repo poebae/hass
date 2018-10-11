@@ -1,0 +1,30 @@
+  intent_script:
+    Temperature:
+      speech:
+        text: The temperature is {{ states('sensor.yweather_temperature') }} degrees
+    LocateIntent:
+      speech:
+        text: >
+          {%- for state in states.device_tracker -%}
+            {%- if state.name.lower() == User.lower() -%}
+              {{ state.name }} is at {{ state.state }}
+            {%- elif loop.last -%}
+              I am sorry, I do not know where {{ User }} is.
+            {%- endif -%}
+          {%- else -%}
+            Sorry, I don't have any trackers registered.
+          {%- endfor -%}
+    WhereAreWeIntent:
+      speech:
+        text: >
+          {%- if is_state('device_tracker.graham', 'home') and
+                 is_state('device_tracker.bora', 'home') -%}
+            You are both home, you silly
+          {%- else -%}
+            Graham is at {{ states("device_tracker.graham") }}
+            and Bora is at {{ states("device_tracker.bora") }}
+          {% endif %}
+
+    NextTrain:
+      speech:
+        text: The next train to Central is in {{ states('sensor.next_train_to_central') }} minutes

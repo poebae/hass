@@ -1,0 +1,41 @@
+homeassistant: true
+permit_join: true
+mqtt:
+  base_topic: zigbee2mqtt
+  server: 'mqtt://192.168.1.6:1883'
+serial:
+  port: /dev/ttyACM0
+devices:
+  '0x00158d0002162ac7':
+    friendly_name: motion_kitchen
+    retain: true
+  '0x00158d0001e573dd':
+    friendly_name: motion_study
+    retain: true
+  '0x00158d0001b12769':
+    friendly_name: button_bedroom
+    retain: true
+  '0x00158d0001a2c821':
+    friendly_name: motion_living
+    retain: true
+  '0x00158d000183df47':
+    friendly_name: wall_kitchen
+    retain: true
+  '0x00158d0002286c1d':
+    friendly_name: door_bedroom
+    retain: true
+  '0x00158d000183bde7':
+    friendly_name: wall_study
+    retain: true
+  '0x00158d000183b707':
+    friendly_name: wall_bedroom
+    retain: true
+  '0x00158d00024d8cc9':
+    friendly_name: plug_studyheater
+    retain: true
+  '0x00158d0002495404':
+    friendly_name: plug_kettle
+    retain: true
+  '0x00158d00024a7ccd':
+    friendly_name: plug_bedroomheater
+    retain: true

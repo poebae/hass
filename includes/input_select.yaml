@@ -1,0 +1,9 @@
+hass_template:
+  name: Choose template
+  options:
+   - default
+   - midnight
+   - darkcyan
+   - darkorange
+  initial: midnight
+  icon: mdi:theme-light-dark

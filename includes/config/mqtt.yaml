@@ -1,0 +1,12 @@
+  broker: localhost
+  port: 1883
+  discovery: true
+  keepalive: 60
+  birth_message:
+    topic: 'hass/status'
+    payload: 'online'
+    retain: true
+  will_message:
+    topic: 'hass/status'
+    payload: 'offline'
+    retain: true

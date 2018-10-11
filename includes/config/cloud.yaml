@@ -1,0 +1,60 @@
+  google_actions:
+    filter:
+      include_entities:
+        - switch.plug_kettle_switch
+        - switch.plug_bedroomheater_switch
+        - switch.plug_studyheater_switch
+        - group.bedroom_light
+        - group.living_room_light
+        - group.dining_room_light
+      exclude_domains:
+        - automation
+        - alert
+        - input_boolean
+        - media_player
+        - group
+        - scene
+
+    entity_config:
+      switch.plug_kettle_switch:
+        name: Kitchen Kettle
+        aliases:
+         - the kettle
+         - kettle
+        room: kitchen
+
+      switch.plug_bedroomheater_switch:
+        name: Bedroom Heater
+        aliases:
+         - the bedroom heater
+         - bedroom heater
+         - the heater
+        room: bedroom
+
+      switch.plug_studyheater_switch:
+        name: Study Heater
+        aliases:
+         - the study heater
+         - study heater
+        room: study
+
+      group.bedroom_light:
+        name: Bedroom Light
+        aliases:
+         - the bedroom light
+         - bedroom light
+        room: bedroom
+
+      group.living_room_light:
+        name: Living Room Light
+        aliases:
+         - the living room light
+         - living room light
+        room: living room
+
+      group.dining_room_light:
+        name: Dining Room Light
+        aliases:
+         - the dining room light
+         - dining room light
+        room: dining room

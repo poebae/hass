@@ -1,0 +1,232 @@
+# HA Uptime
+- platform: uptime
+  name: "HA uptime"
+  unit_of_measurement: minutes
+
+# Fitbit
+- platform: fitbit
+  clock_format: 24H
+  unit_system: metric
+  monitored_resources:
+    - "body/fat"
+    - "body/bmi"
+    - "body/weight"
+    - "devices/battery"
+    - "sleep/minutesAfterWakeup"
+    - "sleep/minutesAsleep"
+    - "sleep/minutesAwake"
+    - "sleep/minutesToFallAsleep"
+    - "sleep/startTime"
+    - "sleep/timeInBed"
+
+# Google Geocode
+- platform: google_geocode
+  name: graham_geocode
+  origin: device_tracker.google_maps_116993081434204761650
+  options: street_number, street, city
+  limit_refetch_to_url_change: true
+  api_key: !secret places_api
+
+- platform: google_geocode
+  name: bora_geocode
+  origin: device_tracker.google_maps_111604514484536138497
+  options: street_number, street,city
+  limit_refetch_to_url_change: true
+  api_key: !secret places_api
+
+# Transit
+- platform: google_travel_time
+  name: Drive to College
+  api_key: !secret google_api
+  origin: zone.home
+  destination: Christ College Burwood
+  options:
+    mode: driving
+
+- platform: transport_nsw
+  name: Next train to Central
+  stopid: '2114181'
+  apikey: !secret 'transportnswkey'
+
+# System Monitor
+- platform: systemmonitor
+  resources:
+  - type: disk_use_percent
+    arg: /
+  - type: memory_free
+  - type: processor_use
+  - type: network_in
+    arg: wlp8s0
+  - type: network_out
+    arg: wlp8s0
+  - type: last_boot
+
+# Steam
+- platform: steam_online
+  api_key: !secret steamkey
+  accounts:
+    - 76561198051415178
+
+# Current Steam game  
+- platform: template
+  sensors:
+    steam_game:
+      friendly_name: "Game"
+      value_template: "{{ states.sensor.steam_76561198051415178.attributes.game }}"
+
+# In game?
+- platform: template
+  sensors:
+    ingame:
+      friendly_name: "In Game?"
+      value_template: >-
+        {% if is_state('sensor.steam_game', '') %}
+          no
+        {% else %}
+          yes
+        {% endif %}
+
+# Door Sensor Template for Floorplan
+- platform: template
+  sensors:
+    bedroom_door_closed:
+      entity_id: binary_sensor.door_bedroom
+      value_template: >
+        {% if is_state('binary_sensor.door_bedroom', 'off') %}
+          on
+        {% else %}
+          off
+        {% endif %}
+
+# Motion Sensor Template for Floorplan - Study
+- platform: template
+  sensors:
+    study_motion:
+      entity_id: binary_sensor.motion_study
+      value_template: >
+        {% if is_state('binary_sensor.motion_study_occupancy', 'on') %}
+          on
+        {% else %}
+          off
+        {% endif %}
+
+# Motion Sensor Template for Floorplan - Kitchen
+- platform: template
+  sensors:
+    kitchen_motion:
+      entity_id: binary_sensor.motion_kitchen
+      value_template: >
+        {% if is_state('binary_sensor.motion_kitchen', 'on') %}
+          on
+        {% else %}
+          off
+        {% endif %}
+
+# Motion Sensor Template for Floorplan - Living Room
+- platform: template
+  sensors:
+    livingroom_motion:
+      entity_id: binary_sensor.motion_living
+      value_template: >
+        {% if is_state('binary_sensor.motion_living', 'on') %}
+          on
+        {% else %}
+          off
+        {% endif %}
+
+# Pihole
+- platform: pi_hole
+  host: 192.168.1.6
+  monitored_conditions:
+    - ads_blocked_today
+    - ads_percentage_today
+    - dns_queries_today
+    - domains_being_blocked
+    - queries_cached
+    - queries_forwarded
+    - unique_clients
+    - unique_domains
+
+- platform: speedtest
+  server_id: 2629
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+
+# Xiaomi Batteries
+- platform: mqtt
+  name: Bedroom Door Sensor
+  state_topic: "zigbee2mqtt/door_bedroom"
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
+
+- platform: mqtt
+  name: Bedroom Button
+  state_topic: "zigbee2mqtt/button_bedroom"
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
+
+- platform: mqtt
+  name: Living Room Motion Sensor
+  state_topic: "zigbee2mqtt/motion_living"
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
+
+- platform: mqtt
+  name: Kitchen Motion Sensor
+  state_topic: "zigbee2mqtt/motion_kitchen"
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
+
+- platform: mqtt
+  name: Study Motion Sensor
+  state_topic: "zigbee2mqtt/motion_study"
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
+
+- platform: mqtt
+  name: Bedroom Wall Switch
+  state_topic: "zigbee2mqtt/wall_bedroom"
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
+
+- platform: mqtt
+  name: Living Room Wall Switch
+  state_topic: "zigbee2mqtt/wall_living"
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
+
+- platform: mqtt
+  name: Kitchen Wall Switch
+  state_topic: "zigbee2mqtt/wall_kitchen"
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
+
+- platform: mqtt
+  name: Study Wall Switch
+  state_topic: "zigbee2mqtt/wall_study"
+  unit_of_measurement: "%"
+  device_class: battery
+  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
+
+# Bluetooth Devices
+- platform: mqtt
+  state_topic: 'monitor/ha-monitor/80:7a:bf:07:1c:75'
+  value_template: '{{ value_json.confidence }}'
+  unit_of_measurement: '%'
+  name: 'Graham Pixel Bluetooth'
+
+- platform: mqtt
+  state_topic: 'monitor/ha-monitor/c8:d7:b0:ad:51:1f'
+  value_template: '{{ value_json.confidence }}'
+  unit_of_measurement: '%'
+  name: 'Bora S8 Bluetooth'
