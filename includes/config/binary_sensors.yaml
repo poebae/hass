@@ -10,6 +10,7 @@
     prior: 0.50
     name: 'Graham Bayesian'
     device_class: 'presence'
+    unit_of_measurement: '%'
     probability_threshold: 0.85
     observations:
       - entity_id: 'input_boolean.pixel_bluetooth_occupancy'
@@ -37,6 +38,7 @@
     prior: 0.50
     name: 'Bora Bayesian'
     device_class: 'presence'
+    unit_of_measurement: '%'
     probability_threshold: 0.85
     observations:
       - entity_id: 'input_boolean.s8_bluetooth_occupancy'

@@ -36,8 +36,9 @@
 
 # Temperature
 - platform: template
-  name: Temperature
-  value_template: "{{ states.weather.yweather.attributes.temperature }}"
+  sensors:
+    temperature:
+      value_template: "{{ states.weather.yweather.attributes.temperature }}"
 
 # Transit
 - platform: google_travel_time
