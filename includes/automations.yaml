@@ -364,8 +364,6 @@
     - condition: state
       entity_id: light.bedroom
       state: 'off'
-    - condition: template
-      value_template: "{{ not is_state('binary_sensor.bora_bayesian', 'on') }}"
     - condition: or
       conditions:
       - condition: state
