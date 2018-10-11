@@ -926,7 +926,7 @@
     entity_id: light.living_room, light.dining_room
 
 # Turn on heater after 9pm if temperature is below 20
-- alias: "Turn on Heater at 9pm if temperature is below 20"
+- alias: "Turn on heater and kettle at 9pm if temperature is below 20"
   id: 'heater_on_9pm_temperature_below_20'
   hide_entity: True
   initial_state: 'on'
@@ -951,8 +951,10 @@
           entity_id: binary_sensor.graham_bayesian
           state: 'on'
   action:
-    service: switch.turn_on
-    entity_id:  switch.plug_bedroomheater_switch
+    - service: switch.turn_on
+      entity_id: switch.plug_bedroomheater_switch
+    - service: switch.turn_on
+      entity_id: switch.plug_kettle_switch
 
 # Toggle receiver power - Chromecast Idle -> Playing
 - alias: "Toggle receiver power - Chromecast Idle -> Playing"
@@ -965,8 +967,10 @@
     from: 'idle'
     to: 'playing'
   action:
-    service: script.turn_on
-    entity_id: script.receiver_power
+    - service: script.turn_on
+      entity_id: script.receiver_power
+    - service: script.turn_on
+      entity_id: script.receiver_power
 
 # Toggle receiver power - Chromecast Playing -> Off
 - alias: "Toggle receiver power - Chromecast Playing -> Off"
