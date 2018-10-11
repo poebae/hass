@@ -955,6 +955,10 @@
       entity_id: switch.plug_bedroomheater_switch
     - service: switch.turn_on
       entity_id: switch.plug_kettle_switch
+    - service: tts.google_say
+      entity_id: media_player.molly_home
+      data:
+        message: 'Turning on the heater and kettle'
 
 # Toggle receiver power - Chromecast Idle -> Playing
 - alias: "Toggle receiver power - Chromecast Idle -> Playing"
