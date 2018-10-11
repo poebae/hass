@@ -12,11 +12,6 @@
     device_class: 'presence'
     probability_threshold: 0.79
     observations:
-      - entity_id: 'sensor.graham_nearwifi'
-        prob_given_true: 0.40
-        prob_given_false: 0.15
-        platform: 'state'
-        to_state: 'true'
       - entity_id: 'input_boolean.pixel_bluetooth_occupancy'
         prob_given_true: 0.99
         prob_given_false: 0.10
@@ -44,11 +39,6 @@
     device_class: 'presence'
     probability_threshold: 0.79
     observations:
-      - entity_id: 'sensor.bora_nearwifi'
-        prob_given_true: 0.40
-        prob_given_false: 0.10
-        platform: 'state'
-        to_state: 'true'
       - entity_id: 'input_boolean.s8_bluetooth_occupancy'
         prob_given_true: 0.99
         prob_given_false: 0.10
