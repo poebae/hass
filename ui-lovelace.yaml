@@ -585,9 +585,11 @@ views:
               - input_boolean.pixel_bluetooth_occupancy
               - device_tracker.google_maps_116993081434204761650
               - binary_sensor.motion_study_occupancy
+              - binary_sensor.graham_pixel_ping
               - sensor.bora_nearwifi
               - input_boolean.s8_bluetooth_occupancy
               - device_tracker.google_maps_111604514484536138497
+              - binary_sensor.bora_s8_ping
 
           - type: custom:monster-card
             show_empty: false
