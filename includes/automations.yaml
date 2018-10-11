@@ -4,9 +4,8 @@
   hide_entity: True
   initial_state: 'on'
   trigger:
-    platform: sun
-    event: sunrise
-    offset: "01:00:00"
+    platform: time
+    at: '06:50:00'
   condition:
     condition: and
     conditions:
@@ -943,6 +942,14 @@
       - condition: state
         entity_id: 'switch.plug_bedroomheater_switch'
         state: 'off'
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: binary_sensor.bora_bayesian
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.graham_bayesian
+          state: 'on'
   action:
     service: switch.turn_on
     entity_id:  switch.plug_bedroomheater_switch
@@ -1018,6 +1025,8 @@
     - service: frontend.set_theme
       data_template:
         name: "{{ states.input_select.hass_template.state }}"
+
+# Bora S8 Bluetooth Occupancy - True
 - alias: 'Bora S8 Bluetooth Occupancy - True'
   id: 's8_bluetooth_occupancy_true'
   hide_entity: True
@@ -1032,6 +1041,7 @@
       data:
         entity_id: input_boolean.s8_bluetooth_occupancy
 
+# Bora S8 Bluetooth Occupancy - False
 - alias: 'Bora S8 Bluetooth Occupancy - False'
   id: 's8_bluetooth_occupancy_false'
   hide_entity: True
@@ -1046,6 +1056,7 @@
       data:
         entity_id: input_boolean.s8_bluetooth_occupancy
 
+# Graham Pixel Bluetooth Occupancy - True
 - alias: 'Graham Pixel Bluetooth Occupancy - True'
   id: 'pixel_bluetooth_occupancy_true'
   hide_entity: True
@@ -1060,6 +1071,7 @@
       data:
         entity_id: input_boolean.pixel_bluetooth_occupancy
 
+# Graham Pixel Bluetooth Occupancy - False
 - alias: 'Graham Pixel Bluetooth Occupancy - False'
   id: 'pixel_bluetooth_occupancy_false'
   hide_entity: True
