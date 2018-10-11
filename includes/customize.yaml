@@ -13,7 +13,11 @@
 # Trackers
   sensor.graham_geocode:
     icon: mdi:human-handsup
+  device_tracker.google_maps_116993081434204761650:
+    icon: mdi:human-handsup
   sensor.bora_geocode:
+    icon: mdi:human-female
+  device_tracker.google_maps_111604514484536138497:
     icon: mdi:human-female
 
 # Lights
