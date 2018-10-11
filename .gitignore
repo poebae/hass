@@ -26,8 +26,8 @@ fcm_android_registrations
 fitbit.conf
 .cloud/
 .HA_VERSION
-.google_maps_location_sharing_cookies
-.storeage/
+.google*
+.storage/
 *.json
 
 # Temporary files
