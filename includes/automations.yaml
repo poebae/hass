@@ -417,9 +417,6 @@
     - condition: state
       entity_id: light.living_room
       state: 'off'
-    - condition: state
-      entity_id: binary_sensor.door_bedroom
-      state: 'on'
     - condition: or
       conditions:
       - condition: state
@@ -1134,6 +1131,8 @@
 # Google Next Train
 - alias: 'Next Train - Google'
   id: 'google_next_train'
+  initial_state: 'on'
+  hide_entity: true
   trigger:
     - platform: state
       entity_id: input_boolean.next_train

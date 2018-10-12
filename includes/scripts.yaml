@@ -36,7 +36,7 @@ speak_next_train:
     service: tts.google_say
     entity_id:
       - media_player.molly_mini
-      - media_player.molly_home
+      - media_player.molly_mini
     data_template:
       message: >-
         The next train is in {{ states.sensor.next_train_to_central.state }} minutes
