@@ -237,7 +237,7 @@
     condition: and
     conditions:
       - condition: time
-        after: "16:00:00"
+        after: "16:30:00"
         before: "23:00:00"
       - condition: or
         conditions:
@@ -271,7 +271,7 @@
     conditions:
     - condition: time
       after: "23:00:00"
-      before: "06:30:00"
+      before: "07:00:00"
     - condition: state
       entity_id: light.kitchen
       state: 'off'
@@ -321,7 +321,7 @@
     condition: and
     conditions:
     - condition: time
-      after: "18:00:00"
+      after: "16:30:00"
       before: "23:00:00"
     - condition: state
       entity_id: light.living_room
@@ -988,14 +988,9 @@
     - condition: numeric_state
       entity_id: 'sensor.temperature'
       below: '20'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: binary_sensor.bora_bayesian
-        state: 'on'
-      - condition: state
-        entity_id: binary_sensor.graham_bayesian
-        state: 'on'
+    - condition: state
+      entity_id: binary_sensor.bora_bayesian
+      state: 'on'
   action:
     - service: switch.turn_on
       entity_id: switch.plug_bedroomheater_switch
