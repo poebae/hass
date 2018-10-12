@@ -17,7 +17,8 @@ receiver_android:
         data:
           tag: 1
           dismiss: true
-#send cam
+
+# Send cam picture notification
 living_cam:
   alias: "Living Room cam - Android notification"
   sequence:
@@ -28,7 +29,19 @@ living_cam:
         data:
           image: "http://192.168.1.50/cgi-bin/currentpic.cgi"
 
+# Google - Next Train
+speak_next_train:
+  alias: 'Ask Google when the next train is'
+  sequence:
+    service: tts.google_say
+    entity_id:
+      - media_player.molly_mini
+      - media_player.molly_home
+    data_template:
+      message: >-
+        The next train is in {{ states.sensor.next_train_to_central.state }} minutes
 
+# Broadlink TV
 tv_power:
   alias: TV Power
   sequence:
@@ -37,6 +50,7 @@ tv_power:
         packet:
           - "JgAyAW49DQ8OKw0QDRANDw4PDRANDw4PDQ8ODw0QDQ8OLAsRDg8NDw0QDBENDw4PDRAMEA0tDBANEAwQDRAMEQwQDRANEA0sDBEMLQwtDC0NLQwQDRAMLQwRDC0MLQ0tDC0MEA0tDAAJnG88DBANLQwQDRAMEQwQDRAMEA0QDBEMEA0QDBEMLQwQDRAMEQwQDRAMEQwQDRAMEQwtDBANEAwRDBANEAwRDBANEAwtDBEMLQwtDC4MLQwRDBAMLQ0QDC0NLQwtDC0MEQwtDAAJnG87DREMLQwRDBANEAwQDRAMEQwQDRAMEQwQDRAMLQwRDBANEAwRDBANEAwRDBANEAwtDBEMEA0QDBEMEA0QDBEMEA0sDRAMLQ0tDC0MLQ0QDBANLQwQDS0MLQwtDC0NEAwtDQANBQAAAAAAAA=="
 
+# Broadlink Receiver
 receiver_power:
   alias: Receiver Power
   sequence:
@@ -133,6 +147,7 @@ receiver_volume_up:
         packet:
           - "JgBIAAABKJMTExI3ExMROBM3EjgSOBITEjcTExE4ExISExITExISOBITEjcTExE4EzcSExMSEhMSOBISEzgSEhMSEzcSOBI4EgANBQ=="
 
+# Broadlink Fan
 fan_power:
   alias: Fan Power
   sequence:

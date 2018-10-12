@@ -3,3 +3,7 @@ pixel_bluetooth_occupancy:
 
 s8_bluetooth_occupancy:
   name: Bora S8 Bluetooth Occupancy
+
+next_train:
+  name: Next train - Google
+  initial: off

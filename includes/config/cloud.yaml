@@ -4,6 +4,12 @@
         - switch.plug_kettle_switch
         - switch.plug_bedroomheater_switch
         - switch.plug_studyheater_switch
+        - input_boolean.next_train
+        - switch.yamaha_audio
+        - switch.fan_power
+        - switch.av_volume_down
+        - switch.av_volume_up
+        - switch.av_video
 
       exclude_domains:
         - automation
@@ -13,6 +19,8 @@
         - group
         - scene
         - light
+        - script
+        - switch
 
     entity_config:
       switch.plug_kettle_switch:

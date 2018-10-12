@@ -1131,3 +1131,18 @@
       data:
         entity_id: input_boolean.pixel_bluetooth_occupancy
 
+# Google Next Train
+- alias: 'Next Train - Google'
+  id: 'google_next_train'
+  trigger:
+    - platform: state
+      entity_id: input_boolean.next_train
+      from: 'off'
+      to: 'on'
+  action:
+    - delay:
+        seconds: 2
+    - service: script.turn_on
+      entity_id: script.speak_next_train
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.next_train
