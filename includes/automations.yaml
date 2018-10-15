@@ -106,8 +106,8 @@
   action:
     - service: light.turn_off
       entity_id: group.all_lights
-      - service: switch.turn_off
-        entity_id: switch.plug_bedroomheater_switch
+    - service: switch.turn_off
+      entity_id: switch.plug_bedroomheater_switch
     - service: switch.turn_off
       entity_id: switch.plug_studyheater_switch
 
