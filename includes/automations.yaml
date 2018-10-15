@@ -106,8 +106,8 @@
   action:
     - service: light.turn_off
       entity_id: group.all_lights
-    - service: switch.turn_off
-      entity_id: switch.plug_bedroomheater_switch
+      - service: switch.turn_off
+        entity_id: switch.plug_bedroomheater_switch
     - service: switch.turn_off
       entity_id: switch.plug_studyheater_switch
 
@@ -141,9 +141,12 @@
     entity_id: binary_sensor.bora_bayesian
     to: 'off'
   condition:
-    condition: state
-    entity_id: binary_sensor.door_bedroom
-    state: 'off'
+    - condition: state
+      entity_id: binary_sensor.door_bedroom
+      state: 'off'
+    - condition: state
+      entity_id: switch.plug_bedroomheater_switch
+      state: 'on'
   action:
     service: switch.turn_off
     entity_id: switch.plug_bedroomheater_switch
