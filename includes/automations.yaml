@@ -1148,3 +1148,12 @@
       entity_id: script.speak_next_train
     - service: input_boolean.turn_off
       entity_id: input_boolean.next_train
+
+# Restart HA at 5:30am daily (it stops working overnight every now and then)
+- alias: 'Daily HA restart'
+  id: 'daily_ha_restart'
+  trigger: 
+    platform: time
+    at: "05:30:00"  
+  action:
+    service: homeassistant.restart

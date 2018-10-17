@@ -39,7 +39,7 @@
     name: 'Bora Bayesian'
     device_class: 'presence'
     unit_of_measurement: '%'
-    probability_threshold: 0.85
+    probability_threshold: 0.79
     observations:
       - entity_id: 'input_boolean.s8_bluetooth_occupancy'
         prob_given_true: 0.99
