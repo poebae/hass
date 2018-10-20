@@ -61,10 +61,10 @@
     host: 192.168.1.85
     name: graham_pixel_ping
     device_class: connectivity
-    scan_interval: 30
+    scan_interval: 60
 
   - platform: ping
     host: 192.168.1.86
     name: bora_s8_ping
     device_class: connectivity
-    scan_interval: 30
+    scan_interval: 60

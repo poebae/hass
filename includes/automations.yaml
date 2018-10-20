@@ -302,6 +302,8 @@
     entity_id: binary_sensor.motion_kitchen
     from: 'on'
     to: 'off'
+    for:
+      minutes: 2
   condition:
       condition: state
       entity_id: light.kitchen
