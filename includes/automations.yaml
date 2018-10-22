@@ -179,6 +179,30 @@
     service: light.turn_on
     entity_id: light.study
 
+# Light on: study (someone comes home, motion already detected)
+- alias: Light on - study (motion detected)
+  id: 'study_motion_already'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+      platform: state
+      entity_id:
+      - binary_sensor.graham_bayesian
+      - binary_sensor.bora_bayesian
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.study
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.motion_study_occupancy
+        state: 'on'
+  action:
+    service: light.turn_on
+    entity_id: light.study
+
 # Light off: study (no motion)
 - alias: Light off - study (no motion)
   id: 'study_nomotion'
@@ -258,6 +282,30 @@
       data_template:
         group_name: "Kitchen"
         scene_name: "KitchenBright"
+
+# Light on: kitchen (someone comes home, motion already detected)
+- alias: Light on - kitchen (someone comes home, motion already detected)
+  id: 'kitchen_motion_already'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+      platform: state
+      entity_id:
+      - binary_sensor.graham_bayesian
+      - binary_sensor.bora_bayesian
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.study
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.motion_kitchen
+        state: 'on'
+  action:
+    service: light.turn_on
+    entity_id: light.kitchen
 
 # Light on: kitchen night light
 - alias: Light on - kitchen night light
@@ -765,7 +813,7 @@
 - alias: 'Bedroom button: long press boil kettle'
   id: 'bedroom_button_long_press_boil_kettle'
   hide_entity: True
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
     platform: mqtt
     topic: 'zigbee2mqtt/button_bedroom'
