@@ -75,7 +75,7 @@
         entity_id: light.living_room
         state: 'off'
       - condition: time
-        after: "16:00:00"
+        after: "17:00:00"
         before: "07:00:00"
   action:
     service: hue.hue_activate_scene
@@ -264,7 +264,7 @@
     condition: and
     conditions:
       - condition: time
-        after: "16:30:00"
+        after: "17:00:00"
         before: "23:00:00"
       - condition: or
         conditions:
@@ -374,7 +374,7 @@
     condition: and
     conditions:
     - condition: time
-      after: "16:30:00"
+      after: "17:00:00"
       before: "23:00:00"
     - condition: state
       entity_id: light.living_room
@@ -498,6 +498,12 @@
     - condition: time
       after: "23:00:00"
       before: "06:00:00"
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
     - condition: or
       conditions:
       - condition: state
@@ -1030,7 +1036,7 @@
 - alias: "Turn on heater and kettle at 9pm if temperature is below 20"
   id: 'heater_kettle_on_9pm_temperature_below_20'
   hide_entity: True
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
     platform: time
     at: '21:00:00'
@@ -1199,11 +1205,11 @@
     - service: input_boolean.turn_off
       entity_id: input_boolean.next_train
 
-# Restart HA at 5:30am daily (it stops working overnight every now and then)
-- alias: 'Daily HA restart'
-  id: 'daily_ha_restart'
-  trigger: 
-    platform: time
-    at: "05:30:00"  
-  action:
-    service: homeassistant.restart
+# # Restart HA at 5:30am daily (it stops working overnight every now and then)
+# - alias: 'Daily HA restart'
+#   id: 'daily_ha_restart'
+#   trigger: 
+#     platform: time
+#     at: "05:30:00"  
+#   action:
+#     service: homeassistant.restart
