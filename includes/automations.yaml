@@ -18,6 +18,13 @@
     - condition: state
       entity_id: 'binary_sensor.workday_sensor'
       state: 'on'
+    - condition: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
   action:
     - service: light.turn_on
       entity_id: light.bedroom
@@ -924,19 +931,72 @@
     service: light.turn_off
     entity_id: light.kitchen
 
-- alias: 'Study switch: light toggle'
-  id: 'study_switch_light_toggle'
+- alias: 'Study switch: light on'
+  id: 'study_switch_light_on'
   hide_entity: True
   initial_state: 'on'
   trigger:
     platform: mqtt
     topic: 'zigbee2mqtt/wall_study'
   condition:
-    condition: template
-    value_template: "{{ 'single' == trigger.payload_json.click }}"
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.study
+        state: 'off'
   action:
-    service: light.toggle
+    service: light.turn_on
     entity_id: light.study
+
+- alias: 'Study switch: light off (night)'
+  id: 'study_switch_light_off_night'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_study'
+  condition:
+    condition: and
+    conditions:
+      - condition: time
+        after: "23:00:00"
+        before: "07:00:00"
+      - condition: state
+        entity_id: light.study
+        state: 'on'
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+  action:
+    - service: light.turn_off
+      entity_id: light.study
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: "Living Room"
+        scene_name: "LivingDim"
+
+- alias: 'Study switch: light off (daytime)'
+  id: 'study_switch_light_off_daytime'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_study'
+  condition:
+    condition: and
+    conditions:
+      - condition: time
+        after: "07:00:00"
+        before: "23:00:00"
+      - condition: state
+        entity_id: light.study
+        state: 'on'
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+  action:
+    - service: light.turn_off
+      entity_id: light.study
 
 - alias: 'Left switch: living room on'
   id: 'left_switch_living_room_on'

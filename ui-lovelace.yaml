@@ -531,6 +531,13 @@ views:
               - automation.warning__door_open_while_nobody_home
               - automation.warning__left_the_house_with_the_door_open
               - automation.bedroom_button_long_press_boil_kettle
+              - automation.birdie_arrives_at_work
+              - automation.birdie_arrives_at_work
+              - automation.light_off__kitchen_no_motion
+              - automation.light_off__livingdining_room__no_motion_birdie_asleep
+              - automation.light_off__study_no_motion
+              - automation.light_on__bedroom_sunrise
+              - automation.light_on__living_room_night_light
 
           - type: entities
             title: Speed Test

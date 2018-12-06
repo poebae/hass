@@ -24,7 +24,7 @@
         platform: 'state'
         to_state: 'home'
       - entity_id: 'binary_sensor.motion_study_occupancy'
-        prob_given_true: 0.30
+        prob_given_true: 0.40
         prob_given_false: 0.20
         platform: 'state'
         to_state: 'on'
