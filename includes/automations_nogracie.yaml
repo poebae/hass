@@ -172,7 +172,7 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: light.dining_room
+        entity_id: light.study
         state: 'off'
       - condition: or
         conditions:
@@ -184,7 +184,7 @@
           state: 'on'
   action:
     service: light.turn_on
-    entity_id: light.dining_room
+    entity_id: light.study
 
 # Light on: study (someone comes home, motion already detected)
 - alias: Light on - study (motion detected)
@@ -201,14 +201,14 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: light.dining_room
+        entity_id: light.study
         state: 'off'
       - condition: state
         entity_id: binary_sensor.motion_study_occupancy
         state: 'on'
   action:
     service: light.turn_on
-    entity_id: light.dining_room
+    entity_id: light.study
 
 # Light off: study (no motion)
 - alias: Light off - study (no motion)
@@ -226,14 +226,14 @@
     condition: and
     conditions:
     - condition: state
-      entity_id: light.dining_room
+      entity_id: light.study
       state: 'on'
     - condition: state
       entity_id: sensor.ingame
       state: 'no'
   action:
     - service: light.turn_off
-      entity_id: light.dining_room
+      entity_id: light.study
     - service: switch.turn_off
       entity_id: switch.plug_158d00024d8cc9
 
@@ -305,7 +305,7 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: light.dining_room
+        entity_id: light.study
         state: 'off'
       - condition: state
         entity_id: binary_sensor.motion_kitchen
@@ -418,9 +418,14 @@
       - condition: state
         entity_id: light.living_room
         state: 'on'
+      - condition: state
+        entity_id: light.dining_room
+        state: 'on'
   action:
     - service: light.turn_off
       entity_id: light.living_room
+    - service: light.turn_off
+      entity_id: light.dining_room
 
 # Light off: living/dining room - no motion (birdie asleep)
 - alias: Light off - living/dining room - no motion (birdie asleep)
@@ -444,9 +449,14 @@
       - condition: state
         entity_id: light.living_room
         state: 'on'
+      - condition: state
+        entity_id: light.dining_room
+        state: 'on'
   action:
     - service: light.turn_off
       entity_id: light.living_room
+    - service: light.turn_off
+      entity_id: light.dining_room
 
 # Light on: living room night light
 - alias: Light on - living room night light
@@ -506,9 +516,14 @@
       - condition: state
         entity_id: light.living_room
         state: 'on'
+      - condition: state
+        entity_id: light.dining_room
+        state: 'on'
   action:
     - service: light.turn_off
       entity_id: light.living_room
+    - service: light.turn_off
+      entity_id: light.dining_room
 
 # Warning
 - alias: Warning - left the house with the door open
@@ -582,7 +597,7 @@
       entity_id: binary_sensor.graham_bayesian
       state: 'on'
   action:
-    entity_id: light.dining_room, light.living_room
+    entity_id: light.study, light.living_room
     service: light.turn_on
     data:
       flash: short
@@ -611,7 +626,7 @@
       state: 'on'
   action:
     service: light.turn_on
-    entity_id: light.dining_room, light.living_room
+    entity_id: light.study, light.living_room
     data:
       flash: short
 
@@ -639,7 +654,7 @@
       state: 'on'
   action:
     - service: light.turn_on
-      entity_id: light.dining_room, light.living_room
+      entity_id: light.study, light.living_room
       data:
         flash: short
     - service: hue.hue_activate_scene
@@ -669,7 +684,7 @@
     state: 'on'
   action:
     - service: light.turn_on
-      entity_id: light.dining_room, light.living_room
+      entity_id: light.study, light.living_room
       data:
         flash: short
     - service: hue.hue_activate_scene
@@ -688,8 +703,8 @@
 # XIAOMI #
 ##########
 
-- alias: 'Door open: bedroom light on (daytime)'
-  id: 'door_open_bedroom_light_on_daytime'
+- alias: 'Door open: bedroom light on'
+  id: 'door_open_bedroom_light_on'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -697,34 +712,13 @@
     entity_id: binary_sensor.door_bedroom
     from: 'off'
     to: 'on'
-  condition:
-    condition: time
-    after: "06:00:00"
-    before: "23:00:00"
   action:
+    - service: light.turn_on
+      entity_id: light.bedroom
     - service: hue.hue_activate_scene
       data_template:
         group_name: "Bedroom"
         scene_name: "BedroomBright"
-
-- alias: 'Door open: bedroom light on (night)'
-  id: 'door_open_bedroom_light_on_night'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: state
-    entity_id: binary_sensor.door_bedroom
-    from: 'off'
-    to: 'on'
-  condition:
-    condition: time
-    after: "23:00:00"
-    before: "06:00:00"
-  action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Bedroom"
-        scene_name: "BedroomDim"
 
 - alias: 'Door closed: bedroom light off'
   id: 'door_closed_bedroom_light_off'
@@ -740,68 +734,6 @@
       entity_id: light.bedroom
     - service: light.turn_off
       entity_id: light.bedroom
-
-# Light on: kitchen (someone comes home, motion already detected)
-- alias: Light on - kitchen (someone comes home, motion already detected)
-  id: 'kitchen_motion_already'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-      platform: state
-      entity_id:
-      - binary_sensor.graham_bayesian
-      - binary_sensor.bora_bayesian
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: light.dining_room
-        state: 'off'
-      - condition: state
-        entity_id: binary_sensor.motion_kitchen
-        state: 'on'
-  action:
-    service: light.turn_on
-    entity_id: light.kitchen
-
-# Light on: kitchen night light
-- alias: Light on - kitchen night light
-  id: 'kitchen_nightlight_on'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: state
-    entity_id: binary_sensor.motion_kitchen
-    from: 'off'
-    to: 'on'
-  condition:
-    condition: and
-    conditions:
-    - condition: time
-      after: "23:00:00"
-      before: "07:00:00"
-    - condition: state
-      entity_id: light.kitchen
-      state: 'off'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: binary_sensor.bora_bayesian
-        state: 'on'
-      - condition: state
-        entity_id: binary_sensor.graham_bayesian
-        state: 'on'
-  action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Kitchen"
-        scene_name: "KitchenDim"
-
-
-
-
-
 
 - alias: 'Bedroom button: light on'
   id: 'bedroom_button_light_on'

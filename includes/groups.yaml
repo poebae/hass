@@ -54,6 +54,13 @@
     entities:
      - light.molly_dining_room_1
      - light.molly_dining_room_2
+     - light.dining_room_yeelight
+
+  study_light:
+    name: Dining Room Light
+    entities:
+     - light.molly_study
+     - light.study_yeelight
 
 # Family
   family:
