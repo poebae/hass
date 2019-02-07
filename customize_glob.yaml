@@ -6,6 +6,12 @@ input_boolean.*:
    icon_color: >
      if (state === 'on') return 'rgb(251, 210, 41)'; return 'rgb(54, 95, 140)';
 
-light.study:
+light.*:
  templates:
-   icon_color: rgb(251, 210, 41)
+   icon_color: >
+     if (state === 'on') return 'rgb(251, 210, 41)'; return 'rgb(54, 95, 140)';
+
+group.*:
+ templates:
+   icon_color: >
+     if (state === 'on') return 'rgb(251, 210, 41)'; return 'rgb(54, 95, 140)';

@@ -34,18 +34,49 @@
   limit_refetch_to_url_change: true
   api_key: !secret places_api
 
-# Temperature
-- platform: template
-  sensors:
-    temperature:
-      value_template: "{{ states.weather.yweather.attributes.temperature }}"
+# Weather
+- platform: darksky
+  api_key: !secret darksky_key
+  language: it
+  forecast:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+  monitored_conditions:
+    - icon
+    - summary
+    - nearest_storm_distance
+    - nearest_storm_bearing
+    - humidity
+    - temperature
+    - temperature_high
+    - temperature_low
+    - apparent_temperature
+    - apparent_temperature_high
+    - apparent_temperature_low
+    - wind_speed
+    - wind_bearing
+    - precip_type
+    - precip_probability
+    - precip_accumulation
+    - precip_intensity
+    - precip_intensity_max
+    - uv_index
+    - daily_summary
+    - pressure
+    - visibility
+  update_interval:
+    minutes: 5
 
 # Transit
 - platform: google_travel_time
-  name: Drive to College
+  name: Drive to ATA
   api_key: !secret google_api
   origin: zone.home
-  destination: Christ College Burwood
+  destination: 1 Fitzwilliam St, Parramatta
   options:
     mode: driving
 
@@ -55,17 +86,17 @@
   apikey: !secret 'transportnswkey'
 
 # System Monitor
-- platform: systemmonitor
-  resources:
-  - type: disk_use_percent
-    arg: /
-  - type: memory_free
-  - type: processor_use
-  - type: network_in
-    arg: wlp8s0
-  - type: network_out
-    arg: wlp8s0
-  - type: last_boot
+# - platform: systemmonitor
+#   resources:
+#   - type: disk_use_percent
+#     arg: /
+#   - type: memory_free
+#   - type: processor_use
+#   - type: network_in
+#     arg: wlp8s0
+#   - type: network_out
+#     arg: wlp8s0
+#   - type: last_boot
 
 # Steam
 - platform: steam_online

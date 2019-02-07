@@ -24,43 +24,19 @@
   bora: binary_sensor.bora_bayesian
 
 #########
-# HOME #
+# LIGHTS #
 ########
-
-# Lights
-  lights:
-    name: Lights
-    entities:
-      - light.bedroom
-      - light.living_room
-      - light.dining_room
-      - light.kitchen
-      - light.study
-
-  bedroom_light:
+  bedroom:
     name: Bedroom Light
     entities:
      - light.molly_bedroom_1
      - light.molly_bedroom_2
 
-  living_room_light:
+  living_room:
     name: Living Room Light
     entities:
      - light.molly_living_room_1
      - light.molly_living_room_2
-
-  dining_room_light:
-    name: Dining Room Light
-    entities:
-     - light.molly_dining_room_1
-     - light.molly_dining_room_2
-     - light.dining_room_yeelight
-
-  study_light:
-    name: Dining Room Light
-    entities:
-     - light.molly_study
-     - light.study_yeelight
 
 # Family
   family:
@@ -119,15 +95,15 @@
       - input_select.hass_template
 
 # System Monitor
-  system_monitor:
-    name: System Monitor
-    entities:
-      - sensor.disk_use_percent_
-      - sensor.memory_free
-      - sensor.processor_use
-      - sensor.network_in_wlp8s0
-      - sensor.network_out_wlp8s0
-      - sensor.last_boot
+  # system_monitor:
+  #   name: System Monitor
+  #   entities:
+  #     - sensor.disk_use_percent_
+  #     - sensor.memory_free
+  #     - sensor.processor_use
+  #     - sensor.network_in_wlp8s0
+  #     - sensor.network_out_wlp8s0
+  #     - sensor.last_boot
 
 # Pi-Hole
   # pihole:

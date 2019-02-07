@@ -22,9 +22,6 @@ http:
   # whitelist_external_dirs:
     # - '/home/graham/homeassistant'
 
-lovelace:
-  mode: yaml
-
 light:
   - platform: yeelight
     devices:
@@ -32,6 +29,18 @@ light:
         name: Dining Room Yeelight
       192.168.1.5:
         name: Study Yeelight
+
+  - platform: group
+    name: Dining Room
+    entities:
+      - light.molly_dining_room_2
+      - light.dining_room_yeelight
+
+  - platform: group
+    name: Study
+    entities:
+      - light.molly_study
+      - light.study_yeelight
 
 # Floor plan
 panel_custom:

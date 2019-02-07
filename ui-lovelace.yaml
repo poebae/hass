@@ -5,8 +5,8 @@ resources:
     type: js
   - url: /local/my-webfont.css
     type: css
-  - url: /local/custom_ui/weather-card.js
-    type: js
+  - url: /local/custom_ui/dark-sky-weather-card.js?v=7.1
+    type: module
   - url: /local/monster-card.js?v=0
     type: js
 
@@ -21,7 +21,7 @@ views:
     id: home
     icon: mdi:home-assistant
     cards:
-   
+
 ##########
 # FAMILY #
 ##########
@@ -55,24 +55,24 @@ views:
                   transform: none
                   color: white
 
-          - type: picture-elements
+          - type: picture
             image: /local/lovelace/home/molly.jpg
-            elements:
-              - type: state-label
-                entity: variable.molly_location
-                style:
-                  top: 87%
-                  left: 2%
-                  transform: none
-                  color: white
-              - type: state-label
-                entity: variable.molly_weight
-                style:
-                  top: 87%
-                  left: 67%
-                  transform: none
-                  color: white
-            
+            # elements:
+            #   - type: state-label
+            #     entity: variable.molly_location
+            #     style:
+            #       top: 87%
+            #       left: 2%
+            #       transform: none
+            #       color: white
+            #   - type: state-label
+            #     entity: variable.molly_weight
+            #     style:
+            #       top: 87%
+            #       left: 67%
+            #       transform: none
+            #       color: white
+
           - type: picture-elements
             image: /local/lovelace/home/bora.jpg
             elements:
@@ -106,10 +106,47 @@ views:
 
       - type: vertical-stack
         cards:
-          - type: "custom:weather-card"
-            title: Weather
-            entity_weather: weather.yweather
+          - type: custom:dark-sky-weather-card
             entity_sun: sun.sun
+            entity_daily_summary: sensor.dark_sky_daily_summary
+            entity_current_conditions: sensor.dark_sky_icon
+            entity_humidity: sensor.dark_sky_humidity
+            entity_pressure: sensor.dark_sky_pressure
+            entity_temperature: sensor.dark_sky_temperature
+            entity_visibility: sensor.dark_sky_visibility
+            entity_wind_bearing: sensor.dark_sky_wind_bearing
+            entity_wind_speed: sensor.dark_sky_wind_speed
+            entity_forecast_high_temp_1: sensor.dark_sky_daytime_high_temperature_1
+            entity_forecast_high_temp_2: sensor.dark_sky_daytime_high_temperature_2
+            entity_forecast_high_temp_3: sensor.dark_sky_daytime_high_temperature_3
+            entity_forecast_high_temp_4: sensor.dark_sky_daytime_high_temperature_4
+            entity_forecast_high_temp_5: sensor.dark_sky_daytime_high_temperature_5
+            entity_forecast_low_temp_1: sensor.dark_sky_overnight_low_temperature_0
+            entity_forecast_low_temp_2: sensor.dark_sky_overnight_low_temperature_1
+            entity_forecast_low_temp_3: sensor.dark_sky_overnight_low_temperature_2
+            entity_forecast_low_temp_4: sensor.dark_sky_overnight_low_temperature_3
+            entity_forecast_low_temp_5: sensor.dark_sky_overnight_low_temperature_4
+            entity_forecast_icon_1: sensor.dark_sky_icon_1
+            entity_forecast_icon_2: sensor.dark_sky_icon_2
+            entity_forecast_icon_3: sensor.dark_sky_icon_3
+            entity_forecast_icon_4: sensor.dark_sky_icon_4
+            entity_forecast_icon_5: sensor.dark_sky_icon_5
+            entity_summary_1: sensor.dark_sky_summary_1
+            entity_summary_2: sensor.dark_sky_summary_2
+            entity_summary_3: sensor.dark_sky_summary_3
+            entity_summary_4: sensor.dark_sky_summary_4
+            entity_summary_5: sensor.dark_sky_summary_5
+            locale: it
+            static_icons: false
+            sunset: true
+            tooltips: true
+            tooltip_bg_color: 'rgb( 75,155,239)'
+            tooltip_border_color: orange
+            tooltip_border_width: 3
+            tooltip_caret_size: 10
+            tooltip_fg_color: '#fff'
+            tooltip_left_offset: -5
+            tooltip_width: 100
 
 ##########
 # LIGHTS #
@@ -207,33 +244,33 @@ views:
                   top: 18%
                   left: 18%
                   transform: none
-                  
+
               - type: state-icon
                 entity: binary_sensor.motion_study_occupancy
                 style:
                   top: 65%
                   left: 15%
-                  
+
               - type: state-label
                 entity: binary_sensor.motion_study_occupancy
                 prefix: 'Study: '
                 style:
                   top: 79%
                   left: 15%
-                  
+
               - type: state-icon
                 entity: binary_sensor.motion_living
                 style:
                   top: 65%
                   left: 50%
-                  
+
               - type: state-label
                 entity: binary_sensor.motion_living
                 prefix: 'Living: '
                 style:
                   top: 79%
                   left: 50%
-                  
+
               - type: state-icon
                 entity: binary_sensor.motion_kitchen
                 style:
@@ -262,7 +299,7 @@ views:
                   top: 12%
                   left: 10%
                   transform: none
-                  
+
               - type: state-label
                 entity: sensor.weight
                 prefix: 'Weight: '
@@ -270,14 +307,14 @@ views:
                   top: 13%
                   left: 17%
                   transform: none
-                  
+
               - type: state-icon
                 entity: sensor.bmi
                 style:
                   top: 32%
                   left: 10%
                   transform: none
-                  
+
               - type: state-label
                 entity: sensor.bmi
                 prefix: 'BMI: '
@@ -292,7 +329,7 @@ views:
                   top: 52%
                   left: 10%
                   transform: none
-                  
+
               - type: state-label
                 entity: sensor.body_fat
                 prefix: 'Body Fat: '
@@ -300,14 +337,14 @@ views:
                   top: 53%
                   left: 17%
                   transform: none
-                  
+
               - type: state-icon
                 entity: sensor.charge_2_battery
                 style:
                   top: 72%
                   left: 10%
                   transform: none
-                  
+
               - type: state-label
                 entity: sensor.charge_2_battery
                 prefix: 'Fitbit Battery: '
@@ -329,22 +366,22 @@ views:
                   top: 7%
                   left: 10%
                   transform: none
-                  
-              - type: state-label
-                entity: sensor.drive_to_college
-                prefix: 'Drive to College: '
-                style:
-                  top: 9%
-                  left: 18%
-                  transform: none
-                  
+
+              # - type: state-label
+              #   entity: sensor.drive_to_college
+              #   prefix: 'Drive to College: '
+              #   style:
+              #     top: 9%
+              #     left: 18%
+              #     transform: none
+
               - type: state-icon
                 entity: sensor.next_train_to_central
                 style:
                   top: 29%
                   left: 10%
                   transform: none
-                  
+
               - type: state-label
                 entity: sensor.next_train_to_central
                 prefix: 'Next train to Central: '
@@ -359,7 +396,7 @@ views:
                   top: 51%
                   left: 10%
                   transform: none
-                  
+
               - type: state-label
                 entity: sensor.graham_geocode
                 prefix: 'Graham: '
@@ -367,14 +404,14 @@ views:
                   top: 52%
                   left: 18%
                   transform: none
-                  
+
               - type: state-icon
                 entity: sensor.bora_geocode
                 style:
                   top: 74%
                   left: 10%
                   transform: none
-                  
+
               - type: state-label
                 entity: sensor.bora_geocode
                 prefix: 'Bora: '
@@ -525,17 +562,20 @@ views:
           - type: entities
             title: Automations
             entities:
-              - automation.light_off__study_no_motion
-              - automation.light_off__livingdining_room_no_motion
-              - automation.light_off__living_room_night_light_no_motion
-              - automation.warning__door_open_while_nobody_home
-              - automation.warning__left_the_house_with_the_door_open
+              - automation.light_off_study_no_motion
+              - automation.light_off_living_dining_room_no_motion
+              - automation.light_off_living_room_night_light_no_motion
+              - automation.light_off_kitchen_no_motion
+              - automation.light_off_living_dining_room_no_motion_birdie_asleep
+              - automation.warning_door_open_while_nobody_home
+              - automation.warning_left_the_house_with_the_door_open
               - automation.bedroom_button_long_press_boil_kettle
               - automation.birdie_arrives_at_work
-              - automation.light_off__kitchen_no_motion
-              - automation.light_off__livingdining_room__no_motion_birdie_asleep
-              - automation.light_on__bedroom_sunrise
-              - automation.light_on__living_room_night_light
+              - automation.light_on_living_room_night_light
+              - automation.light_on_living_room_evening
+              - automation.light_on_living_room_motion_detected
+              - automation.light_on_living_room_night_light
+              - automation.light_on_bedroom_sunrise
 
           - type: entities
             title: Speed Test
@@ -546,15 +586,15 @@ views:
 
       - type: vertical-stack
         cards:
-          - type: entities
-            title: System Monitor
-            entities:
-              - sensor.disk_use_percent_
-              - sensor.memory_free
-              - sensor.processor_use
-              - sensor.network_in_wlp8s0
-              - sensor.network_out_wlp8s0
-              - sensor.last_boot
+      #     - type: entities
+      #       title: System Monitor
+      #       entities:
+      #         - sensor.disk_use_percent
+      #         - sensor.memory_free
+      #         - sensor.processor_use
+      #         - sensor.network_in_wlp8s0
+      #         - sensor.network_out_wlp8s0
+      #         - sensor.last_boot
 
           - type: entities
             title: Battery Levels
@@ -571,17 +611,17 @@ views:
 
       - type: vertical-stack
         cards:
-          - type: entities
-            title: Pi-Hole
-            entities:
-              - sensor.pihole_ads_blocked_today
-              - sensor.pihole_ads_percentage_blocked_today
-              - sensor.pihole_dns_queries_cached
-              - sensor.pihole_dns_queries_forwarded
-              - sensor.pihole_dns_queries_today
-              - sensor.pihole_dns_unique_clients
-              - sensor.pihole_dns_unique_domains
-              - sensor.pihole_domains_blocked
+          # - type: entities
+          #   title: Pi-Hole
+          #   entities:
+          #     - sensor.pihole_ads_blocked_today
+          #     - sensor.pihole_ads_percentage_blocked_today
+          #     - sensor.pihole_dns_queries_cached
+          #     - sensor.pihole_dns_queries_forwarded
+          #     - sensor.pihole_dns_queries_today
+          #     - sensor.pihole_dns_unique_clients
+          #     - sensor.pihole_dns_unique_domains
+          #     - sensor.pihole_domains_blocked
 
           - type: entities
             title: Bayesian Sensor Considerations

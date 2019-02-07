@@ -25,12 +25,15 @@
     icon: mdi:hotel
   light.living_room:
     icon: mdi:sofa
+    friendly_name: Living
   light.dining_room:
     icon: mdi:silverware
+    friendly_name: Dining
   light.kitchen:
     icon: mdi:pot-mix
   light.study:
     icon: mdi:desktop-classic
+    friendly_name: Study
 
 # Sensors
   sensor.bedroomdoor_state:
@@ -41,21 +44,31 @@
     device_class: motion
   sensor.kitchenmotion_state:
     device_class: motion
+  binary_sensor.motion_living:
+    device_class: motion
+  binary_sensor.motion_study_occupancy:
+    device_class: motion
+  binary_sensor.motion_kitchen:
+    device_class: motion
+  binary_sensor.graham_bayesian:
+    device_class: presence
+  binary_sensor.bora_bayesian:
+    device_class: presence
 
 # System Monitor
-  sensor.disk_use_percent_:
-    friendly_name: Disk use
+#  sensor.disk_use_percent_:
+#    friendly_name: Disk use
 
 # Automations
-  automation.light_off__study_no_motion:
+  automation.light_off_study_no_motion:
     icon: mdi:account-remove
-  automation.light_off__livingdining_room_no_motion:
+  automation.light_off_livingdining_room_no_motion:
     icon: mdi:account-remove
-  automation.light_off__living_room_night_light_no_motion:
+  automation.light_off_living_room_night_light_no_motion:
     icon: mdi:account-remove
-  automation.warning__door_open_while_nobody_home:
+  automation.warning_door_open_while_nobody_home:
     icon: mdi:door
-  automation.warning__left_the_house_with_the_door_open:
+  automation.warning_left_the_house_with_the_door_open:
     icon: mdi:door
   automation.bedroom_button_long_press_boil_kettle:
     icon: mdi:kettle
@@ -66,21 +79,21 @@
 
 # Switches
   switch.plug_studyheater_switch:
-    friendly_name: Study Heater
-    icon: mdi:desktop-classic
+    friendly_name: Receiver
+    icon: mdi:speaker
 
   switch.plug_bedroomheater_switch:
     friendly_name: Bedroom Heater
     icon: mdi:hotel
 
   switch.plug_kettle_switch:
-    friendly_name: Kettle
-    icon: mdi:kettle
+    friendly_name: Bedroom Fan
+    icon: mdi:fan
 
 # Transit 
   sensor.next_train_to_central:
     icon: mdi:train
-  sensor.drive_to_college:
+  sensor.drive_to_ata:
     icon: mdi:school
 
 # Juve Calendar

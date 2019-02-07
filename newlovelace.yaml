@@ -1,0 +1,475 @@
+excluded_entities: null
+resources:
+  - type: js
+    url: /local/my-custom-card.js
+  - type: css
+    url: /local/my-webfont.css
+  - type: css
+  - type: module
+    url: /local/custom_ui/dark-sky-weather-card.js?v=7.1
+  - url: /local/monster-card.js?v=1
+    type: js
+title: Molly's House
+views:
+  - cards:
+      - cards:
+          - elements:
+              - entity: binary_sensor.graham_bayesian
+                style:
+                  color: white
+                  left: 2%
+                  top: 87%
+                  transform: none
+                type: state-label
+              - entity: sensor.graham_pixel_batt
+                style:
+                  '--iron-icon-height': 19px
+                  '--iron-icon-width': 19px
+                  color: white
+                  left: 58%
+                  top: 85%
+                  transform: none
+                type: state-icon
+              - entity: sensor.graham_pixel_batt
+                style:
+                  color: white
+                  left: 70.5%
+                  top: 87%
+                  transform: none
+                type: state-label
+            image: /local/lovelace/home/graham.jpg
+            type: picture-elements
+          - image: /local/lovelace/home/molly.jpg
+            type: picture
+          - elements:
+              - entity: binary_sensor.bora_bayesian
+                style:
+                  color: white
+                  left: 2%
+                  top: 87%
+                  transform: none
+                type: state-label
+              - entity: sensor.bora_s8_batt
+                style:
+                  '--iron-icon-height': 19px
+                  '--iron-icon-width': 19px
+                  color: white
+                  left: 58%
+                  top: 85%
+                  transform: none
+                type: state-icon
+              - entity: sensor.bora_s8_batt
+                style:
+                  color: white
+                  left: 70.5%
+                  top: 87%
+                  transform: none
+                type: state-label
+            image: /local/lovelace/home/bora.jpg
+            type: picture-elements
+        type: horizontal-stack
+      - entity_current_conditions: sensor.dark_sky_icon
+        entity_forecast_high_temp_1: sensor.dark_sky_daytime_high_temperature_1
+        entity_forecast_high_temp_2: sensor.dark_sky_daytime_high_temperature_2
+        entity_forecast_high_temp_3: sensor.dark_sky_daytime_high_temperature_3
+        entity_forecast_high_temp_4: sensor.dark_sky_daytime_high_temperature_4
+        entity_forecast_high_temp_5: sensor.dark_sky_daytime_high_temperature_5
+        entity_forecast_icon_1: sensor.dark_sky_icon_1
+        entity_forecast_icon_2: sensor.dark_sky_icon_2
+        entity_forecast_icon_3: sensor.dark_sky_icon_3
+        entity_forecast_icon_4: sensor.dark_sky_icon_4
+        entity_forecast_icon_5: sensor.dark_sky_icon_5
+        entity_forecast_low_temp_1: sensor.dark_sky_overnight_low_temperature_0
+        entity_forecast_low_temp_2: sensor.dark_sky_overnight_low_temperature_1
+        entity_forecast_low_temp_3: sensor.dark_sky_overnight_low_temperature_2
+        entity_forecast_low_temp_4: sensor.dark_sky_overnight_low_temperature_3
+        entity_forecast_low_temp_5: sensor.dark_sky_overnight_low_temperature_4
+        entity_summary_1: sensor.dark_sky_summary_1
+        entity_summary_2: sensor.dark_sky_summary_2
+        entity_summary_3: sensor.dark_sky_summary_3
+        entity_summary_4: sensor.dark_sky_summary_4
+        entity_summary_5: sensor.dark_sky_summary_5
+        entity_temperature: sensor.dark_sky_temperature
+        type: 'custom:dark-sky-weather-card'
+      - entities:
+          - entity: light.bedroom
+            name: Bedroom
+            icon: 'mdi:hotel'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - entity: light.living_room
+            name: Living
+            icon: 'mdi:sofa'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - entity: light.dining_room
+            name: Dining
+            icon: 'mdi:silverware'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - entity: light.kitchen
+            name: Kitchen
+            icon: 'mdi:pot-mix'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+          - entity: light.study
+            name: Study
+            icon: 'mdi:desktop-classic'
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+        type: glance
+        show_name: true
+        show_state: false
+      - entities:
+          - entity: switch.plug_kettle_switch
+          - entity: switch.plug_bedroomheater_switch
+          - entity: switch.plug_studyheater_switch
+        image: /local/lovelace/home/switches.jpg
+        title: Switches
+        type: picture-glance
+      - cards:
+          - elements:
+              - entity: binary_sensor.door_bedroom
+                style:
+                  left: 10%
+                  top: 15%
+                  transform: none
+                type: state-icon
+              - entity: binary_sensor.door_bedroom
+                prefix: 'Bedroom Door: '
+                style:
+                  left: 18%
+                  top: 18%
+                  transform: none
+                type: state-label
+              - entity: binary_sensor.motion_study_occupancy
+                style:
+                  left: 15%
+                  top: 65%
+                type: state-icon
+              - entity: binary_sensor.motion_study_occupancy
+                prefix: 'Study: '
+                style:
+                  left: 15%
+                  top: 79%
+                type: state-label
+              - entity: binary_sensor.motion_living
+                style:
+                  left: 50%
+                  top: 65%
+                type: state-icon
+              - entity: binary_sensor.motion_living
+                prefix: 'Living: '
+                style:
+                  left: 50%
+                  top: 79%
+                type: state-label
+              - entity: binary_sensor.motion_kitchen
+                style:
+                  left: 85%
+                  top: 65%
+                type: state-icon
+              - entity: binary_sensor.motion_kitchen
+                prefix: 'Kitchen: '
+                style:
+                  left: 85%
+                  top: 79%
+                type: state-label
+            image: /local/lovelace/home/sensors.jpg
+            type: picture-elements
+        type: vertical-stack
+      - cards:
+          - elements:
+              - entity: sensor.weight
+                style:
+                  left: 10%
+                  top: 12%
+                  transform: none
+                type: state-icon
+              - entity: sensor.weight
+                prefix: 'Weight: '
+                style:
+                  left: 17%
+                  top: 13%
+                  transform: none
+                type: state-label
+              - entity: sensor.bmi
+                style:
+                  left: 10%
+                  top: 32%
+                  transform: none
+                type: state-icon
+              - entity: sensor.bmi
+                prefix: 'BMI: '
+                style:
+                  left: 17%
+                  top: 33%
+                  transform: none
+                type: state-label
+              - entity: sensor.body_fat
+                style:
+                  left: 10%
+                  top: 52%
+                  transform: none
+                type: state-icon
+              - entity: sensor.body_fat
+                prefix: 'Body Fat: '
+                style:
+                  left: 17%
+                  top: 53%
+                  transform: none
+                type: state-label
+              - entity: sensor.charge_2_battery
+                style:
+                  left: 10%
+                  top: 72%
+                  transform: none
+                type: state-icon
+              - entity: sensor.charge_2_battery
+                prefix: 'Fitbit Battery: '
+                style:
+                  left: 17%
+                  top: 73%
+                  transform: none
+                type: state-label
+            image: /local/lovelace/home/health.jpg
+            type: picture-elements
+        type: vertical-stack
+      - cards:
+          - elements:
+              - entity: sensor.drive_to_ata
+                style:
+                  left: 10%
+                  top: 7%
+                  transform: none
+                type: state-icon
+              - entity: sensor.drive_to_ata
+                prefix: 'Drive to ATA: '
+                style:
+                  left: 18%
+                  top: 9%
+                  transform: none
+                type: state-label
+              - entity: sensor.next_train_to_central
+                style:
+                  left: 10%
+                  top: 29%
+                  transform: none
+                type: state-icon
+              - entity: sensor.next_train_to_central
+                prefix: 'Next train to Central: '
+                style:
+                  left: 18%
+                  top: 31%
+                  transform: none
+                type: state-label
+              - entity: sensor.graham_geocode
+                style:
+                  left: 10%
+                  top: 51%
+                  transform: none
+                type: state-icon
+              - entity: sensor.graham_geocode
+                prefix: 'Graham: '
+                style:
+                  left: 18%
+                  top: 52%
+                  transform: none
+                type: state-label
+              - entity: sensor.bora_geocode
+                style:
+                  left: 10%
+                  top: 74%
+                  transform: none
+                type: state-icon
+              - entity: sensor.bora_geocode
+                prefix: 'Bora: '
+                style:
+                  left: 18%
+                  top: 75%
+                  transform: none
+                type: state-label
+            image: /local/lovelace/home/transit.jpg
+            type: picture-elements
+        type: vertical-stack
+      - cards:
+          - entity: camera.living_room_snap
+            show_name: false
+            show_state: false
+            title: Living Room
+            type: picture-entity
+        type: vertical-stack
+    icon: 'mdi:home-assistant'
+    id: home
+    title: Home
+  - cards:
+      - cards:
+          - elements:
+              - entity: script.receiver_power
+                image: /local/lovelace/media/powerbutton.png
+                style:
+                  left: 10%
+                  top: 85%
+                tap_action: toggle
+                type: image
+              - entity: script.receiver_volume_down
+                image: /local/lovelace/media/volume-minus.png
+                style:
+                  left: 23%
+                  top: 85%
+                tap_action: toggle
+                type: image
+              - entity: script.receiver_volume_up
+                image: /local/lovelace/media/volume-plus.png
+                style:
+                  left: 36%
+                  top: 85%
+                tap_action: toggle
+                type: image
+              - entity: script.receiver_video
+                image: /local/lovelace/media/play.png
+                style:
+                  left: 49%
+                  top: 85%
+                tap_action: toggle
+                type: image
+            image: /local/lovelace/media/av.jpg
+            type: picture-elements
+          - elements:
+              - entity: script.tv_power
+                image: /local/lovelace/media/powerbutton.png
+                style:
+                  left: 10%
+                  top: 85%
+                tap_action: toggle
+                type: image
+            image: /local/lovelace/media/tv.jpg
+            type: picture-elements
+        type: vertical-stack
+      - cards:
+          - entity: media_player.molly_dongle
+            title: Media Players
+            type: media-control
+          - entity: media_player.molly_home
+            title: Media Players
+            type: media-control
+          - entity: media_player.molly_mini
+            title: Media Players
+            type: media-control
+        type: vertical-stack
+    icon: 'mdi:filmstrip'
+    title: media
+  - cards:
+      - cards:
+          - title: Next Match
+            type: iframe
+            url: >-
+              https://www.fctables.com/teams/juventus-187903/iframe/?type=team-next-match&lang_id=2&country=108&template=17&team=187903&timezone=Australia/Sydney&time=24&width=490&height=200&font=Helvetica&fs=14&lh=32&bg=434954&fc=FFFFFF&logo=1&tlink=0&scfs=22&scfc=FFFFFF&scb=1&sclg=1&teamls=80&sh=0&hfb=0&hbc=3bafda&hfc=FFFFFF
+          - title: Top Scorers
+            type: iframe
+            url: >-
+              https://www.fctables.com/italy/serie-a/iframe=/?type=top-scorers&lang_id=2&country=108&template=17&team=187903&timezone=Australia/Sydney&time=24&limit=10&ppo=1&pte=1&pgo=1&pma=0&pas=1&ppe=1&width=470&height=700&font=Helvetica&fs=14&lh=32&bg=434954&fc=FFFFFF&logo=1&tlink=0&ths=1&thb=0&thba=434954&thc=FFFFFF&bc=434954&hob=434954&hobc=434954&lc=333333&sh=0&hfb=0&hbc=3bafda&hfc=FFFFFF
+        type: vertical-stack
+      - cards:
+          - title: Serie A
+            type: iframe
+            url: >-
+              https://www.fctables.com/italy/serie-a/iframe/?type=table&lang_id=2&country=108&template=17&team=187903&timezone=Australia/Sydney&time=24&po=1&ma=1&wi=1&dr=1&los=1&gf=0&ga=0&gd=1&pts=1&ng=0&form=0&width=470&height=650&font=Helvetica&fs=14&lh=32&bg=434954&fc=FFFFFF&logo=1&tlink=0&ths=1&thb=0&thba=434954&thc=FFFFFF&bc=434954&hob=434954&hobc=434954&lc=333333&sh=0&hfb=0&hbc=3bafda&hfc=FFFFFF
+          - title: Champions League Group H
+            type: iframe
+            url: >-
+              https://www.fctables.com/championsleague/iframe/?type=table&lang_id=2&country=5&stage=26153&team=187903&timezone=Australia/Sydney&time=24&po=1&ma=1&wi=1&dr=1&los=1&gf=1&ga=1&gd=1&pts=1&ng=0&form=0&width=485&height=300&font=Helvetica&fs=14&lh=44&bg=434954&fc=FFFFFF&logo=1&tlink=0&ths=1&thb=0&thba=434954&thc=FFFFFF&bc=434954&hob=434954&hobc=434954&lc=333333&sh=0&hfb=0&hbc=3bafda&hfc=FFFFFF
+        type: vertical-stack
+    icon: 'mdi:soccer'
+    title: football
+  - cards:
+      - cards:
+          - entities:
+              - input_select.hass_template
+            title: Theme
+            type: entities
+          - entities:
+              - script.living_cam
+            type: entities
+          - entities:
+              - automation.light_off_study_no_motion
+              - automation.light_off_living_dining_room_no_motion
+              - automation.light_off_living_room_night_light_no_motion
+              - automation.warning_door_open_while_nobody_home
+              - automation.warning_left_the_house_with_the_door_open
+              - automation.bedroom_button_long_press_boil_kettle
+              - automation.birdie_arrives_at_work
+              - automation.light_off_kitchen_no_motion
+              - automation.light_off_living_dining_room_no_motion_birdie_asleep
+              - automation.light_on_bedroom_sunrise
+              - automation.light_on_living_room_night_light
+            title: Automations
+            type: entities
+          - entities:
+              - sensor.speedtest_ping
+              - sensor.speedtest_download
+              - sensor.speedtest_upload
+            title: Speed Test
+            type: entities
+        type: vertical-stack
+      - cards:
+          - entities:
+              - sensor.bedroom_button
+              - sensor.bedroom_door_sensor
+              - sensor.living_room_motion_sensor
+              - sensor.kitchen_motion_sensor
+              - sensor.study_motion_sensor
+              - sensor.bedroom_wall_switch
+              - sensor.living_room_wall_switch
+              - sensor.kitchen_wall_switch
+              - sensor.study_wall_switch
+            title: Battery Levels
+            type: entities
+        type: vertical-stack
+      - cards:
+          - entities:
+              - input_boolean.pixel_bluetooth_occupancy
+              - device_tracker.google_maps_116993081434204761650
+              - binary_sensor.motion_study_occupancy
+              - binary_sensor.graham_pixel_ping
+              - input_boolean.s8_bluetooth_occupancy
+              - device_tracker.google_maps_111604514484536138497
+              - binary_sensor.bora_s8_ping
+            title: Bayesian Sensor Considerations
+            type: entities
+          - card:
+              title: Low Battery Devices
+              type: glance
+            filter:
+              include:
+                - entity_id: '*battery_level*'
+                  state: < 25
+                - attributes:
+                    battery: < 25
+                - attributes:
+                    battery_level: < 25
+            show_empty: false
+            type: 'custom:monster-card'
+          - card:
+              title: Things that are broken
+              type: entities
+            filter:
+              exclude:
+                - entity_id: group.*
+              include:
+                - state: unknown
+            show_empty: false
+            type: 'custom:monster-card'
+        type: vertical-stack
+    icon: 'mdi:wrench'
+    title: tools

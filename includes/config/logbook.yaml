@@ -1,7 +1,7 @@
   exclude:
     entities:
       - sensor.date
-      - sensor.date__time
+      - sensor.date_time
       - sensor.study_motion
       - sensor.kitchen_motion
       - sensor.study_motion
@@ -28,12 +28,14 @@
       - sensor.wall_living
       - sensor.wall_study
       - sensor.temperature
-      - automation.bora_s8_bluetooth_occupancy__false
-      - automation.bora_s8_bluetooth_occupancy__true
-      - automation.graham_pixel_bluetooth_occupancy__false
-      - automation.graham_pixel_bluetooth_occupancy__true
+      - automation.bora_s8_bluetooth_occupancy_false
+      - automation.bora_s8_bluetooth_occupancy_true
+      - automation.graham_pixel_bluetooth_occupancy_false
+      - automation.graham_pixel_bluetooth_occupancy_true\
+      - group.darksky
 
     domains:
       - sun
       - group
       - weather
+      - darksky
