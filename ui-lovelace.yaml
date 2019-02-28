@@ -361,19 +361,19 @@ views:
             image: /local/lovelace/home/transit.jpg
             elements:
               - type: state-icon
-                entity: sensor.drive_to_college
+                entity: sensor.drive_to_ata
                 style:
                   top: 7%
                   left: 10%
                   transform: none
 
-              # - type: state-label
-              #   entity: sensor.drive_to_college
-              #   prefix: 'Drive to College: '
-              #   style:
-              #     top: 9%
-              #     left: 18%
-              #     transform: none
+              - type: state-label
+                entity: sensor.drive_to_ata
+                prefix: 'Drive to ATA: '
+                style:
+                  top: 9%
+                  left: 18%
+                  transform: none
 
               - type: state-icon
                 entity: sensor.next_train_to_central
@@ -575,6 +575,7 @@ views:
               - automation.light_on_living_room_evening
               - automation.light_on_living_room_motion_detected
               - automation.light_on_living_room_night_light
+              - automation.light_on_study_motion_detected
               - automation.light_on_bedroom_sunrise
 
           - type: entities

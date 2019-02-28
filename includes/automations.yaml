@@ -4,8 +4,9 @@
   hide_entity: True
   initial_state: 'on'
   trigger:
-    platform: time
-    at: '06:50:00'
+    platform: sun
+    event: sunrise
+    offset: "00:10:00"
   condition:
     condition: and
     conditions:
@@ -131,10 +132,8 @@
   condition:
     - condition: template
       value_template: "{{ not is_state('binary_sensor.bora_bayesian', 'on') }}"
-    - condition: state
-      # entity_id: switch.plug_bedroomheater_switch
-      entity_id: switch.plug_kettle_switch
-      state: 'on'
+    - condition: template
+      value_template: "{{states('sensor.plug_kettle_power')|float > 0.6}}"
   action:
     service: switch.turn_off
     # entity_id: switch.plug_bedroomheater_switch
@@ -153,10 +152,8 @@
     - condition: state
       entity_id: binary_sensor.door_bedroom
       state: 'off'
-    - condition: state
-      # entity_id: switch.plug_bedroomheater_switch
-      entity_id: switch.plug_kettle_switch
-      state: 'on'
+    - condition: template
+      value_template: "{{states('sensor.plug_kettle_power')|float > 0.6}}"
   action:
     service: switch.turn_off
       # entity_id: switch.plug_bedroomheater_switch
@@ -173,12 +170,10 @@
     to: 'on'
   condition:
     - condition: state
-    # entity_id: switch.plug_bedroomheater_switch
       entity_id: switch.plug_kettle_switch
       state: 'off'
   action:
     service: switch.turn_on
-      # entity_id: switch.plug_bedroomheater_switch
     entity_id: switch.plug_kettle_switch
 
 # Light on: study (motion detected)
@@ -210,7 +205,7 @@
     entity_id: light.dining_room
 
 # Light on: study (someone comes home, motion already detected)
-- alias: Light on, study (motion detected)
+- alias: Light on, someone comes home (motion already detected)
   id: 'study_motion_already'
   hide_entity: True
   initial_state: 'on'
@@ -252,13 +247,16 @@
       entity_id: light.dining_room
       state: 'on'
     - condition: state
+      entity_id: light.living_room
+      state: 'off'
+    - condition: state
       entity_id: sensor.ingame
       state: 'no'
   action:
     - service: light.turn_off
       entity_id: light.dining_room
     - service: switch.turn_off
-      entity_id: switch.plug_158d00024d8cc9
+      entity_id: switch.plug_kettle_switch
 
 # Study heater off (no motion)
 - alias: Study heater off (no motion)
@@ -294,8 +292,10 @@
     condition: and
     conditions:
       - condition: time
-        after: "17:00:00"
         before: "23:00:00"
+      - condition: sun
+        after: sunset
+        after_offset: "-1:00:00"
       - condition: or
         conditions:
         - condition: state
@@ -352,7 +352,9 @@
     conditions:
     - condition: time
       after: "23:00:00"
-      before: "07:00:00"
+    - condition: sun
+      before: sunrise
+      before_offset: "01:00:00"
     - condition: state
       entity_id: light.kitchen
       state: 'off'
@@ -404,8 +406,10 @@
     condition: and
     conditions:
     - condition: time
-      after: "17:00:00"
       before: "23:00:00"
+    - condition: sun
+      after: sunset
+      after_offset: "-1:00:00"
     - condition: state
       entity_id: light.living_room
       state: 'off'
@@ -553,9 +557,8 @@
       - binary_sensor.bora_bayesian
       to: 'off'
   condition:
-    - condition: state
-      entity_id: binary_sensor.door_bedroom
-      state: 'on'
+    condition: and
+    conditions:
     - condition: state
       entity_id: binary_sensor.bora_bayesian
       state: 'off'
@@ -579,6 +582,8 @@
     from: 'off'
     to: 'on'
   condition:
+    condition: and
+    conditions:
     - condition: state
       entity_id: binary_sensor.bora_bayesian
       state: 'off'
@@ -767,8 +772,6 @@
     from: 'on'
     to: 'off'
   action:
-    - service: light.turn_on
-      entity_id: light.bedroom
     - service: light.turn_off
       entity_id: light.bedroom
 
@@ -829,13 +832,8 @@
         group_name: "Kitchen"
         scene_name: "KitchenDim"
 
-
-
-
-
-
-- alias: 'Bedroom button: light on'
-  id: 'bedroom_button_light_on'
+- alias: 'Bedroom button: light on (daytime)'
+  id: 'bedroom_button_light_on_daytime'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -849,11 +847,38 @@
       - condition: state
         entity_id: light.bedroom
         state: 'off'
+      - condition: time
+        after: "06:00:00"
+        before: "23:00:00"
   action:
     service: hue.hue_activate_scene
     data_template:
       group_name: "Bedroom"
       scene_name: "BedroomBright"
+
+- alias: 'Bedroom button: light on (night)'
+  id: 'bedroom_button_light_on_night'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: time
+        after: "23:00:00"
+        before: "06:00:00"
+      - condition: state
+        entity_id: light.bedroom
+        state: 'off'
+  action:
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: "Bedroom"
+        scene_name: "BedroomDim"
 
 - alias: 'Bedroom button: light off'
   id: 'bedroom_button_light_off'
@@ -1214,9 +1239,32 @@
       data:
         message: 'Turning on the heater and kettle'
 
+# Turn off receiver after 5 minutes of living room light off
+- alias: Receiver off - living room off 5 minutes
+  id: 'receiver_off_5_minutes_living'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: light.living_room
+    to: 'off'
+    for:
+      minutes: 5
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.plug_studyheater_switch
+        state: 'on'
+      - condition: template
+        value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
+  action:
+    - service: switch.turn_off
+      entity_id: switch.plug_studyheater_switch
+
 # Toggle receiver power - Chromecast Idle -> Playing
-- alias: "Toggle receiver power - Chromecast Idle -> Playing"
-  id: 'toggle_receiver_power_chromecast_idle_to_playing'
+- alias: "Turn on receiver - Chromecast Idle -> Playing"
+  id: 'turn_on_receiver_chromecast_idle_to_playing'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1224,43 +1272,45 @@
     entity_id: media_player.molly_dongle
     from: 'idle'
     to: 'playing'
+  condition:
+    condition: state
+    entity_id: switch.plug_studyheater_switch
+    state: 'off'
   action:
-    - service: script.turn_on
-      entity_id: script.receiver_power
-    - service: script.turn_on
-      entity_id: script.receiver_power
+    - service: switch.turn_on
+      entity_id: switch.plug_studyheater_switch
 
 # Toggle receiver power - Chromecast Playing -> Off
-- alias: "Toggle receiver power - Chromecast Playing -> Off"
-  id: 'toggle_receiver_power_chromecast_playing_to_off'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: state
-    entity_id: media_player.molly_dongle
-    from: 'playing'
-    to: 'off'
-  action:
-    - service: script.turn_on
-      entity_id: script.receiver_power
-    - service: script.turn_on
-      entity_id: script.tv_power
+#- alias: "Toggle receiver power - Chromecast Playing -> Off"
+#  id: 'toggle_receiver_power_chromecast_playing_to_off'
+#  hide_entity: True
+#  initial_state: 'on'
+#  trigger:
+#    platform: state
+#    entity_id: media_player.molly_dongle
+#    from: 'playing'
+#    to: 'off'
+#  action:
+#    - service: script.turn_on
+#      entity_id: script.receiver_power
+#    - service: script.turn_on
+#      entity_id: script.tv_power
 
 # Toggle receiver power - Chromecast Paused -> Off
-- alias: "Toggle receiver power - Chromecast Playing -> Off"
-  id: 'toggle_receiver_power_chromecast_paused_to_off'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: state
-    entity_id: media_player.molly_dongle
-    from: 'paused'
-    to: 'off'
-  action:
-    - service: script.turn_on
-      entity_id: script.receiver_power
-    - service: script.turn_on
-      entity_id: script.tv_power
+#- alias: "Toggle receiver power - Chromecast Playing -> Off"
+#  id: 'toggle_receiver_power_chromecast_paused_to_off'
+#  hide_entity: True
+#  initial_state: 'on'
+#  trigger:
+#    platform: state
+#    entity_id: media_player.molly_dongle
+#    from: 'paused'
+#    to: 'off'
+#  action:
+#    - service: script.turn_on
+#      entity_id: script.receiver_power
+#    - service: script.turn_on
+#      entity_id: script.tv_power
 
 # Set theme at startup
 - alias: 'Set theme at startup'
@@ -1362,11 +1412,34 @@
     - service: input_boolean.turn_off
       entity_id: input_boolean.next_train
 
-# # Restart HA at 5:30am daily (it stops working overnight every now and then)
-# - alias: 'Daily HA restart'
-#   id: 'daily_ha_restart'
-#   trigger: 
-#     platform: time
-#     at: "05:30:00"  
-#   action:
-#     service: homeassistant.restart
+# Security Camera Capture (nobody home)
+- alias: Security Camera Capture
+  id: 'security_camera_capture'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_living
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.bora_bayesian
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.graham_bayesian
+      state: 'off'
+  action:
+    - service: script.living_cam
+    - delay: '00:00:10'
+    - service: script.living_cam
+    - delay: '00:00:10'
+    - service: script.living_cam
+    - delay: '00:00:10'
+    - service: script.living_cam
+    - delay: '00:00:10'
+    - service: script.living_cam
+    - delay: '00:00:10'
+    - service: script.living_cam

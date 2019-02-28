@@ -3,6 +3,9 @@
   name: "HA uptime"
   unit_of_measurement: minutes
 
+- platform: aftership
+  api_key: !secret aftership_key
+
 # Fitbit
 - platform: fitbit
   clock_format: 24H
@@ -183,13 +186,6 @@
     - queries_forwarded
     - unique_clients
     - unique_domains
-
-- platform: speedtest
-  server_id: 2629
-  monitored_conditions:
-    - ping
-    - download
-    - upload
 
 # Xiaomi Batteries
 - platform: mqtt

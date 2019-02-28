@@ -1,5 +1,6 @@
 - platform: darksky
   api_key: !secret darksky_key
+  language: it
   forecast:
     - 0
     - 1
@@ -27,5 +28,5 @@
     - daily_summary
     - pressure
     - visibility
-  update_interval:
+  scan_interval:
     minutes: 5

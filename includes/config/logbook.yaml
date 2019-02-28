@@ -31,7 +31,7 @@
       - automation.bora_s8_bluetooth_occupancy_false
       - automation.bora_s8_bluetooth_occupancy_true
       - automation.graham_pixel_bluetooth_occupancy_false
-      - automation.graham_pixel_bluetooth_occupancy_true\
+      - automation.graham_pixel_bluetooth_occupancy_true
       - group.darksky
 
     domains:
