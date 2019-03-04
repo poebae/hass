@@ -99,8 +99,8 @@
   trigger:
     platform: state
     entity_id:
-    - binary_sensor.graham_bayesian
-    - binary_sensor.bora_bayesian
+      - binary_sensor.graham_bayesian
+      - binary_sensor.bora_bayesian
     to: 'off'
   condition:
     condition: and
@@ -232,7 +232,7 @@
 - alias: Light off, study (no motion)
   id: 'study_nomotion'
   hide_entity: True
-  initial_state: 'off'
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id: binary_sensor.motion_study_occupancy
@@ -295,7 +295,7 @@
         before: "23:00:00"
       - condition: sun
         after: sunset
-        after_offset: "-1:00:00"
+        after_offset: "-1:30:00"
       - condition: or
         conditions:
         - condition: state
@@ -409,7 +409,7 @@
       before: "23:00:00"
     - condition: sun
       after: sunset
-      after_offset: "-1:00:00"
+      after_offset: "-1:30:00"
     - condition: state
       entity_id: light.living_room
       state: 'off'
@@ -551,11 +551,11 @@
   hide_entity: True
   initial_state: 'on'
   trigger:
-      platform: state
-      entity_id:
-      - binary_sensor.graham_bayesian
-      - binary_sensor.bora_bayesian
-      to: 'off'
+    platform: state
+    entity_id:
+    - binary_sensor.graham_bayesian
+    - binary_sensor.bora_bayesian
+    to: 'off'
   condition:
     condition: and
     conditions:
@@ -947,10 +947,38 @@
             message: 'Turning off the heater'
           {% endif %}
 
-- alias: 'Bedroom button: long press boil kettle'
-  id: 'bedroom_button_long_press_boil_kettle'
+# - alias: 'Bedroom button: long press boil kettle'
+#   id: 'bedroom_button_long_press_boil_kettle'
+#   hide_entity: True
+#   initial_state: 'off'
+#   trigger:
+#     platform: mqtt
+#     topic: 'zigbee2mqtt/button_bedroom'
+#   condition:
+#     condition: template
+#     value_template: "{{ 'long_release' == trigger.payload_json.click }}"
+#   action:
+#     - service_template: >
+#         {% if is_state("switch.plug_kettle_switch", "off") %}
+#           switch.turn_on
+#         {% else %}
+#           switch.turn_off
+#         {% endif %}
+#       entity_id: switch.plug_kettle_switch
+#     - service: tts.google_say
+#       entity_id: media_player.molly_mini
+#       data_template:
+#         message: >
+#           {% if is_state("switch.plug_kettle_switch", "off") %}
+#             message: 'Turning on the kettle'
+#           {% else %}
+#             message: 'Turning off the kettle'
+#           {% endif %}
+
+- alias: 'Bedroom button: long press dim bedroom'
+  id: 'bedroom_button_long_press_dim'
   hide_entity: True
-  initial_state: 'off'
+  initial_state: 'on'
   trigger:
     platform: mqtt
     topic: 'zigbee2mqtt/button_bedroom'
@@ -958,22 +986,10 @@
     condition: template
     value_template: "{{ 'long_release' == trigger.payload_json.click }}"
   action:
-    - service_template: >
-        {% if is_state("switch.plug_kettle_switch", "off") %}
-          switch.turn_on
-        {% else %}
-          switch.turn_off
-        {% endif %}
-      entity_id: switch.plug_kettle_switch
-    - service: tts.google_say
-      entity_id: media_player.molly_mini
+    - service: hue.hue_activate_scene
       data_template:
-        message: >
-          {% if is_state("switch.plug_kettle_switch", "off") %}
-            message: 'Turning on the kettle'
-          {% else %}
-            message: 'Turning off the kettle'
-          {% endif %}
+        group_name: "Bedroom"
+        scene_name: "BedroomDim"
 
 - alias: 'Bedroom switch: light on'
   id: 'bedroom_switch_light_on'
@@ -1068,11 +1084,11 @@
       - condition: template
         value_template: "{{ 'single' == trigger.payload_json.click }}"
       - condition: state
-        entity_id: light.study_lights
+        entity_id: light.study_2
         state: 'off'
   action:
     service: light.turn_on
-    entity_id: light.study_lights
+    entity_id: light.study_2
 
 - alias: 'Study switch: light off (night)'
   id: 'study_switch_light_off_night'
@@ -1088,13 +1104,13 @@
         after: "23:00:00"
         before: "07:00:00"
       - condition: state
-        entity_id: light.study_lights
+        entity_id: light.study_2
         state: 'on'
       - condition: template
         value_template: "{{ 'single' == trigger.payload_json.click }}"
   action:
     - service: light.turn_off
-      entity_id: light.study_lights
+      entity_id: light.study_2
     - service: hue.hue_activate_scene
       data_template:
         group_name: "Living Room"
@@ -1114,13 +1130,13 @@
         after: "07:00:00"
         before: "23:00:00"
       - condition: state
-        entity_id: light.study_lights
+        entity_id: light.study_2
         state: 'on'
       - condition: template
         value_template: "{{ 'single' == trigger.payload_json.click }}"
   action:
     - service: light.turn_off
-      entity_id: light.study_lights
+      entity_id: light.study_2
 
 - alias: 'Left switch: living room on'
   id: 'left_switch_living_room_on'

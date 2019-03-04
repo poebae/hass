@@ -11,7 +11,7 @@
     name: 'Graham Bayesian'
     device_class: 'presence'
     unit_of_measurement: '%'
-    probability_threshold: 0.85
+    probability_threshold: 0.84
     observations:
       - entity_id: 'input_boolean.pixel_bluetooth_occupancy'
         prob_given_true: 0.99

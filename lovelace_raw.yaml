@@ -320,11 +320,7 @@ views:
             image: /local/lovelace/home/transit.jpg
             type: picture-elements
         type: vertical-stack
-      - type: entities
-        entities:
-          - entity: sensor.aftership
-        title: Packages
-        show_header_toggle: false
+
       - cards:
           - entity: camera.living_room_snap
             show_name: false
@@ -429,6 +425,13 @@ views:
             type: entities
             show_header_toggle: false
         type: vertical-stack
+
+      - type: entities
+        entities:
+          - entity: sensor.aftership
+        title: Packages
+        show_header_toggle: false
+        
       - cards:
           - entities:
               - automation.light_off_study_no_motion
