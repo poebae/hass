@@ -6,9 +6,12 @@ homeassistant:
   unit_system: metric
   time_zone: Australia/Sydney
   auth_providers:
-   - type: homeassistant
-   - type: trusted_networks
-   - type: legacy_api_password
+    - type: homeassistant
+    - type: trusted_networks
+      trusted_networks:
+        - 127.0.0.1
+        - 192.168.0.0/24
+    - type: legacy_api_password
 
   customize: !include includes/customize.yaml
   customize_glob: !include customize_glob.yaml
@@ -16,8 +19,6 @@ homeassistant:
 http:
   api_password: !secret api_password
   base_url: !secret base_url
-  trusted_networks:
-    - 192.168.1.0/24
 
   # whitelist_external_dirs:
     # - '/home/graham/homeassistant'
@@ -76,7 +77,6 @@ logbook: !include includes/config/logbook.yaml
 mqtt: !include includes/config/mqtt.yaml
 notify: !include includes/config/notify.yaml
 switch: !include includes/config/switch.yaml
-weather: !include includes/config/weather.yaml
 zone: !include includes/config/zones.yaml
 
 logger:
@@ -103,9 +103,11 @@ tts:
   - platform: google
     cache: false
 
-
 ffmpeg:
 map:
 config:
 sun:
+system_health:
 discovery:
+  ignore:
+    - netgear_router

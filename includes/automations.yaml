@@ -46,21 +46,17 @@
   trigger:
     platform: sun
     event: sunset
-    offset: "-00:30:00"
+    offset: "-00:30:00"  
   condition:
     condition: and
     conditions:
       - condition: state
         entity_id: light.living_room
         state: 'off'
-      - condition: or
-        conditions:
-        - condition: state
-          entity_id: binary_sensor.bora_bayesian
-          state: 'on'
-        - condition: state
-          entity_id: binary_sensor.graham_bayesian
-          state: 'on'
+      - condition: state
+        entity_id: binary_sensor.bora_bayesian
+        state: 'on'
+
   action:
     service: light.turn_on
     entity_id: light.living_room
@@ -174,7 +170,9 @@
       state: 'off'
   action:
     service: switch.turn_on
-    entity_id: switch.plug_kettle_switch
+    entity_id:
+      - switch.plug_kettle_switch
+      - switch.plug_studyheater_switch
 
 # Light on: study (motion detected)
 - alias: Light on, study (motion detected)
@@ -334,8 +332,10 @@
         entity_id: binary_sensor.motion_kitchen
         state: 'on'
   action:
-    service: light.turn_on
-    entity_id: light.kitchen
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: "Kitchen"
+        scene_name: "KitchenBright"
 
 # Light on: kitchen night light
 - alias: Light on, kitchen night light
@@ -565,10 +565,13 @@
     - condition: state
       entity_id: binary_sensor.graham_bayesian
       state: 'off'
+    - condition: state
+      entity_id: binary_sensor.door_bedroom
+      state: 'on'
   action:
     - service: notify.graham_telegram
       data:
-        message: "Nobody is home but the bedroom door is open. Molly!"
+        message: "You left home with the bedroom door open. Molly!"
 
 
 # Warning: Door open while nobody home
@@ -602,7 +605,7 @@
   initial_state: 'on'
   trigger:
     platform: zone
-    entity_id: device_tracker.google_maps_111604514484536138497
+    entity_id: device_tracker.galaxys8
     zone: zone.work
     event: enter
   condition:
@@ -630,7 +633,7 @@
   initial_state: 'on'
   trigger:
   - platform: zone
-    entity_id: device_tracker.google_maps_111604514484536138497
+    entity_id: device_tracker.galaxys8
     zone: zone.work
     event: leave
   condition:
@@ -658,7 +661,7 @@
   initial_state: 'on'
   trigger:
   - platform: zone
-    entity_id: device_tracker.google_maps_111604514484536138497
+    entity_id: device_tracker.galaxys8
     zone: zone.rhodes
     event: enter
   condition:
@@ -696,7 +699,7 @@
   initial_state: 'on'
   trigger:
   - platform: zone
-    entity_id: device_tracker.google_maps_111604514484536138497
+    entity_id: device_tracker.galaxys8
     zone: zone.bali
     event: enter
   condition:
@@ -796,8 +799,10 @@
         entity_id: binary_sensor.motion_kitchen
         state: 'on'
   action:
-    service: light.turn_on
-    entity_id: light.kitchen
+    - service: hue.hue_activate_scene
+      data_template:
+        group_name: "Kitchen"
+        scene_name: "KitchenBright"
 
 # Light on: kitchen night light
 - alias: Light on, kitchen night light
@@ -1448,14 +1453,4 @@
       entity_id: binary_sensor.graham_bayesian
       state: 'off'
   action:
-    - service: script.living_cam
-    - delay: '00:00:10'
-    - service: script.living_cam
-    - delay: '00:00:10'
-    - service: script.living_cam
-    - delay: '00:00:10'
-    - service: script.living_cam
-    - delay: '00:00:10'
-    - service: script.living_cam
-    - delay: '00:00:10'
     - service: script.living_cam

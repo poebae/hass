@@ -8,6 +8,34 @@ living_cam:
         message: "Living Room Cam"
         data:
           image: "http://192.168.1.4/cgi-bin/currentpic.cgi"
+    - delay: 00:00:15
+    - service: notify.android
+      data:
+        target: "unnamed device"
+        message: "Living Room Cam"
+        data:
+          image: "http://192.168.1.4/cgi-bin/currentpic.cgi"
+    - delay: 00:00:15
+    - service: notify.android
+      data:
+        target: "unnamed device"
+        message: "Living Room Cam"
+        data:
+          image: "http://192.168.1.4/cgi-bin/currentpic.cgi"
+    - delay: 00:00:15
+    - service: notify.android
+      data:
+        target: "unnamed device"
+        message: "Living Room Cam"
+        data:
+          image: "http://192.168.1.4/cgi-bin/currentpic.cgi"
+    - delay: 00:00:15
+    - service: notify.android
+      data:
+        target: "unnamed device"
+        message: "Living Room Cam"
+        data:
+          image: "http://192.168.1.4/cgi-bin/currentpic.cgi"
 
 # Google - Next Train
 speak_next_train:
@@ -21,43 +49,43 @@ speak_next_train:
       message: >-
         The next train is in {{ states.sensor.next_train_to_central.state }} minutes
 
-# Broadlink Fan
-fan_power:
-  alias: Fan Power
-  sequence:
-    - service: switch.broadlink_send_packet_192_168_1_12
-      data:
-        packet:
-          - "JgBiACYRJhALLCYRJhALLAwrCysMKwsrCywm6CYQJhELLCYQJhELKwwrDCsKLAwrCywm5yYRJhEKLCYRJhALKg0sCiwLLAsrCywm6CYQJxALLCYQJhELLAosCywLKwssCywmAA0FAAAAAAAA"
+# # Broadlink Fan
+# fan_power:
+#   alias: Fan Power
+#   sequence:
+#     - service: switch.broadlink_send_packet_192_168_1_12
+#       data:
+#         packet:
+#           - "JgBiACYRJhALLCYRJhALLAwrCysMKwsrCywm6CYQJhELLCYQJhELKwwrDCsKLAwrCywm5yYRJhEKLCYRJhALKg0sCiwLLAsrCywm6CYQJxALLCYQJhELLAosCywLKwssCywmAA0FAAAAAAAA"
 
-fan_speed:
-  alias: Fan Speed
-  sequence:
-    - service: switch.broadlink_send_packet_192_168_1_12
-      data:
-        packet:
-          - "JgBOACYQJhELLCYQJhELKwwrCywKKg0sJw8LAAEBKBEmEAssJhEmEAssCywLKwwrDSkoDw0AAQEmECYRDSomECYRCysNKA8oDCwNKigPDAANBQAAAAAAAAAAAAA="
+# fan_speed:
+#   alias: Fan Speed
+#   sequence:
+#     - service: switch.broadlink_send_packet_192_168_1_12
+#       data:
+#         packet:
+#           - "JgBOACYQJhELLCYQJhELKwwrCywKKg0sJw8LAAEBKBEmEAssJhEmEAssCywLKwwrDSkoDw0AAQEmECYRDSomECYRCysNKA8oDCwNKigPDAANBQAAAAAAAAAAAAA="
 
-fan_mode:
-  alias: Fan Mode
-  sequence:
-    - service: switch.broadlink_send_packet_192_168_1_12
-      data:
-        packet:
-          - "JgBOACYRJhELKyYRJhALLAwrCiwLLCYRCysMAAECJhEmEAssJhEnDwssCywLKwwrJhALLAsAAQMmECcQCywmECYRCysMKwssCywmEAssCwANBQAAAAAAAAAAAAA="
+# fan_mode:
+#   alias: Fan Mode
+#   sequence:
+#     - service: switch.broadlink_send_packet_192_168_1_12
+#       data:
+#         packet:
+#           - "JgBOACYRJhELKyYRJhALLAwrCiwLLCYRCysMAAECJhEmEAssJhEnDwssCywLKwwrJhALLAsAAQMmECcQCywmECYRCysMKwssCywmEAssCwANBQAAAAAAAAAAAAA="
 
-fan_timer:
-  alias: Fan Timer
-  sequence:
-    - service: switch.broadlink_send_packet_192_168_1_12
-      data:
-        packet:
-          - "JgBOACgPKA4NKigPKA4NKgssCiwoDwsrCywMAAECKA4mEQ0qKA4oDw0qDCoMKygODSkMLAoAAQMoDyYRDCooDyYRDCoLLA0pKA8LLAwqDQANBQAAAAAAAAAAAAA="
+# fan_timer:
+#   alias: Fan Timer
+#   sequence:
+#     - service: switch.broadlink_send_packet_192_168_1_12
+#       data:
+#         packet:
+#           - "JgBOACgPKA4NKigPKA4NKgssCiwoDwsrCywMAAECKA4mEQ0qKA4oDw0qDCoMKygODSkMLAoAAQMoDyYRDCooDyYRDCoLLA0pKA8LLAwqDQANBQAAAAAAAAAAAAA="
 
-fan_osc:
-  alias: Fan Oscillation
-  sequence:
-    - service: switch.broadlink_send_packet_192_168_1_12
-      data:
-        packet:
-          - "JgBOACgOKA8NKigOKA8NKgwqKA8NKQ0qDCsMAAECJw8mEQwqJhEmEQwqDSooDwwqCywMKwwAAQEoDygPCiwoDygODSoNKiYQDSoMKg0qDQANBQAAAAAAAAAAAAA="
+# fan_osc:
+#   alias: Fan Oscillation
+#   sequence:
+#     - service: switch.broadlink_send_packet_192_168_1_12
+#       data:
+#         packet:
+#           - "JgBOACgOKA8NKigOKA8NKgwqKA8NKQ0qDCsMAAECJw8mEQwqJhEmEQwqDSooDwwqCywMKwwAAQEoDygPCiwoDygODSoNKiYQDSoMKg0qDQANBQAAAAAAAAAAAAA="

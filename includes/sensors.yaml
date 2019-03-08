@@ -25,17 +25,49 @@
 # Google Geocode
 - platform: google_geocode
   name: graham_geocode
-  origin: device_tracker.google_maps_116993081434204761650
+  # origin: device_tracker.google_maps_116993081434204761650
+  origin: device_tracker.pixel_3
   options: street_number, street, city
-  limit_refetch_to_url_change: true
   api_key: !secret places_api
 
 - platform: google_geocode
   name: bora_geocode
-  origin: device_tracker.google_maps_111604514484536138497
+  origin: device_tracker.galaxys8
   options: street_number, street,city
-  limit_refetch_to_url_change: true
   api_key: !secret places_api
+
+- platform: template
+  sensors: 
+    graham_battery:
+      value_template: '{{ states.device_tracker.pixel_3.attributes.battery }}'  
+      # value_template: '{{ states.device_tracker.google_maps_116993081434204761650.attributes.battery_level }}'  
+      friendly_name: 'Graham Pixel 3 Battery' 
+      unit_of_measurement: '%'
+      icon_template: >
+       {% set battery_level = states.device_tracker.pixel_3.attributes.battery|default(0)|int %}
+       {% set battery_round = (battery_level / 10) |int * 10 %}
+       {% if battery_round >= 100 %}
+         mdi:battery
+        {% elif battery_round > 0 %}
+         mdi:battery-{{ battery_round }}
+       {% else %}
+         mdi:battery-alert
+       {% endif %}
+
+    bora_battery:
+      value_template: '{{ states.device_tracker.galaxys8.attributes.battery }}'  
+      friendly_name: 'Bora Galaxy S8 Battery' 
+      unit_of_measurement: '%'
+      icon_template: >
+       {% set battery_level = states.device_tracker.galaxys8.attributes.battery|default(0)|int %}
+       {% set battery_round = (battery_level / 10) |int * 10 %}
+       {% if battery_round >= 100 %}
+         mdi:battery
+        {% elif battery_round > 0 %}
+         mdi:battery-{{ battery_round }}
+       {% else %}
+         mdi:battery-alert
+       {% endif %}
 
 # Weather
 - platform: darksky
@@ -71,7 +103,7 @@
     - daily_summary
     - pressure
     - visibility
-  update_interval:
+  scan_interval:
     minutes: 5
 
 # Transit
@@ -89,17 +121,17 @@
   apikey: !secret 'transportnswkey'
 
 # System Monitor
-# - platform: systemmonitor
-#   resources:
-#   - type: disk_use_percent
-#     arg: /
-#   - type: memory_free
-#   - type: processor_use
-#   - type: network_in
-#     arg: wlp8s0
-#   - type: network_out
-#     arg: wlp8s0
-#   - type: last_boot
+- platform: systemmonitor
+  resources:
+  - type: disk_use_percent
+    arg: /
+  - type: memory_free
+  - type: processor_use
+  - type: network_in
+    arg: wlp8s0
+  - type: network_out
+    arg: wlp8s0
+  - type: last_boot
 
 # Steam
 - platform: steam_online
@@ -251,7 +283,6 @@
   device_class: battery
   value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
 
-# Bluetooth Devices
 - platform: mqtt
   state_topic: 'monitor/ha-monitor/80:7a:bf:07:1c:75'
   value_template: '{{ value_json.confidence }}'
@@ -263,3 +294,16 @@
   value_template: '{{ value_json.confidence }}'
   unit_of_measurement: '%'
   name: 'Bora S8 Bluetooth'
+
+# Aftership
+- platform: template
+  sensors: 
+    aftership_pending:
+      value_template: '{{ states.sensor.aftership.attributes.pending }}'  
+      friendly_name: 'Pending'
+    aftership_intransit:
+      value_template: '{{ states.sensor.aftership.attributes.intransit }}'  
+      friendly_name: 'In Transit'
+    aftership_delivered:
+      value_template: '{{ states.sensor.aftership.attributes.delivered }}'  
+      friendly_name: 'Delivered'

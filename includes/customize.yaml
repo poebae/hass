@@ -20,6 +20,14 @@
   device_tracker.google_maps_111604514484536138497:
     icon: mdi:human-female
 
+# Aftership
+  sensor.aftership_pending:
+    icon: mdi:timer-sand
+  sensor.aftership_intransit:
+    icon: mdi:truck-delivery
+  sensor.aftership_delivered:
+    icon: mdi:check
+
 # Lights
   light.bedroom:
     icon: mdi:hotel
