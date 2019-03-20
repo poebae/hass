@@ -1437,7 +1437,7 @@
 - alias: Security Camera Capture
   id: 'security_camera_capture'
   hide_entity: True
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
     platform: state
     entity_id: binary_sensor.motion_living

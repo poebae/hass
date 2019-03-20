@@ -116,9 +116,9 @@
     mode: driving
 
 - platform: transport_nsw
-  name: Next train to Central
-  stopid: '2114181'
-  apikey: !secret 'transportnswkey'
+  name: 'Next train to Central'
+  stop_id: '2114181'
+  api_key: !secret 'transportnswkey'
 
 # System Monitor
 - platform: systemmonitor
