@@ -57,8 +57,11 @@
         entity_id: binary_sensor.bora_bayesian
         state: 'on'
   action:
-    service: light.turn_on
-    entity_id: light.living_room
+    - service:  light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 100
+        color_temp: 153
 
 # Light on: living room (someone comes home)
 - alias: Light on, living room (someone comes home)
@@ -81,10 +84,6 @@
         after: "17:00:00"
         before: "07:00:00"
   action:
-    # service: hue.hue_activate_scene
-    # data_template:
-    #   group_name: "Living Room"
-    #   scene_name: "LivingBright"
     - service:  light.turn_on
       data:
         entity_id: light.living_room
@@ -209,7 +208,7 @@
     entity_id: light.dining_room
 
 # Light on: study (someone comes home, motion already detected)
-- alias: Light on, someone comes home (motion already detected)
+- alias: Light on study - someone comes home (motion already detected)
   id: 'study_motion_already'
   hide_entity: True
   initial_state: 'on'
@@ -229,8 +228,65 @@
         entity_id: binary_sensor.motion_study_occupancy
         state: 'on'
   action:
-    service: light.turn_on
-    entity_id: light.dining_room
+    - service:  light.turn_on
+      data:
+        entity_id: light.dining_room
+        brightness_pct: 100
+        color_temp: 153
+
+# Light on: living (someone comes home, motion already detected)
+- alias: Light on living - someone comes home (motion already detected)
+  id: 'living_motion_already'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+      platform: state
+      entity_id:
+      - binary_sensor.graham_bayesian
+      - binary_sensor.bora_bayesian
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.living_room
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.motion_study_occupancy
+        state: 'on'
+  action:
+    - service:  light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: 100
+        color_temp: 153
+
+# Light on: kitchen (someone comes home, motion already detected)
+- alias: Light on - kitchen (someone comes home, motion already detected)
+  id: 'kitchen_motion_already'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+      platform: state
+      entity_id:
+      - binary_sensor.graham_bayesian
+      - binary_sensor.bora_bayesian
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.dining_room
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.motion_kitchen
+        state: 'on'
+  action:
+    - service:  light.turn_on
+      data:
+        entity_id: light.kitchen
+        brightness_pct: 100
+        color_temp: 153
 
 # Light off: study (no motion)
 - alias: Light off, study (no motion)
@@ -308,48 +364,12 @@
         - condition: state
           entity_id: binary_sensor.graham_bayesian
           state: 'on'
-  # action:
-  #   - service: hue.hue_activate_scene
-  #     data_template:
-  #       group_name: "Kitchen"
-  #       scene_name: "KitchenBright"
   action:
     - service:  light.turn_on
       data:
         entity_id: light.kitchen
         brightness_pct: 100
         color_temp: 154
-
-# Light on: kitchen (someone comes home, motion already detected)
-- alias: Light on, kitchen (someone comes home, motion already detected)
-  id: 'kitchen_motion_already'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-      platform: state
-      entity_id:
-      - binary_sensor.graham_bayesian
-      - binary_sensor.bora_bayesian
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: light.dining_room
-        state: 'off'
-      - condition: state
-        entity_id: binary_sensor.motion_kitchen
-        state: 'on'
-  action:
-    # - service: hue.hue_activate_scene
-    #   data_template:
-    #     group_name: "Kitchen"
-    #     scene_name: "KitchenBright"
-    - service:  light.turn_on
-      data:
-        entity_id: light.kitchen
-        brightness_pct: 100
-        color_temp: 153
 
 # Light on: kitchen night light
 - alias: Light on, kitchen night light
@@ -437,10 +457,6 @@
         entity_id: binary_sensor.graham_bayesian
         state: 'on'
   action:
-    # service: hue.hue_activate_scene
-    # data_template:
-    #   group_name: "Living Room"
-    #   scene_name: "LivingBright"
     - service:  light.turn_on
       data:
         entity_id: light.living_room
@@ -527,11 +543,6 @@
       - condition: state
         entity_id: binary_sensor.graham_bayesian
         state: 'on'
-  # action:
-  #   - service: hue.hue_activate_scene
-  #     data_template:
-  #       group_name: "Living Room"
-  #       scene_name: "LivingDim"
   action:
     - service:  light.turn_on
       data:
@@ -710,10 +721,11 @@
       entity_id: light.dining_room, light.living_room
       data:
         flash: short
-    # - service: hue.hue_activate_scene
-    #   data:
-    #     group_name: "Living Room"
-    #     scene_name: "LivingBright"
+    - service:  light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: 100
+        color_temp: 153
     - service:  light.turn_on
       data:
         entity_id: light.living_room
@@ -749,10 +761,11 @@
     after: "06:00:00"
     before: "23:00:00"
   action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Bedroom"
-        scene_name: "BedroomBright"
+    - service:  light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 100
+        color_temp: 153
 
 - alias: 'Door open: bedroom light on (night)'
   id: 'door_open_bedroom_light_on_night'
@@ -768,10 +781,11 @@
     after: "23:00:00"
     before: "06:00:00"
   action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Bedroom"
-        scene_name: "BedroomDim"
+    - service:  light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 20
+        color_temp: 500
 
 - alias: 'Door closed: bedroom light off'
   id: 'door_closed_bedroom_light_off'
@@ -805,10 +819,11 @@
         after: "06:00:00"
         before: "23:00:00"
   action:
-    service: hue.hue_activate_scene
-    data_template:
-      group_name: "Bedroom"
-      scene_name: "BedroomBright"
+    - service:  light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 100
+        color_temp: 153
 
 - alias: 'Bedroom button: light on (night)'
   id: 'bedroom_button_light_on_night'
@@ -829,10 +844,11 @@
         entity_id: light.bedroom
         state: 'off'
   action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Bedroom"
-        scene_name: "BedroomDim"
+    - service:  light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 20
+        color_temp: 500
 
 - alias: 'Bedroom button: light off'
   id: 'bedroom_button_light_off'
@@ -940,10 +956,11 @@
     condition: template
     value_template: "{{ 'long_release' == trigger.payload_json.click }}"
   action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Bedroom"
-        scene_name: "BedroomDim"
+    - service:  light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 20
+        color_temp: 500
 
 - alias: 'Bedroom switch: light on'
   id: 'bedroom_switch_light_on'
@@ -961,10 +978,11 @@
         entity_id: light.bedroom
         state: 'off'
   action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Bedroom"
-        scene_name: "BedroomBright"
+    - service:  light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 100
+        color_temp: 153
 
 - alias: 'Bedroom switch: light off'
   id: 'bedroom_switch_light_off'
@@ -1001,10 +1019,6 @@
         entity_id: light.kitchen
         state: 'off'
   action:
-    # - service: hue.hue_activate_scene
-    #   data_template:
-    #     group_name: "Kitchen"
-    #     scene_name: "KitchenBright"
     - service:  light.turn_on
       data:
         entity_id: light.kitchen
@@ -1070,10 +1084,6 @@
   action:
     - service: light.turn_off
       entity_id: light.study_2
-    # - service: hue.hue_activate_scene
-    #   data_template:
-    #     group_name: "Living Room"
-    #     scene_name: "LivingDim"
     - service:  light.turn_on
       data:
         entity_id: light.living_room
@@ -1118,10 +1128,6 @@
         entity_id: light.living_room
         state: 'off'
   action:
-    # service: hue.hue_activate_scene
-    # data_template:
-    #   group_name: "Living Room"
-    #   scene_name: "LivingBright"
     - service:  light.turn_on
       data:
         entity_id: light.living_room
