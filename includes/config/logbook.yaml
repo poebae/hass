@@ -150,6 +150,12 @@
       - sensor.dark_sky_wind_speed_3
       - sensor.dark_sky_wind_speed_4
       - sensor.dark_sky_wind_speed_5
+      - sensor.time_next_dawn
+      - sensor.time_next_dusk
+      - sensor.time_sun_azimuth
+      - sensor.time_sun_elevation
+      - sensor.time_sunrise
+      - sensor.time_sunset
 
     domains:
       - sun

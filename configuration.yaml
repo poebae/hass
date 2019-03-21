@@ -9,9 +9,7 @@ homeassistant:
     - type: homeassistant
     - type: trusted_networks
       trusted_networks:
-        - 127.0.0.1
         - 192.168.0.0/24
-    - type: legacy_api_password
 
   customize: !include includes/customize.yaml
   customize_glob: !include customize_glob.yaml
@@ -108,6 +106,7 @@ map:
 config:
 sun:
 system_health:
+stream:
 discovery:
   ignore:
     - netgear_router

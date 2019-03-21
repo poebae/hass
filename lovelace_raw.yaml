@@ -272,6 +272,101 @@ views:
         type: picture-glance
       - cards:
           - elements:
+              - entity: sun.sun
+                style:
+                  left: 10%
+                  top: 7%
+                  transform: none
+                type: state-icon
+              - entity: sun.sun
+                style:
+                  left: 17%
+                  top: 9%
+                  transform: none
+                type: state-label
+              - entity: sensor.time_sun_elevation
+                style:
+                  left: 10%
+                  top: 29%
+                  transform: none
+                type: state-icon
+              - entity: sensor.time_sun_elevation
+                prefix: 'Elevation: '
+                style:
+                  left: 17%
+                  top: 31%
+                  transform: none
+                type: state-label
+              - entity: sensor.time_sun_azimuth
+                style:
+                  left: 10%
+                  top: 51%
+                  transform: none
+                type: state-icon
+              - entity: sensor.time_sun_azimuth
+                prefix: 'Azimuth: '
+                style:
+                  left: 17%
+                  top: 53%
+                  transform: none
+                type: state-label
+              - entity: sensor.time_sunrise
+                style:
+                  left: 59%
+                  top: 7%
+                  transform: none
+                type: state-icon
+              - entity: sensor.time_sunrise
+                prefix: 'Sunrise '
+                style:
+                  left: 67%
+                  top: 9%
+                  transform: none
+                type: state-label
+              - entity: sensor.time_sunset
+                style:
+                  left: 59%
+                  top: 29%
+                  transform: none
+                type: state-icon
+              - entity: sensor.time_sunset
+                prefix: 'Sunset '
+                style:
+                  left: 67%
+                  top: 31%
+                  transform: none
+                type: state-label
+              - entity: sensor.time_next_dawn
+                style:
+                  left: 59%
+                  top: 51%
+                  transform: none
+                type: state-icon
+              - entity: sensor.time_next_dawn
+                prefix: 'Dawn '
+                style:
+                  left: 67%
+                  top: 53%
+                  transform: none
+                type: state-label
+              - entity: sensor.time_next_dusk
+                style:
+                  left: 59%
+                  top: 73%
+                  transform: none
+                type: state-icon
+              - entity: sensor.time_next_dusk
+                prefix: 'Dusk '
+                style:
+                  left: 67%
+                  top: 75%
+                  transform: none
+                type: state-label
+            image: /local/lovelace/home/sunrise.jpg
+            type: picture-elements
+        type: vertical-stack
+      - cards:
+          - elements:
               - entity: sensor.drive_to_ata
                 style:
                   left: 10%
@@ -452,7 +547,7 @@ views:
       - cards:
           - entities:
               - input_boolean.pixel_bluetooth_occupancy
-              - device_tracker.pixel_3
+              - device_tracker.google_maps_116993081434204761650
               - binary_sensor.motion_study_occupancy
               - binary_sensor.graham_pixel_ping
             show_header_toggle: false
@@ -460,7 +555,7 @@ views:
             type: entities
           - entities:
               - input_boolean.s8_bluetooth_occupancy
-              - device_tracker.galaxys8
+              - device_tracker.google_maps_111604514484536138497
               - binary_sensor.bora_s8_ping
             show_header_toggle: false
             title: Bora Bayesian

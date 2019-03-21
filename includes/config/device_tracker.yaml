@@ -1,6 +1,7 @@
-  # - platform: google_maps
-  #   username: !secret gmailuser
-  #   password: !secret gmailpass
+  - platform: google_maps
+    username: !secret gmailuser
+    password: !secret gmailpass
+
   - platform: mqtt
     devices:
       graham_pixel: 'graham_pixel/location'

@@ -44,9 +44,9 @@
   hide_entity: True
   initial_state: 'on'
   trigger:
-    platform: sun
-    event: sunset
-    offset: "-00:30:00"  
+    platform: state
+    entity_id: sun.sun
+    to: 'below_horizon'
   condition:
     condition: and
     conditions:
@@ -56,7 +56,6 @@
       - condition: state
         entity_id: binary_sensor.bora_bayesian
         state: 'on'
-
   action:
     service: light.turn_on
     entity_id: light.living_room
@@ -98,6 +97,8 @@
       - binary_sensor.graham_bayesian
       - binary_sensor.bora_bayesian
     to: 'off'
+    for:
+      minutes: 2
   condition:
     condition: and
     conditions:
@@ -291,9 +292,9 @@
     conditions:
       - condition: time
         before: "23:00:00"
-      - condition: sun
-        after: sunset
-        after_offset: "-1:30:00"
+      - condition: state
+        entity_id: sun.sun
+        state: below_horizon
       - condition: or
         conditions:
         - condition: state
@@ -407,9 +408,9 @@
     conditions:
     - condition: time
       before: "23:00:00"
-    - condition: sun
-      after: sunset
-      after_offset: "-1:30:00"
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
     - condition: state
       entity_id: light.living_room
       state: 'off'

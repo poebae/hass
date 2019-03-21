@@ -14,11 +14,13 @@
   sensor.graham_geocode:
     icon: mdi:human-handsup
   device_tracker.google_maps_116993081434204761650:
+    friendly_name: Graham Pixel 3
     icon: mdi:human-handsup
   sensor.bora_geocode:
     icon: mdi:human-female
   device_tracker.google_maps_111604514484536138497:
     icon: mdi:human-female
+    friendly_name: Bora Galaxy S8
 
 # Aftership
   sensor.aftership_pending:
@@ -56,12 +58,17 @@
     device_class: motion
   binary_sensor.motion_study_occupancy:
     device_class: motion
+    friendly_name: Study Motion
   binary_sensor.motion_kitchen:
     device_class: motion
   binary_sensor.graham_bayesian:
     device_class: presence
   binary_sensor.bora_bayesian:
     device_class: presence
+  binary_sensor.graham_pixel_ping:
+    friendly_name: Graham Pixel Ping
+  binary_sensor.bora_s8_ping:
+    friendly_name: Bora Galaxy S8 Ping
 
 # System Monitor
 #  sensor.disk_use_percent_:
@@ -144,3 +151,17 @@
     icon: mdi:human-pregnant
   sensor.bmi:
     unit_of_measurement:
+
+# Sun
+  sensor.time_sunrise:
+    icon: mdi:weather-sunset-up
+  sensor.time_sunset:
+    icon: mdi:weather-sunset-down
+  sensor.time_next_dawn:
+    icon: mdi:weather-sunny
+  sensor.time_next_dusk:
+    icon: mdi:weather-night
+  sensor.time_sun_elevation:
+    icon: mdi:arrow-expand-vertical
+  sensor.time_sun_azimuth:
+    icon: mdi:angle-acute
