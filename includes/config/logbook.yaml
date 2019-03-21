@@ -156,6 +156,7 @@
       - sensor.time_sun_elevation
       - sensor.time_sunrise
       - sensor.time_sunset
+      - sensor.time
 
     domains:
       - sun

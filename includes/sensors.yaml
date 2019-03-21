@@ -1,3 +1,7 @@
+- platform: time_date
+  display_options:
+    - 'time'
+
 # HA Uptime
 - platform: uptime
   name: "HA uptime"
