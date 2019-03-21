@@ -81,10 +81,15 @@
         after: "17:00:00"
         before: "07:00:00"
   action:
-    service: hue.hue_activate_scene
-    data_template:
-      group_name: "Living Room"
-      scene_name: "LivingBright"
+    # service: hue.hue_activate_scene
+    # data_template:
+    #   group_name: "Living Room"
+    #   scene_name: "LivingBright"
+    - service:  light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: 100
+        color_temp: 153
 
 # Lights and heaters off: all (nobody home)
 - alias: Lights and heaters off - all (nobody home)
@@ -290,11 +295,11 @@
   condition:
     condition: and
     conditions:
+      - condition: state
+        entity_id: light.kitchen
+        state: 'off'
       - condition: time
         before: "23:00:00"
-      - condition: state
-        entity_id: sun.sun
-        state: below_horizon
       - condition: or
         conditions:
         - condition: state
@@ -303,14 +308,17 @@
         - condition: state
           entity_id: binary_sensor.graham_bayesian
           state: 'on'
-      - condition: state
-        entity_id: light.kitchen
-        state: 'off'
+  # action:
+  #   - service: hue.hue_activate_scene
+  #     data_template:
+  #       group_name: "Kitchen"
+  #       scene_name: "KitchenBright"
   action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Kitchen"
-        scene_name: "KitchenBright"
+    - service:  light.turn_on
+      data:
+        entity_id: light.kitchen
+        brightness_pct: 100
+        color_temp: 154
 
 # Light on: kitchen (someone comes home, motion already detected)
 - alias: Light on, kitchen (someone comes home, motion already detected)
@@ -333,10 +341,15 @@
         entity_id: binary_sensor.motion_kitchen
         state: 'on'
   action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Kitchen"
-        scene_name: "KitchenBright"
+    # - service: hue.hue_activate_scene
+    #   data_template:
+    #     group_name: "Kitchen"
+    #     scene_name: "KitchenBright"
+    - service:  light.turn_on
+      data:
+        entity_id: light.kitchen
+        brightness_pct: 100
+        color_temp: 153
 
 # Light on: kitchen night light
 - alias: Light on, kitchen night light
@@ -351,11 +364,11 @@
   condition:
     condition: and
     conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
     - condition: time
       after: "23:00:00"
-    - condition: sun
-      before: sunrise
-      before_offset: "01:00:00"
     - condition: state
       entity_id: light.kitchen
       state: 'off'
@@ -368,10 +381,11 @@
         entity_id: binary_sensor.graham_bayesian
         state: 'on'
   action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Kitchen"
-        scene_name: "KitchenDim"
+    - service:  light.turn_on
+      data:
+        entity_id: light.kitchen
+        brightness_pct: 20
+        color_temp: 500
 
 # Light off: kitchen (no motion)
 - alias: Light off, kitchen (no motion)
@@ -423,10 +437,15 @@
         entity_id: binary_sensor.graham_bayesian
         state: 'on'
   action:
-    service: hue.hue_activate_scene
-    data_template:
-      group_name: "Living Room"
-      scene_name: "LivingBright"
+    # service: hue.hue_activate_scene
+    # data_template:
+    #   group_name: "Living Room"
+    #   scene_name: "LivingBright"
+    - service:  light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: 100
+        color_temp: 153
 
 # Light off: living/dining room (no motion)
 - alias: Light off, living,dining room (no motion)
@@ -463,6 +482,9 @@
   condition:
     condition: and
     conditions:
+      - condition: time
+        after: "06:00:00"
+        before: "23:00:00"
       - condition: state
         entity_id: binary_sensor.door_bedroom
         state: 'on'
@@ -505,11 +527,17 @@
       - condition: state
         entity_id: binary_sensor.graham_bayesian
         state: 'on'
+  # action:
+  #   - service: hue.hue_activate_scene
+  #     data_template:
+  #       group_name: "Living Room"
+  #       scene_name: "LivingDim"
   action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Living Room"
-        scene_name: "LivingDim"
+    - service:  light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: 20
+        color_temp: 500
 
 # Light off: living room night light (no motion)
 - alias: Light off, living room night light (no motion)
@@ -682,47 +710,26 @@
       entity_id: light.dining_room, light.living_room
       data:
         flash: short
-    - service: hue.hue_activate_scene
+    # - service: hue.hue_activate_scene
+    #   data:
+    #     group_name: "Living Room"
+    #     scene_name: "LivingBright"
+    - service:  light.turn_on
       data:
-        group_name: "Living Room"
-        scene_name: "LivingBright"
+        entity_id: light.living_room
+        brightness_pct: 100
+        color_temp: 153
+    - service:  light.turn_on
+      data:
+        entity_id: light.dining_room
+        brightness_pct: 100
+        color_temp: 153
     - service: light.turn_on
       entity_id: light.dining_room
     - service: tts.google_say
       entity_id: media_player.molly_home
       data:
         message: 'Bora is at Rhodes and will be home soon!'
-
-# Flash study and living room, and turn living room lights on when birdie is almost home
-- alias: Birdie landed in Bali!
-  id: 'birdie_landed_bali'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-  - platform: zone
-    entity_id: device_tracker.galaxys8
-    zone: zone.bali
-    event: enter
-  condition:
-    condition: state
-    entity_id: binary_sensor.graham_bayesian
-    state: 'on'
-  action:
-    - service: light.turn_on
-      entity_id: light.dining_room, light.living_room
-      data:
-        flash: short
-    - service: hue.hue_activate_scene
-      data:
-        group_name: "Living Room"
-        scene_name: "LivingBright"
-    - service: notify.graham_telegram
-      data:
-        message: "Birdie landed in Bali!"
-    - service: tts.google_say
-      entity_id: media_player.molly_home
-      data:
-        message: 'Birdie landed in Bali!'
 
 ##########
 # XIAOMI #
@@ -778,65 +785,6 @@
   action:
     - service: light.turn_off
       entity_id: light.bedroom
-
-# Light on: kitchen (someone comes home, motion already detected)
-- alias: Light on, kitchen (someone comes home, motion already detected)
-  id: 'kitchen_motion_already'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-      platform: state
-      entity_id:
-      - binary_sensor.graham_bayesian
-      - binary_sensor.bora_bayesian
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: light.dining_room
-        state: 'off'
-      - condition: state
-        entity_id: binary_sensor.motion_kitchen
-        state: 'on'
-  action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Kitchen"
-        scene_name: "KitchenBright"
-
-# Light on: kitchen night light
-- alias: Light on, kitchen night light
-  id: 'kitchen_nightlight_on'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: state
-    entity_id: binary_sensor.motion_kitchen
-    from: 'off'
-    to: 'on'
-  condition:
-    condition: and
-    conditions:
-    - condition: time
-      after: "23:00:00"
-      before: "07:00:00"
-    - condition: state
-      entity_id: light.kitchen
-      state: 'off'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: binary_sensor.bora_bayesian
-        state: 'on'
-      - condition: state
-        entity_id: binary_sensor.graham_bayesian
-        state: 'on'
-  action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Kitchen"
-        scene_name: "KitchenDim"
 
 - alias: 'Bedroom button: light on (daytime)'
   id: 'bedroom_button_light_on_daytime'
@@ -1053,10 +1001,15 @@
         entity_id: light.kitchen
         state: 'off'
   action:
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Kitchen"
-        scene_name: "KitchenBright"
+    # - service: hue.hue_activate_scene
+    #   data_template:
+    #     group_name: "Kitchen"
+    #     scene_name: "KitchenBright"
+    - service:  light.turn_on
+      data:
+        entity_id: light.kitchen
+        brightness_pct: 100
+        color_temp: 153
 
 - alias: 'Kitchen switch: light off'
   id: 'kitchen_switch_light_off'
@@ -1117,10 +1070,15 @@
   action:
     - service: light.turn_off
       entity_id: light.study_2
-    - service: hue.hue_activate_scene
-      data_template:
-        group_name: "Living Room"
-        scene_name: "LivingDim"
+    # - service: hue.hue_activate_scene
+    #   data_template:
+    #     group_name: "Living Room"
+    #     scene_name: "LivingDim"
+    - service:  light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: 20
+        color_temp: 500
 
 - alias: 'Study switch: light off (daytime)'
   id: 'study_switch_light_off_daytime'
@@ -1160,10 +1118,15 @@
         entity_id: light.living_room
         state: 'off'
   action:
-    service: hue.hue_activate_scene
-    data_template:
-      group_name: "Living Room"
-      scene_name: "LivingBright"
+    # service: hue.hue_activate_scene
+    # data_template:
+    #   group_name: "Living Room"
+    #   scene_name: "LivingBright"
+    - service:  light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: 100
+        color_temp: 153
 
 - alias: 'Left switch: living room off'
   id: 'left_switch_living_room_off'
@@ -1301,38 +1264,6 @@
   action:
     - service: switch.turn_on
       entity_id: switch.plug_studyheater_switch
-
-# Toggle receiver power - Chromecast Playing -> Off
-#- alias: "Toggle receiver power - Chromecast Playing -> Off"
-#  id: 'toggle_receiver_power_chromecast_playing_to_off'
-#  hide_entity: True
-#  initial_state: 'on'
-#  trigger:
-#    platform: state
-#    entity_id: media_player.molly_dongle
-#    from: 'playing'
-#    to: 'off'
-#  action:
-#    - service: script.turn_on
-#      entity_id: script.receiver_power
-#    - service: script.turn_on
-#      entity_id: script.tv_power
-
-# Toggle receiver power - Chromecast Paused -> Off
-#- alias: "Toggle receiver power - Chromecast Playing -> Off"
-#  id: 'toggle_receiver_power_chromecast_paused_to_off'
-#  hide_entity: True
-#  initial_state: 'on'
-#  trigger:
-#    platform: state
-#    entity_id: media_player.molly_dongle
-#    from: 'paused'
-#    to: 'off'
-#  action:
-#    - service: script.turn_on
-#      entity_id: script.receiver_power
-#    - service: script.turn_on
-#      entity_id: script.tv_power
 
 # Set theme at startup
 - alias: 'Set theme at startup'

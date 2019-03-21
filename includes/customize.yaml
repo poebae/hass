@@ -165,3 +165,8 @@
     icon: mdi:arrow-expand-vertical
   sensor.time_sun_azimuth:
     icon: mdi:angle-acute
+    unit_of_measurement: °
+
+# Fitbit 
+  sensor.sleep_time_in_bed:
+    unit_of_measurement: minuti
