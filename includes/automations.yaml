@@ -4,7 +4,6 @@
 
 # Light on: study (motion detected)
 - alias: Light on, study (motion detected)
-  id: 'study_motion'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -39,7 +38,6 @@
 
 # Light on: study (motion detected - night light)
 - alias: Light on, study (motion detected), night light
-  id: 'study_motion'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -74,7 +72,6 @@
 
 # Light on: study (motion detected)
 - alias: Light on, study (motion detected)
-  id: 'study_motion'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -105,7 +102,6 @@
 
 # Light off: study (no motion)
 - alias: Light off, study (no motion)
-  id: 'study_nomotion'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -135,7 +131,6 @@
 
 # Light on: kitchen (motion detected)
 - alias: Light on, kitchen (motion detected)
-  id: 'kitchen_motion'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -147,7 +142,7 @@
     condition: and
     conditions:
       - condition: template
-        value_template: "{{ (state_attr('sun.sun', 'elevation')) < 13.5 }}"
+        value_template: "{{ (state_attr('sun.sun', 'elevation')) < 10.5 }}"
       - condition: time
         after: '06:00:00'
       - condition: time
@@ -172,7 +167,6 @@
 
 # Light on: kitchen night light
 - alias: Light on, kitchen night light
-  id: 'kitchen_nightlight_on'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -206,7 +200,6 @@
 
 # Light off: kitchen (no motion)
 - alias: Light off, kitchen (no motion)
-  id: 'kitchen_nomotion'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -226,7 +219,6 @@
 
 # Light on: living room (motion detected)
 - alias: Light on, living room (motion detected)
-  id: 'livingroom_motion'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -242,7 +234,7 @@
     - condition: time
       before: '23:00'
     - condition: template
-      value_template: "{{ (state_attr('sun.sun', 'elevation')) < 13.5 }}"
+      value_template: "{{ (state_attr('sun.sun', 'elevation')) < 10.5 }}"
     - condition: state
       entity_id: light.living_room
       state: 'off'
@@ -263,7 +255,6 @@
 
 # Light off: living/dining room (no motion)
 - alias: Light off, living,dining room (no motion)
-  id: 'livingdining_nomotion'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -285,7 +276,6 @@
 
 # Light off: living/dining room - no motion (birdie asleep)
 - alias: Light off, living/dining room - no motion (birdie asleep)
-  id: 'light_off_living_dining_no_motion_birdie_asleep'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -316,7 +306,6 @@
 
 # Light on: living room night light
 - alias: Light on, living room night light
-  id: 'livingroom_nightlight_on'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -350,7 +339,6 @@
 
 # Light off: living room night light (no motion)
 - alias: Light off, living room night light (no motion)
-  id: 'livingroom_nighlight_nomotion'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -379,7 +367,6 @@
 
 # Light on: study (someone comes home, motion already detected)
 - alias: Light on study - someone comes home (motion already detected)
-  id: 'study_motion_already'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -406,7 +393,6 @@
 
 # Light on: living (someone comes home, motion already detected)
 - alias: Light on living - someone comes home (motion already detected)
-  id: 'living_motion_already'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -433,7 +419,6 @@
 
 # Light on: kitchen (someone comes home, motion already detected)
 - alias: Light on - kitchen (someone comes home, motion already detected)
-  id: 'kitchen_motion_already'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -464,7 +449,6 @@
 
 # Light on: bedroom (sunrise)
 - alias: Light on, bedroom (sunrise)
-  id: 'sunrise_light'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -481,7 +465,7 @@
       entity_id: binary_sensor.bora_bayesian
       state: 'on'
     - condition: state
-      entity_id: 'binary_sensor.workday_sensor'
+      entity_id: binary_sensor.workday_sensor
       state: 'on'
     - condition: time
       weekday:
@@ -504,14 +488,13 @@
 
 # Light on: living room (evening)
 - alias: 'Light on, living room (evening)'
-  id: 'lights on in the evening'
   hide_entity: True
   initial_state: 'on'
   trigger:
     platform: numeric_state
     entity_id: sun.sun
     value_template: '{{ state.attributes.elevation }}'
-    below: 13.5
+    below: 10.5
   condition:
     condition: and
     conditions:
@@ -530,7 +513,6 @@
 
 # Light on: living room (someone comes home)
 - alias: Light on, living room (someone comes home)
-  id: 'lights on when home'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -557,7 +539,6 @@
 
 # Lights and heaters off: all (nobody home)
 - alias: Lights and heaters off - all (nobody home)
-  id: 'nobody_home_lights_heaters_off'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -587,7 +568,6 @@
 
 # Warning - left the house with the door open
 - alias: Warning - left the house with the door open
-  id: 'warning_left_the_house_with_the_door_open'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -615,7 +595,6 @@
 
 # Warning: Door open while nobody home
 - alias: Warning - door open while nobody home
-  id: 'automation.warning_door_opened_while_nobody_was_home'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -639,7 +618,6 @@
 
 # Flash study and living room when birdie arrives at work
 - alias: Birdie arrives at work
-  id: 'birdie_arrive_work'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -670,10 +648,8 @@
         brightness_pct: 100
         color_temp: 153
       
-
 # Flash study and living room when birdie leaves work
 - alias: Birdie leaves work
-  id: 'birdie_leaves_work'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -691,7 +667,7 @@
       after: '16:30:00'
       before: '22:00:00'
     - condition: state
-      entity_id: 'binary_sensor.workday_sensor'
+      entity_id: binary_sensor.workday_sensor
       state: 'on'
   action:
     - service: light.turn_on
@@ -709,7 +685,6 @@
 
 # Flash study and living room, and turn living room lights on when birdie is almost home
 - alias: Birdie almost home
-  id: 'birdie_almost_home'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -727,7 +702,7 @@
       after: '16:30:00'
       before: '22:00:00'
     - condition: state
-      entity_id: 'binary_sensor.workday_sensor'
+      entity_id: binary_sensor.workday_sensor
       state: 'on'
   action:
     - service: light.turn_on
@@ -747,7 +722,6 @@
         entity_id: light.living_room
         brightness_pct: 100
         color_temp: 153
-
     - service: light.turn_on
       entity_id: light.dining_room
     - service: tts.google_say
@@ -761,7 +735,6 @@
 
 # Study heater off (no motion)
 - alias: Study heater off (no motion)
-  id: 'studyheater_off_nomotion'
   hide_entity: True
   initial_state: 'off'
   trigger:
@@ -781,7 +754,6 @@
 
 # Bedroom fan off when door closes and birdie is away
 - alias: Bedroom fan off - door closes, birdie away
-  id: 'bedroom_fan_off_door_closes_birdie_away'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -794,6 +766,9 @@
       value_template: "{{ not is_state('binary_sensor.bora_bayesian', 'on') }}"
     - condition: template
       value_template: "{{states('sensor.plug_kettle_power')|float > 0.6}}"
+    - condition: state
+      entity_id: switch.plug_kettle_switch
+      state: 'on'
   action:
     service: switch.turn_off
     # entity_id: switch.plug_bedroomheater_switch
@@ -801,7 +776,6 @@
 
 # Bedroom fan off when birdie leaves and the door is cloesd
 - alias: Bedroom fan off - birdie away, door closes
-  id: 'bedroom_fan_off_birdie_away_door_closes'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -821,7 +795,6 @@
 
 # Bedroom fan back on when birdie comes home
 - alias: Bedroom fan on - birdie arrives
-  id: 'bedroom_fan_on_birdie_arrives'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -832,6 +805,9 @@
     - condition: state
       entity_id: switch.plug_kettle_switch
       state: 'off'
+    - condition: numeric_state
+      entity_id: sensor.dark_sky_apparent_temperature
+      above: '25'
   action:
     service: switch.turn_on
     entity_id:
@@ -844,7 +820,6 @@
 ########################################################################################################################
 
 - alias: 'Door open: bedroom light on (daytime)'
-  id: 'door_open_bedroom_light_on_daytime'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -864,7 +839,6 @@
         color_temp: 153
 
 - alias: 'Door open: bedroom light on (night)'
-  id: 'door_open_bedroom_light_on_night'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -884,7 +858,6 @@
         color_temp: 500
 
 - alias: 'Door closed: bedroom light off'
-  id: 'door_closed_bedroom_light_off'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -897,7 +870,6 @@
       entity_id: light.bedroom
 
 - alias: 'Bedroom button: light on (daytime)'
-  id: 'bedroom_button_light_on_daytime'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -922,7 +894,6 @@
         color_temp: 153
 
 - alias: 'Bedroom button: light on (night)'
-  id: 'bedroom_button_light_on_night'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -947,7 +918,6 @@
         color_temp: 500
 
 - alias: 'Bedroom button: light off'
-  id: 'bedroom_button_light_off'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -966,7 +936,6 @@
     entity_id: light.bedroom
 
 - alias: 'Bedroom button: double click all lights off'
-  id: 'bedroom_button_all_lights_off_double_click'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -986,7 +955,6 @@
       entity_id: light.dining_room
 
 - alias: 'Bedroom button: triple click heater toggle'
-  id: 'bedroom_button_triple_click_heater_toggle'
   hide_entity: True
   initial_state: 'off'
   trigger:
@@ -1014,7 +982,6 @@
           {% endif %}
 
 # - alias: 'Bedroom button: long press boil kettle'
-#   id: 'bedroom_button_long_press_boil_kettle'
 #   hide_entity: True
 #   initial_state: 'off'
 #   trigger:
@@ -1042,7 +1009,6 @@
 #           {% endif %}
 
 - alias: 'Bedroom button: long press dim bedroom'
-  id: 'bedroom_button_long_press_dim'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1059,7 +1025,6 @@
         color_temp: 500
 
 - alias: 'Bedroom switch: light on'
-  id: 'bedroom_switch_light_on'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1081,7 +1046,6 @@
         color_temp: 153
 
 - alias: 'Bedroom switch: light off'
-  id: 'bedroom_switch_light_off'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1100,7 +1064,6 @@
     entity_id: light.bedroom
 
 - alias: 'Kitchen switch: light on'
-  id: 'kitchen_switch_light_on'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1122,7 +1085,6 @@
         color_temp: 153
 
 - alias: 'Kitchen switch: light off'
-  id: 'kitchen_switch_light_off'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1141,7 +1103,6 @@
     entity_id: light.kitchen
 
 - alias: 'Study switch: light on'
-  id: 'study_switch_light_on'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1160,7 +1121,6 @@
     entity_id: light.study_2
 
 - alias: 'Study switch: light off (night)'
-  id: 'study_switch_light_off_night'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1187,7 +1147,6 @@
         color_temp: 500
 
 - alias: 'Study switch: light off (daytime)'
-  id: 'study_switch_light_off_daytime'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1209,7 +1168,6 @@
       entity_id: light.study_2
 
 - alias: 'Left switch: living room on'
-  id: 'left_switch_living_room_on'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1231,7 +1189,6 @@
         color_temp: 153
 
 - alias: 'Left switch: living room off'
-  id: 'left_switch_living_room_off'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1250,7 +1207,6 @@
     entity_id: light.living_room
 
 - alias: 'Right switch: dining room on'
-  id: 'right_switch_dining_room_on'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1269,7 +1225,6 @@
     entity_id: light.dining_room
 
 - alias: 'Right switch: dining room off'
-  id: 'right_switch_dining_room_off'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1288,7 +1243,6 @@
     entity_id: light.dining_room
 
 - alias: 'Both switches: living/dining room toggle'
-  id: 'both_switches_living_dining_room_toggle'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1303,7 +1257,6 @@
 
 # Turn on heater and kettle after 9pm if temperature is below 20
 - alias: "Turn on heater and kettle at 9pm if temperature is below 20"
-  id: 'heater_kettle_on_9pm_temperature_below_20'
   hide_entity: True
   initial_state: 'off'
   trigger:
@@ -1311,7 +1264,7 @@
     at: '21:00:00'
   condition:
     - condition: numeric_state
-      entity_id: 'sensor.temperature'
+      entity_id: sensor.dark_sky_apparent_temperature
       below: '20'
     - condition: state
       entity_id: binary_sensor.bora_bayesian
@@ -1328,7 +1281,6 @@
 
 # Turn off receiver after 5 minutes of living room light off
 - alias: Receiver off - living room off 5 minutes
-  id: 'receiver_off_5_minutes_living'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1351,7 +1303,6 @@
 
 # Toggle receiver power - Chromecast Idle -> Playing
 - alias: "Turn on receiver - Chromecast Idle -> Playing"
-  id: 'turn_on_receiver_chromecast_idle_to_playing'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1369,7 +1320,6 @@
 
 # Set theme at startup
 - alias: 'Set theme at startup'
-  id: 'set_theme_at_startup'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1382,7 +1332,6 @@
 
 # Theme switcher
 - alias: 'Automatic Theme Change'
-  id: 'automatic_theme_change'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -1395,7 +1344,6 @@
 
 # Bora S8 Bluetooth Occupancy - True
 - alias: 'Bora S8 Bluetooth Occupancy - True'
-  id: 's8_bluetooth_occupancy_true'
   initial_state: 'on'
   hide_entity: true
   trigger:
@@ -1409,7 +1357,6 @@
 
 # Bora S8 Bluetooth Occupancy - False
 - alias: 'Bora S8 Bluetooth Occupancy - False'
-  id: 's8_bluetooth_occupancy_false'
   initial_state: 'on'
   hide_entity: true
   trigger:
@@ -1423,7 +1370,6 @@
 
 # Graham Pixel Bluetooth Occupancy - True
 - alias: 'Graham Pixel Bluetooth Occupancy - True'
-  id: 'pixel_bluetooth_occupancy_true'
   initial_state: 'on'
   hide_entity: true
   trigger:
@@ -1437,7 +1383,6 @@
 
 # Graham Pixel Bluetooth Occupancy - False
 - alias: 'Graham Pixel Bluetooth Occupancy - False'
-  id: 'pixel_bluetooth_occupancy_false'
   initial_state: 'on'
   hide_entity: true
   trigger:
@@ -1451,7 +1396,6 @@
 
 # Google Next Train
 - alias: 'Next Train - Google'
-  id: 'google_next_train'
   initial_state: 'on'
   hide_entity: true
   trigger:
@@ -1469,7 +1413,6 @@
 
 # Security Camera Capture (nobody home)
 - alias: Security Camera Capture
-  id: 'security_camera_capture'
   hide_entity: True
   initial_state: 'off'
   trigger:

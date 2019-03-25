@@ -1,3 +1,15 @@
+  - platform: flux
+    lights:
+      - light.dining_room
+    name: Flux Dining
+    start_time: '23:00'
+    stop_time: '05:00'
+    start_colortemp: 6500
+    sunset_colortemp: 2900
+    stop_colortemp: 2000
+    disable_brightness_adjust: True
+    mode: mired
+
   # - platform: broadlink
   #   host: 192.168.1.12
   #   mac: '78:0F:77:00:D5:7C'
