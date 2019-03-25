@@ -113,6 +113,14 @@
   options:
     mode: driving
 
+- platform: google_travel_time
+  name: Drive to Aje
+  api_key: !secret google_api
+  origin: zone.home
+  destination: 94 Oxford St, Paddington
+  options:
+    mode: driving
+
 - platform: transport_nsw
   name: 'Next train to Central'
   stop_id: '2114181'

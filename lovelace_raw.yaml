@@ -117,53 +117,65 @@ views:
               - entity: sensor.weight
                 style:
                   left: 10%
-                  top: 12%
+                  top: 5%
                   transform: none
                 type: state-icon
               - entity: sensor.weight
-                prefix: 'Weight: '
+                prefix: 'Peso: '
                 style:
-                  left: 17%
-                  top: 13%
+                  left: 18%
+                  top: 7%
                   transform: none
                 type: state-label
               - entity: sensor.bmi
                 style:
                   left: 10%
-                  top: 32%
+                  top: 23%
                   transform: none
                 type: state-icon
               - entity: sensor.bmi
-                prefix: 'BMI: '
+                prefix: 'IMC: '
                 style:
-                  left: 17%
-                  top: 33%
+                  left: 18%
+                  top: 25%
                   transform: none
                 type: state-label
               - entity: sensor.body_fat
                 style:
                   left: 10%
-                  top: 52%
+                  top: 41%
                   transform: none
                 type: state-icon
               - entity: sensor.body_fat
-                prefix: 'Body Fat: '
+                prefix: 'Grasso Corporeo: '
                 style:
-                  left: 17%
-                  top: 53%
+                  left: 18%
+                  top: 43%
                   transform: none
                 type: state-label
               - entity: sensor.charge_2_battery
                 style:
                   left: 10%
-                  top: 72%
+                  top: 59%
                   transform: none
                 type: state-icon
               - entity: sensor.charge_2_battery
-                prefix: 'Fitbit Battery: '
+                prefix: 'Batteria Fitbit: '
                 style:
-                  left: 17%
-                  top: 73%
+                  left: 18%
+                  top: 61%
+                  transform: none
+                type: state-label
+              - entity: sensor.sleep_time_in_bed
+                style:
+                  left: 10%
+                  top: 77%
+                  transform: none
+                type: state-icon
+              - entity: sensor.sleep_time_in_bed
+                style:
+                  left: 18%
+                  top: 79%
                   transform: none
                 type: state-label
             image: /local/lovelace/home/health.jpg
@@ -221,7 +233,7 @@ views:
                   transform: none
                 type: state-icon
               - entity: binary_sensor.door_bedroom
-                prefix: 'Bedroom Door: '
+                prefix: 'Camera da letto: '
                 style:
                   left: 18%
                   top: 18%
@@ -230,10 +242,10 @@ views:
               - entity: binary_sensor.motion_study_occupancy
                 style:
                   left: 15%
-                  top: 65%
+                  top: 61%
                 type: state-icon
               - entity: binary_sensor.motion_study_occupancy
-                prefix: 'Study: '
+                prefix: 'Studio: '
                 style:
                   left: 15%
                   top: 79%
@@ -241,10 +253,10 @@ views:
               - entity: binary_sensor.motion_living
                 style:
                   left: 50%
-                  top: 65%
+                  top: 61%
                 type: state-icon
               - entity: binary_sensor.motion_living
-                prefix: 'Living: '
+                prefix: 'Soggiorno: '
                 style:
                   left: 50%
                   top: 79%
@@ -252,10 +264,10 @@ views:
               - entity: binary_sensor.motion_kitchen
                 style:
                   left: 85%
-                  top: 65%
+                  top: 61%
                 type: state-icon
               - entity: binary_sensor.motion_kitchen
-                prefix: 'Kitchen: '
+                prefix: 'Cucina: '
                 style:
                   left: 85%
                   top: 79%
@@ -281,7 +293,7 @@ views:
               - entity: sun.sun
                 style:
                   left: 17%
-                  top: 9%
+                  top: 10%
                   transform: none
                 type: state-label
               - entity: sensor.time_sun_elevation
@@ -291,10 +303,10 @@ views:
                   transform: none
                 type: state-icon
               - entity: sensor.time_sun_elevation
-                prefix: 'Elevation: '
+                prefix: 'Elevazione: '
                 style:
                   left: 17%
-                  top: 31%
+                  top: 32%
                   transform: none
                 type: state-label
               - entity: sensor.time_sun_azimuth
@@ -304,7 +316,7 @@ views:
                   transform: none
                 type: state-icon
               - entity: sensor.time_sun_azimuth
-                prefix: 'Azimuth: '
+                prefix: 'Azimut: '
                 style:
                   left: 17%
                   top: 53%
@@ -317,10 +329,10 @@ views:
                   transform: none
                 type: state-icon
               - entity: sensor.time_sunrise
-                prefix: 'Sunrise '
+                prefix: 'Alba '
                 style:
                   left: 67%
-                  top: 9%
+                  top: 10%
                   transform: none
                 type: state-label
               - entity: sensor.time_sunset
@@ -330,10 +342,10 @@ views:
                   transform: none
                 type: state-icon
               - entity: sensor.time_sunset
-                prefix: 'Sunset '
+                prefix: 'Tramonto '
                 style:
                   left: 67%
-                  top: 31%
+                  top: 32%
                   transform: none
                 type: state-label
               - entity: sensor.time_next_dawn
@@ -370,53 +382,66 @@ views:
               - entity: sensor.drive_to_ata
                 style:
                   left: 10%
-                  top: 7%
+                  top: 15%
                   transform: none
                 type: state-icon
               - entity: sensor.drive_to_ata
                 prefix: 'Drive to ATA: '
                 style:
                   left: 18%
-                  top: 9%
+                  top: 17%
+                  transform: none
+                type: state-label
+              - entity: sensor.drive_to_aje
+                style:
+                  left: 10%
+                  top: 40%
+                  transform: none
+                type: state-icon
+              - entity: sensor.drive_to_aje
+                prefix: 'Drive to Aje: '
+                style:
+                  left: 18%
+                  top: 42%
                   transform: none
                 type: state-label
               - entity: sensor.next_train_to_central
                 style:
                   left: 10%
-                  top: 29%
+                  top: 65%
                   transform: none
                 type: state-icon
               - entity: sensor.next_train_to_central
-                prefix: 'Next train to Central: '
+                prefix: 'Train to Central: '
                 style:
                   left: 18%
-                  top: 31%
+                  top: 67%
                   transform: none
                 type: state-label
               - entity: sensor.graham_geocode
                 style:
-                  left: 10%
-                  top: 51%
+                  left: 56%
+                  top: 15%
                   transform: none
                 type: state-icon
               - entity: sensor.graham_geocode
                 prefix: 'Graham: '
                 style:
-                  left: 18%
-                  top: 52%
+                  left: 62%
+                  top: 17%
                   transform: none
                 type: state-label
               - entity: sensor.bora_geocode
                 style:
-                  left: 10%
-                  top: 74%
+                  left: 56%
+                  top: 40%
                   transform: none
                 type: state-icon
               - entity: sensor.bora_geocode
                 prefix: 'Bora: '
                 style:
-                  left: 18%
-                  top: 75%
+                  left: 62%
+                  top: 42%
                   transform: none
                 type: state-label
             image: /local/lovelace/home/transit.jpg
@@ -430,7 +455,7 @@ views:
                   top: 50%
                 type: state-icon
               - entity: sensor.aftership_pending
-                prefix: 'Pending: '
+                prefix: 'In Attesa: '
                 style:
                   left: 15%
                   top: 70%
@@ -441,7 +466,7 @@ views:
                   top: 50%
                 type: state-icon
               - entity: sensor.aftership_intransit
-                prefix: 'In Transit: '
+                prefix: 'In Transito: '
                 style:
                   left: 50%
                   top: 70%
@@ -452,7 +477,7 @@ views:
                   top: 50%
                 type: state-icon
               - entity: sensor.aftership_delivered
-                prefix: 'Delivered: '
+                prefix: 'Consegnato: '
                 style:
                   left: 85%
                   top: 70%
@@ -536,10 +561,10 @@ views:
             type: iframe
             url: >-
               https://www.fctables.com/italy/serie-a/iframe/?type=table&lang_id=2&country=108&template=17&team=187903&timezone=Australia/Sydney&time=24&po=1&ma=1&wi=1&dr=1&los=1&gf=0&ga=0&gd=1&pts=1&ng=0&form=0&width=470&height=650&font=Helvetica&fs=14&lh=32&bg=434954&fc=FFFFFF&logo=1&tlink=0&ths=1&thb=0&thba=434954&thc=FFFFFF&bc=434954&hob=434954&hobc=434954&lc=333333&sh=0&hfb=0&hbc=3bafda&hfc=FFFFFF
-          - title: Champions League Group H
+          - title: Euro 2020 Qualifying Group J
             type: iframe
             url: >-
-              https://www.fctables.com/championsleague/iframe/?type=table&lang_id=2&country=5&stage=26153&team=187903&timezone=Australia/Sydney&time=24&po=1&ma=1&wi=1&dr=1&los=1&gf=1&ga=1&gd=1&pts=1&ng=0&form=0&width=485&height=300&font=Helvetica&fs=14&lh=44&bg=434954&fc=FFFFFF&logo=1&tlink=0&ths=1&thb=0&thba=434954&thc=FFFFFF&bc=434954&hob=434954&hobc=434954&lc=333333&sh=0&hfb=0&hbc=3bafda&hfc=FFFFFF
+              https://www.fctables.com/championsleague/iframe/?type=table&lang_id=2&country=12&stage=26832&team=18760&timezone=Australia/Sydney&time=24&po=1&ma=1&wi=1&dr=1&los=1&gf=1&ga=1&gd=1&pts=1&ng=0&form=0&width=485&height=650&font=Helvetica&fs=14&lh=32&bg=434954&fc=FFFFFF&logo=1&tlink=0&ths=1&thb=0&thba=434954&thc=FFFFFF&bc=434954&hob=434954&hobc=434954&lc=333333&sh=0&hfb=0&hbc=3bafda&hfc=FFFFFF
         type: vertical-stack
     icon: 'mdi:soccer'
     title: football
@@ -562,12 +587,13 @@ views:
             type: entities
         type: vertical-stack
       - entities:
-          - sensor.disk_use_percent
-          - sensor.memory_free
-          - sensor.processor_use
-          - sensor.network_in_wlp8s0
-          - sensor.network_out_wlp8s0
-          - sensor.last_boot
+          - entity: sensor.disk_use_percent
+          - entity: sensor.memory_free
+          - entity: sensor.processor_use
+          - entity: sensor.network_in_wlp8s0
+          - entity: sensor.network_out_wlp8s0
+          - entity: sensor.last_boot
+          - entity: sensor.ha_uptime
         show_header_toggle: false
         title: Ubuntu Server
         type: entities

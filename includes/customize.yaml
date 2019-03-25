@@ -110,6 +110,8 @@
     icon: mdi:train
   sensor.drive_to_ata:
     icon: mdi:school
+  sensor.drive_to_aje:
+    icon: mdi:grease-pencil
 
 # Juve Calendar
   sensor.juve_nextmatch:
