@@ -1,9 +1,14 @@
   - platform: flux
     lights:
+      - light.bedroom
+      - light.living_room
       - light.dining_room
-    name: Flux Dining
-    start_time: '23:00'
-    stop_time: '05:00'
+      - light.kitchen
+      - light.study
+    name: Flux All Lights
+    start_time: '22:00'
+    stop_time: '23:00'
+    transition: 180
     start_colortemp: 6500
     sunset_colortemp: 2900
     stop_colortemp: 2000

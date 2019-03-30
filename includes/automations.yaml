@@ -240,6 +240,8 @@
       - condition: state
         entity_id: light.living_room
         state: 'on'
+      - condition: template
+        value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
   action:
     - service: light.turn_off
       entity_id: light.living_room
@@ -259,6 +261,8 @@
       - condition: time
         after: '06:00:00'
         before: '23:00:00'
+      - condition: template
+        value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
       - condition: state
         entity_id: binary_sensor.door_bedroom
         state: 'on'
@@ -326,6 +330,8 @@
     - condition: time
       after: '23:00:00'
       before: '06:00:00'
+    - condition: template
+      value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
     - condition: or
       conditions:
       - condition: state
@@ -740,9 +746,11 @@
       entity_id: switch.plug_kettle_switch
       state: 'on'
   action:
-    service: switch.turn_off
+    - service: switch.turn_off
     # entity_id: switch.plug_bedroomheater_switch
-    entity_id: switch.plug_kettle_switch
+      entity_id: switch.plug_kettle_switch
+    - service: light.turn_off
+      entity_id: light.living_room
 
 # Bedroom fan off when birdie leaves and the door is cloesd
 - alias: Bedroom fan off - birdie away, door closes
@@ -759,9 +767,11 @@
     - condition: template
       value_template: "{{states('sensor.plug_kettle_power')|float > 0.6}}"
   action:
-    service: switch.turn_off
+    - service: switch.turn_off
       # entity_id: switch.plug_bedroomheater_switch
-    entity_id: switch.plug_kettle_switch
+      entity_id: switch.plug_kettle_switch
+    - service: light.turn_off
+      entity_id: light.living_room
 
 # Bedroom fan back on when birdie comes home
 - alias: Bedroom fan on - birdie arrives

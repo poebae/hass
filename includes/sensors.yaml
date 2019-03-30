@@ -11,10 +11,24 @@
   clock_format: 24H
   unit_system: metric
   monitored_resources:
+    - "activities/calories"
+    - "activities/caloriesBMR"
+    - "activities/distance"
+    - "activities/elevation"
+    - "activities/floors"
+    - "activities/heart"
+    - "activities/minutesFairlyActive"
+    - "activities/minutesLightlyActive"
+    - "activities/minutesSedentary"
+    - "activities/minutesVeryActive"
+    - "activities/steps"
+    - "activities/activityCalories"
     - "body/fat"
     - "body/bmi"
     - "body/weight"
     - "devices/battery"
+    - "sleep/awakeningsCount"
+    - "sleep/efficiency"
     - "sleep/minutesAfterWakeup"
     - "sleep/minutesAsleep"
     - "sleep/minutesAwake"
@@ -34,6 +48,11 @@
   origin: device_tracker.google_maps_111604514484536138497
   options: street_number, street,city
   api_key: !secret places_api
+
+- platform: template
+  sensors:
+    bora_geocode_trunc:
+      value_template: "{{ states.sensor.bora_geocode.state|replace(', Sydney', '')}}"
 
 - platform: template
   sensors: 

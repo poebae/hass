@@ -57,6 +57,12 @@ telegram_bot:
       - !secret graham_telegram_id
       - !secret bora_telegram_id
 
+# Habitica
+habitica:
+  - api_user: !secret habitica_user
+    api_key: !secret habitica_api
+
+# INCLUDES
 automation: !include includes/automations.yaml
 group: !include includes/groups.yaml
 input_select: !include includes/input_select.yaml
