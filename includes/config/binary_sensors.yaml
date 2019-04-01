@@ -26,7 +26,7 @@
         prob_given_false: 0.40
         platform: 'state'
         to_state: 'on'
-      - entity_id: 'binary_sensor.graham_pixel_ping'
+      - entity_id: 'device_tracker.a2_05_f2_95_8f_f2'
         prob_given_true: 0.90
         prob_given_false: 0.10
         platform: 'state'
@@ -52,11 +52,6 @@
         prob_given_false: 0.10
         platform: 'state'
         to_state: 'on'
-
-  - platform: ping
-    host: 192.168.1.85
-    name: graham_pixel_ping
-    scan_interval: 60
 
   - platform: ping
     host: 192.168.1.86

@@ -1,4 +1,4 @@
-  broker: localhost
+  broker: 127.0.0.1
   port: 1883
   discovery: true
   keepalive: 60

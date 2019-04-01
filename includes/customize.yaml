@@ -110,15 +110,15 @@
     icon: mdi:android
 
 # Switches
-  switch.plug_studyheater_switch:
+  switch.0x00158d00024d8cc9_switch:
     friendly_name: Receiver
     icon: mdi:speaker
 
-  switch.plug_bedroomheater_switch:
+  switch.0x00158d00024a7ccd_switch:
     friendly_name: Bedroom Heater
     icon: mdi:hotel
 
-  switch.plug_kettle_switch:
+  switch.0x00158d0002495404_switch:
     friendly_name: Bedroom Fan
     icon: mdi:fan
 

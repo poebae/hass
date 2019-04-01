@@ -308,7 +308,7 @@
       value_template: '{{ states.sensor.aftership.attributes.delivered }}'  
       friendly_name: 'Delivered'
 
-#Sun
+# Sun
 - platform: template
   sensors:
     time_sunrise:

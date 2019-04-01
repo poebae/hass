@@ -226,13 +226,13 @@ views:
         type: vertical-stack
       - cards:
           - elements:
-              - entity: binary_sensor.door_bedroom
+              - entity: binary_sensor.0x00158d0002286c1d
                 style:
                   left: 10%
                   top: 15%
                   transform: none
                 type: state-icon
-              - entity: binary_sensor.door_bedroom
+              - entity: binary_sensor.0x00158d0002286c1d
                 prefix: 'Camera da letto: '
                 style:
                   left: 18%
@@ -250,23 +250,23 @@ views:
                   left: 15%
                   top: 79%
                 type: state-label
-              - entity: binary_sensor.motion_living
+              - entity: binary_sensor.motion_living_occupancy
                 style:
                   left: 50%
                   top: 61%
                 type: state-icon
-              - entity: binary_sensor.motion_living
+              - entity: binary_sensor.motion_living_occupancy
                 prefix: 'Soggiorno: '
                 style:
                   left: 50%
                   top: 79%
                 type: state-label
-              - entity: binary_sensor.motion_kitchen
+              - entity: binary_sensor.motion_kitchen_occupancy
                 style:
                   left: 85%
                   top: 61%
                 type: state-icon
-              - entity: binary_sensor.motion_kitchen
+              - entity: binary_sensor.motion_kitchen_occupancy
                 prefix: 'Cucina: '
                 style:
                   left: 85%
@@ -276,9 +276,9 @@ views:
             type: picture-elements
         type: vertical-stack
       - entities:
-          - entity: switch.plug_kettle_switch
-          - entity: switch.plug_bedroomheater_switch
-          - entity: switch.plug_studyheater_switch
+          - entity: switch.0x00158d0002495404_switch
+          - entity: switch.0x00158d00024a7ccd_switch
+          - entity: switch.0x00158d00024d8cc9_switch
         image: /local/lovelace/home/switches.jpg
         title: Switches
         type: picture-glance
@@ -619,7 +619,7 @@ views:
               - input_boolean.pixel_bluetooth_occupancy
               - device_tracker.google_maps_116993081434204761650
               - binary_sensor.motion_study_occupancy
-              - binary_sensor.graham_pixel_ping
+              - device_tracker.a2_05_f2_95_8f_f2
             show_header_toggle: false
             title: Graham Bayesian
             type: entities

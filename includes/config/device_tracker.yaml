@@ -6,3 +6,8 @@
     devices:
       graham_pixel: 'graham_pixel/location'
       bora_s8: 'bora_s8/location'
+
+  - platform: ddwrt
+    host: 192.168.1.1
+    username: !secret ddwrt_user
+    password: !secret ddwrt_pass
