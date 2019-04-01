@@ -9,7 +9,7 @@ homeassistant:
     - type: homeassistant
     - type: trusted_networks
       trusted_networks:
-        - 192.168.0.0/24
+        - 192.168.1.0/24
 
   customize: !include includes/customize.yaml
   customize_glob: !include customize_glob.yaml
@@ -18,15 +18,12 @@ http:
   api_password: !secret api_password
   base_url: !secret base_url
 
-  # whitelist_external_dirs:
-    # - '/home/graham/homeassistant'
-
 light:
   - platform: yeelight
     devices:
-      192.168.1.20:
+      192.168.1.12:
         name: Dining Room Yeelight
-      192.168.1.5:
+      192.168.1.16:
         name: Study Yeelight
 
   - platform: group

@@ -158,31 +158,6 @@
     arg: wlp8s0
   - type: last_boot
 
-# Steam
-- platform: steam_online
-  api_key: !secret steamkey
-  accounts:
-    - 76561198051415178
-
-# Current Steam game  
-- platform: template
-  sensors:
-    steam_game:
-      friendly_name: "Game"
-      value_template: "{{ states.sensor.steam_76561198051415178.attributes.game }}"
-
-# In game?
-- platform: template
-  sensors:
-    ingame:
-      friendly_name: "In Game?"
-      value_template: >-
-        {% if is_state('sensor.steam_game', '') %}
-          no
-        {% else %}
-          yes
-        {% endif %}
-
 # Door Sensor Template for Floorplan
 - platform: template
   sensors:

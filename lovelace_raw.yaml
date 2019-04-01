@@ -381,67 +381,67 @@ views:
           - elements:
               - entity: sensor.drive_to_ata
                 style:
-                  left: 10%
+                  left: 4%
                   top: 15%
                   transform: none
                 type: state-icon
               - entity: sensor.drive_to_ata
                 prefix: 'Drive to ATA: '
                 style:
-                  left: 18%
+                  left: 12%
                   top: 17%
                   transform: none
                 type: state-label
               - entity: sensor.drive_to_aje
                 style:
-                  left: 10%
+                  left: 4%
                   top: 40%
                   transform: none
                 type: state-icon
               - entity: sensor.drive_to_aje
                 prefix: 'Drive to Aje: '
                 style:
-                  left: 18%
+                  left: 12%
                   top: 42%
                   transform: none
                 type: state-label
               - entity: sensor.next_train_to_central
                 style:
-                  left: 10%
+                  left: 4%
                   top: 65%
                   transform: none
                 type: state-icon
               - entity: sensor.next_train_to_central
                 prefix: 'Train to Central: '
                 style:
-                  left: 18%
+                  left: 12%
                   top: 67%
                   transform: none
                 type: state-label
               - entity: sensor.graham_geocode
                 style:
-                  left: 56%
+                  left: 48%
                   top: 15%
                   transform: none
                 type: state-icon
               - entity: sensor.graham_geocode
                 prefix: 'Graham: '
                 style:
-                  left: 62%
+                  left: 55%
                   top: 17%
                   transform: none
                 type: state-label
               - entity: sensor.bora_geocode
                 style:
-                  left: 56%
+                  left: 48%
                   top: 40%
                   transform: none
                 type: state-icon
-              - entity: sensor.bora_geocode
+              - entity: sensor.bora_geocode_trunc
                 prefix: 'Bora: '
                 style:
-                  left: 62%
-                  top: 42%
+                  left: 55%
+                  top: 44%
                   transform: none
                 type: state-label
             image: /local/lovelace/home/transit.jpg
@@ -489,35 +489,80 @@ views:
     id: home
     title: Home
   - cards:
+      - entities:
+          - entity: sensor.steps
+          - entity: sensor.activity_calories
+          - entity: sensor.calories
+          - entity: sensor.calories_bmr
+          - entity: sensor.distance
+          - entity: sensor.elevation
+          - entity: sensor.floors
+          - entity: sensor.minutes_lightly_active
+          - entity: sensor.minutes_fairly_active
+          - entity: sensor.minutes_very_active
+          - entity: sensor.minutes_sedentary
+          - entity: sensor.resting_heart_rate
+        show_header_toggle: false
+        title: Fitbit Stats
+        type: entities
+      - entities:
+          - entity: sensor.habitica_droidonomy_class
+          - entity: sensor.habitica_droidonomy_lvl
+          - entity: sensor.habitica_droidonomy_exp
+          - entity: sensor.habitica_droidonomy_tonextlevel
+          - entity: sensor.habitica_droidonomy_hp
+          - entity: sensor.habitica_droidonomy_maxhealth
+          - entity: sensor.habitica_droidonomy_mp
+          - entity: sensor.habitica_droidonomy_maxmp
+          - entity: sensor.habitica_droidonomy_gp
+        show_header_toggle: false
+        title: Habitica
+        type: entities
+    icon: 'mdi:human'
+    path: health
+    title: Health and Discipline
+  - cards:
       - cards:
           - elements:
-              - entity: script.receiver_power
+              - entity: switch.av_video
                 image: /local/lovelace/media/powerbutton.png
+                service: homeassistant.turn_on
+                service_data:
+                  entity_id: switch.av_power
                 style:
                   left: 10%
                   top: 85%
-                tap_action: toggle
+                tap_action: call-service
                 type: image
               - entity: script.receiver_volume_down
                 image: /local/lovelace/media/volume-minus.png
+                service: homeassistant.turn_off
+                service_data:
+                  entity_id: switch.av_volume
                 style:
                   left: 23%
                   top: 85%
-                tap_action: toggle
+                tap_action: call-service
                 type: image
               - entity: script.receiver_volume_up
                 image: /local/lovelace/media/volume-plus.png
+                service: homeassistant.turn_on
+                service_data:
+                  entity_id: switch.av_volume
                 style:
                   left: 36%
                   top: 85%
-                tap_action: toggle
+                tap_action: call-service
                 type: image
               - entity: script.receiver_video
                 image: /local/lovelace/media/play.png
+                service: homeassistant.turn_on
+                service_data:
+                  entity_id: switch.av_power
                 style:
                   left: 49%
                   top: 85%
-                tap_action: toggle
+                tap_action: call-service
                 type: image
             image: /local/lovelace/media/av.jpg
             type: picture-elements

@@ -90,9 +90,6 @@
     - condition: state
       entity_id: light.living_room
       state: 'off'
-    - condition: state
-      entity_id: sensor.ingame
-      state: 'no'
   action:
     - service: light.turn_off
       entity_id: light.dining_room
