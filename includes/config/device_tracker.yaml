@@ -11,3 +11,8 @@
     host: 192.168.1.1
     username: !secret ddwrt_user
     password: !secret ddwrt_pass
+
+  - platform: nmap_tracker
+    hosts:
+      - 192.168.1.85
+      - 192.168.1.86

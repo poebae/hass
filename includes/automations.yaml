@@ -2,8 +2,7 @@
 #                                                    SENSOR LIGHTS                                                     #
 ########################################################################################################################
 
-# Light on: study (motion detected)
-- alias: Light on, study (motion detected)
+- alias: Light on, dining room (motion detected)
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -20,7 +19,7 @@
       - condition: time
         after: '06:00:00'
       - condition: time
-        before: '23:00:00'
+        before: '22:00:00'
       - condition: or
         conditions:
         - condition: state
@@ -35,9 +34,16 @@
     data:
       brightness_pct: 100
       color_temp: 154
+    # data_template:
+    #   brightness_pct: >
+    #   {% if now().hour > 20 %}100
+    #   {% elif now().hour < 5 %}50
+    #   {% elif now().hour < 8 %}100
+    #   {% else %}200
+    #   {% endif %}
+    #   color_temp: 154
 
-# Light on: study (motion detected - night light)
-- alias: Light on, study (motion detected), night light
+- alias: Light on, dining room (motion detected), night light
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -52,7 +58,7 @@
         entity_id: light.dining_room
         state: 'off'
       - condition: time
-        after: '23:00:00'
+        after: '22:00:00'
       - condition: time
         before: '06:00:00'
       - condition: or
@@ -70,8 +76,8 @@
       brightness_pct: 80
       color_temp: 500
 
-# Light off: study (no motion)
-- alias: Light off, study (no motion)
+# Light off: dining room (no motion)
+- alias: Light off, dining room (no motion)
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -109,11 +115,11 @@
     condition: and
     conditions:
       - condition: template
-        value_template: "{{ (state_attr('sun.sun', 'elevation')) < 10.5 }}"
+        value_template: "{{ (state_attr('sun.sun', 'elevation')) < 12 }}"
       - condition: time
         after: '06:00:00'
       - condition: time
-        before: '23:00:00'
+        before: '22:00:00'
       - condition: state
         entity_id: light.kitchen
         state: 'off'
@@ -145,7 +151,7 @@
     condition: and
     conditions:
     - condition: time
-      after: '23:00:00'
+      after: '22:00:00'
       before: '06:00:00'
     - condition: state
       entity_id: light.kitchen
@@ -201,7 +207,7 @@
     - condition: time
       before: '23:00'
     - condition: template
-      value_template: "{{ (state_attr('sun.sun', 'elevation')) < 10.5 }}"
+      value_template: "{{ (state_attr('sun.sun', 'elevation')) < 12 }}"
     - condition: state
       entity_id: light.living_room
       state: 'off'
@@ -220,8 +226,8 @@
         brightness_pct: 100
         color_temp: 153
 
-# Light off: living/dining room (no motion)
-- alias: Light off, living,dining room (no motion)
+# Light off: living room (no motion)
+- alias: Light off, living room (no motion)
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -230,44 +236,29 @@
     from: 'on'
     to: 'off'
   condition:
-    condition: and
+    condition: or
     conditions:
-      - condition: template
-        value_template: "{{ not is_state('binary_sensor.bora_bayesian', 'on') }}"
-      - condition: state
-        entity_id: light.living_room
-        state: 'on'
-      - condition: template
-        value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
-  action:
-    - service: light.turn_off
-      entity_id: light.living_room
-
-# Light off: living/dining room - no motion (birdie asleep)
-- alias: Light off, living/dining room - no motion (birdie asleep)
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: state
-    entity_id: binary_sensor.motion_living_occupancy
-    from: 'on'
-    to: 'off'
-  condition:
-    condition: and
-    conditions:
-      - condition: time
-        after: '06:00:00'
-        before: '23:00:00'
-      - condition: template
-        value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
-      - condition: state
-        entity_id: binary_sensor.0x00158d0002286c1d
-        state: 'on'
-      - condition: state
-        entity_id: light.bedroom
-        state: 'off'
-      - condition: or
+      # Bedrom open, bedroom light off
+      - condition: and
         conditions:
+        - condition: state
+          entity_id: binary_sensor.0x00158d0002286c1d
+          state: 'on'
+        - condition: state
+          entity_id: light.bedroom
+          state: 'off'
+        - condition: template
+          value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
+        - condition: state
+          entity_id: light.living_room
+          state: 'on'
+      # Bora away
+      - condition: and
+        conditions:
+        - condition: template
+          value_template: "{{ not is_state('binary_sensor.bora_bayesian', 'on') }}"
+        - condition: template
+          value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
         - condition: state
           entity_id: light.living_room
           state: 'on'
@@ -287,9 +278,6 @@
   condition:
     condition: and
     conditions:
-    - condition: time
-      after: '23:00:00'
-      before: '06:00:00'
     - condition: state
       entity_id: light.living_room
       state: 'off'
@@ -307,36 +295,6 @@
         entity_id: light.living_room
         brightness_pct: 20
         color_temp: 500
-
-# Light off: living room night light (no motion)
-- alias: Light off, living room night light (no motion)
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: state
-    entity_id: binary_sensor.motion_living_occupancy
-    from: 'on'
-    to: 'off'
-  condition:
-    - condition: state
-      entity_id: binary_sensor.0x00158d0002286c1d
-      state: 'on'
-    - condition: state
-      entity_id: light.bedroom
-      state: 'off'
-    - condition: time
-      after: '23:00:00'
-      before: '06:00:00'
-    - condition: template
-      value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: light.living_room
-        state: 'on'
-  action:
-    - service: light.turn_off
-      entity_id: light.living_room
 
 # Light on: study (someone comes home, motion already detected)
 - alias: Light on study - someone comes home (motion already detected)
@@ -419,6 +377,45 @@
 ########################################################################################################################
 #                                                    ROUTINE LIGHTS                                                    #
 ########################################################################################################################
+# - alias: Flux lights on after 10pm
+#   hide_entity: True
+#   initial_state: 'on'
+#   trigger:
+#     - platform: time
+#       at: '21:00:00'
+#   action:
+#     service: switch.turn_on
+#     entity_id: switch.flux_all_lights
+
+# - alias: Flux checker
+#   hide_entity: True
+#   initial_state: 'on'
+#   trigger:
+#     - platform: state
+#       entity_id: light.bedroom, light.living_room, light.dining_room, light.kitchen, light.study
+#       to: "on"
+#     - platform: time_pattern
+#       seconds: '/30'
+#   condition:
+#     - condition: state
+#       entity_id: switch.flux
+#       state: 'on'
+#   action:
+#     service: switch.flux_update
+
+# - alias: Turn off flux at 6am
+#   hide_entity: True
+#   initial_state: 'on'
+#   trigger:
+#     - platform: time
+#       at: '06:00:00'
+#   condition:
+#     - condition: state
+#       entity_id: switch.flux
+#       state: 'on'
+#   action:
+#     service: switch.turn_off
+#     entity_id: switch.flux_all_lights
 
 # Light on: bedroom (sunrise)
 - alias: Light on, bedroom (sunrise)
@@ -467,7 +464,7 @@
     platform: numeric_state
     entity_id: sun.sun
     value_template: '{{ state.attributes.elevation }}'
-    below: 10.5
+    below: 12
   condition:
     condition: and
     conditions:
@@ -807,7 +804,7 @@
   condition:
     condition: time
     after: '06:00:00'
-    before: '23:00:00'
+    before: '22:00:00'
   action:
     - service:  light.turn_on
       data:
@@ -825,7 +822,7 @@
     to: 'on'
   condition:
     condition: time
-    after: '23:00:00'
+    after: '22:00:00'
     before: '06:00:00'
   action:
     - service:  light.turn_on
@@ -862,7 +859,7 @@
         state: 'off'
       - condition: time
         after: '06:00:00'
-        before: '23:00:00'
+        before: '22:00:00'
   action:
     - service:  light.turn_on
       data:
@@ -882,7 +879,7 @@
       - condition: template
         value_template: "{{ 'single' == trigger.payload_json.click }}"
       - condition: time
-        after: '23:00:00'
+        after: '22:00:00'
         before: '06:00:00'
       - condition: state
         entity_id: light.bedroom
@@ -1091,37 +1088,11 @@
       - condition: template
         value_template: "{{ 'single' == trigger.payload_json.click }}"
       - condition: state
-        entity_id: light.study_2
+        entity_id: light.study
         state: 'off'
   action:
     service: light.turn_on
-    entity_id: light.study_2
-
-- alias: 'Study switch: light off (night)'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_study'
-  condition:
-    condition: and
-    conditions:
-      - condition: time
-        after: '23:00:00'
-        before: '07:00:00'
-      - condition: state
-        entity_id: light.study_2
-        state: 'on'
-      - condition: template
-        value_template: "{{ 'single' == trigger.payload_json.click }}"
-  action:
-    - service: light.turn_off
-      entity_id: light.study_2
-    - service:  light.turn_on
-      data:
-        entity_id: light.living_room
-        brightness_pct: 20
-        color_temp: 500
+    entity_id: light.study
 
 - alias: 'Study switch: light off (daytime)'
   hide_entity: True
@@ -1134,15 +1105,41 @@
     conditions:
       - condition: time
         after: '07:00:00'
-        before: '23:00:00'
+        before: '22:00:00'
       - condition: state
-        entity_id: light.study_2
+        entity_id: light.study
         state: 'on'
       - condition: template
         value_template: "{{ 'single' == trigger.payload_json.click }}"
   action:
     - service: light.turn_off
-      entity_id: light.study_2
+      entity_id: light.study
+
+- alias: 'Study switch: light off (night)'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_study'
+  condition:
+    condition: and
+    conditions:
+      - condition: time
+        after: '22:00:00'
+        before: '07:00:00'
+      - condition: state
+        entity_id: light.study
+        state: 'on'
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+  action:
+    - service: light.turn_off
+      entity_id: light.study
+    - service:  light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: 20
+        color_temp: 500
 
 - alias: 'Left switch: living room on'
   hide_entity: True
@@ -1199,7 +1196,11 @@
         state: 'off'
   action:
     service: light.turn_on
-    entity_id: light.dining_room
+    data:
+      entity_id: light.dining_room
+      brightness_pct: 100
+      color_temp: 153
+
 
 - alias: 'Right switch: dining room off'
   hide_entity: True

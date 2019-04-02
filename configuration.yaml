@@ -102,6 +102,7 @@ tts:
   - platform: google
     cache: false
 
+circadian_lighting:
 ffmpeg:
 map:
 config:
