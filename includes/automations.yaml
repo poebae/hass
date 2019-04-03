@@ -3,7 +3,7 @@
 ########################################################################################################################
 
 # Experimental
-- alias: Motion Lights
+- alias: Motion Lights On
   trigger:
     - platform: state
       entity_id:
@@ -12,25 +12,21 @@
         - binary_sensor.motion_study_occupancy
         - binary_sensor.door_bedroom
       to: 'on'
-
-    - platform: state
-      entity_id:
-        - binary_sensor.motion_kitchen
-        - binary_sensor.motion_living
-        - binary_sensor.motion_study_occupancy
-        - binary_sensor.door_bedroom
-      to: 'off'
-
-    - platform: state
-      entity_id:
-        - binary_sensor.motion_study_occupancy
-      to: 'off'
-      for:
-        minutes: 10
-
-  # condition:
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ (state_attr('sun.sun', 'elevation')) < 60 }}"
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: binary_sensor.bora_bayesian
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.graham_bayesian
+          state: 'on'
   action:
-    - service_template: 'homeassistant.turn_{{trigger.to_state.state}}'
+    - service: light.turn_on
       data_template:
         entity_id: >
           {% set trigger_entity = trigger.entity_id %}
@@ -44,55 +40,37 @@
             light.bedroom
           {% endif %}
 
-# # Light on, dining room (motion detected)
-# - alias: Light on, dining room (motion detected)
-#   hide_entity: True
-#   initial_state: 'on'
-#   trigger:
-#     platform: state
-#     entity_id: binary_sensor.motion_study_occupancy
-#     from: 'off'
-#     to: 'on'
-#   condition:
-#     condition: and
-#     conditions:
-#       - condition: state
-#         entity_id: light.dining_room
-#         state: 'off'
-#       - condition: or
-#         conditions:
-#         - condition: state
-#           entity_id: binary_sensor.bora_bayesian
-#           state: 'on'
-#         - condition: state
-#           entity_id: binary_sensor.graham_bayesian
-#           state: 'on'
-#   action:
-#   - service: light.turn_on
-#     entity_id: light.dining_room
+# Experimental
+- alias: Motion Lights Off
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.motion_kitchen_occupancy
+        - binary_sensor.motion_living_occupancy
+        - binary_sensor.door_bedroom
+      to: 'off'
 
-# # Light off, dining room (no motion)
-# - alias: Light off, dining room (no motion)
-#   hide_entity: True
-#   initial_state: 'on'
-#   trigger:
-#     platform: state
-#     entity_id: binary_sensor.motion_study_occupancy
-#     from: 'on'
-#     to: 'off'
-#     for:
-#       minutes: 10
-#   condition:
-#     condition: and
-#     conditions:
-#     - condition: state
-#       entity_id: light.dining_room
-#       state: 'on'
-#   action:
-#     - service: light.turn_off
-#       entity_id: light.dining_room
-#     # - service: switch.turn_off
-#     #   entity_id: switch.plug_kettle_switch
+    - platform: state
+      entity_id:
+        - binary_sensor.motion_study_occupancy
+      to: 'off'
+      for:
+        minutes: 1
+  # condition:
+  action:
+    - service_template: light.turn_off
+      data_template:
+        entity_id: >
+          {% set trigger_entity = trigger.entity_id %}
+          {% if trigger_entity == 'binary_sensor.motion_kitchen_occupancy' %}
+            light.kitchen
+          {% elif trigger_entity == 'binary_sensor.motion_living_occupancy' %}
+            light.living_room
+          {% elif trigger_entity == 'binary_sensor.motion_study_occupancy' %}
+            light.dining_room
+          {% elif trigger_entity == 'binary_sensor.door_bedroom' %}
+            light.bedroom
+          {% endif %}
 
 # # Light on, kitchen (motion detected)
 # - alias: Light on, kitchen (motion detected)
