@@ -45,16 +45,8 @@
     icon: mdi:door
   automation.bedroom_button_long_press_boil_kettle:
     icon: mdi:kettle  
-  automation.light_on_dining_room_motion_detected:
-    icon: mdi:lightbulb-on-outline
-  automation.light_off_dining_room_no_motion:
-    icon: mdi:lightbulb-outline
-  automation.light_on_living_room_motion_detected:
-    icon: mdi:lightbulb-on-outline
-  automation.light_off_living_room_no_motion:
-    icon: mdi:lightbulb-outline
-  automation.light_off_kitchen_no_motion:
-    icon: mdi:lightbulb-outline
+  automation.motion_lights:
+    icon: mdi:motion-sensor
 
 # Habitica
   sensor.habitica_droidonomy_class:  

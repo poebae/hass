@@ -109,5 +109,3 @@ circadian_lighting:
   max_colortemp: 6500
   interval: 600
   transition: 30
-  sunrise_time: '07:09'
-  sunset_time: '18:49'

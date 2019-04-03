@@ -49,42 +49,6 @@
   options: street_number, street,city
   api_key: !secret places_api
 
-- platform: template
-  sensors:
-    bora_geocode_trunc:
-      value_template: "{{ states.sensor.bora_geocode.state|replace(', Sydney', '')}}"
-
-- platform: template
-  sensors: 
-    graham_battery:
-      value_template: '{{ states.device_tracker.google_maps_116993081434204761650.attributes.battery_level }}'  
-      friendly_name: 'Graham Pixel 3 Battery' 
-      unit_of_measurement: '%'
-      icon_template: >
-       {% set battery_level = states.device_tracker.google_maps_116993081434204761650.attributes.battery_level|default(0)|int %}
-       {% set battery_round = (battery_level / 10) |int * 10 %}
-       {% if battery_round >= 100 %}
-         mdi:battery
-        {% elif battery_round > 0 %}
-         mdi:battery-{{ battery_round }}
-       {% else %}
-         mdi:battery-alert
-       {% endif %}
-
-    bora_battery:
-      value_template: '{{ states.device_tracker.google_maps_111604514484536138497.attributes.battery_level }}'  
-      friendly_name: 'Bora Galaxy S8 Battery' 
-      unit_of_measurement: '%'
-      icon_template: >
-       {% set battery_level = states.device_tracker.google_maps_111604514484536138497.attributes.battery_level|default(0)|int %}
-       {% set battery_round = (battery_level / 10) |int * 10 %}
-       {% if battery_round >= 100 %}
-         mdi:battery
-        {% elif battery_round > 0 %}
-         mdi:battery-{{ battery_round }}
-       {% else %}
-         mdi:battery-alert
-       {% endif %}
 
 # Weather
 - platform: darksky
@@ -158,54 +122,6 @@
     arg: wlp8s0
   - type: last_boot
 
-# Door Sensor Template for Floorplan
-- platform: template
-  sensors:
-    bedroom_door_closed:
-      entity_id: binary_sensor.door_bedroom
-      value_template: >
-        {% if is_state('binary_sensor.door_bedroom', 'off') %}
-          on
-        {% else %}
-          off
-        {% endif %}
-
-# Motion Sensor Template for Floorplan - Study
-- platform: template
-  sensors:
-    study_motion:
-      entity_id: binary_sensor.motion_study
-      value_template: >
-        {% if is_state('binary_sensor.motion_study_occupancy', 'on') %}
-          on
-        {% else %}
-          off
-        {% endif %}
-
-# Motion Sensor Template for Floorplan - Kitchen
-- platform: template
-  sensors:
-    kitchen_motion:
-      entity_id: binary_sensor.motion_kitchen
-      value_template: >
-        {% if is_state('binary_sensor.motion_kitchen', 'on') %}
-          on
-        {% else %}
-          off
-        {% endif %}
-
-# Motion Sensor Template for Floorplan - Living Room
-- platform: template
-  sensors:
-    livingroom_motion:
-      entity_id: binary_sensor.motion_living
-      value_template: >
-        {% if is_state('binary_sensor.motion_living', 'on') %}
-          on
-        {% else %}
-          off
-        {% endif %}
-
 # Pihole
 - platform: pi_hole
   host: 192.168.1.6
@@ -218,6 +134,119 @@
     - queries_forwarded
     - unique_clients
     - unique_domains
+
+
+########################################################################################################################
+#                                                 TEMPLATE SENSORS                                                     #
+########################################################################################################################
+
+- platform: template
+  sensors: 
+
+    circadian_rounded:
+      value_template: "{{ (states('sensor.circadian_values') | round(2)) }}"
+      friendly_name: 'Circadian Value'
+    habitica_droidonomy_health:
+      value_template: "{{ ( states('sensor.habitica_droidonomy_hp') | round(2)) }}"
+      friendly_name: 'Habitica Health'
+    habitica_droidonomy_gold:
+      value_template: "{{ ( states('sensor.habitica_droidonomy_gp') | round(2)) }}"
+      friendly_name: 'Habitica Gold'
+
+# Aftership
+    aftership_pending:
+      value_template: '{{ states.sensor.aftership.attributes.pending }}'
+      friendly_name: 'Pending'
+    aftership_intransit:
+      value_template: '{{ states.sensor.aftership.attributes.intransit }}'  
+      friendly_name: 'In Transit'
+    aftership_delivered:
+      value_template: '{{ states.sensor.aftership.attributes.delivered }}'  
+      friendly_name: 'Delivered'
+
+# Sun
+    time_sunrise:
+      value_template: '{{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%H:%M") }}'
+    time_sunset:
+      value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%H:%M") }}'
+    time_next_dawn:
+      value_template: '{{ as_timestamp(states.sun.sun.attributes.next_dawn) | timestamp_custom("%H:%M") }}'
+    time_next_dusk:
+      value_template: '{{ as_timestamp(states.sun.sun.attributes.next_dusk) | timestamp_custom("%H:%M") }}'
+    time_sun_elevation:
+      value_template: '{{ states.sun.sun.attributes.elevation }}'
+    time_sun_azimuth:
+      value_template: '{{ states.sun.sun.attributes.azimuth }}'
+
+    bora_geocode_trunc:
+      value_template: "{{ states.sensor.bora_geocode.state|replace(', Sydney', '')}}"
+
+    graham_battery:
+      value_template: '{{ states.device_tracker.google_maps_116993081434204761650.attributes.battery_level }}'  
+      friendly_name: 'Graham Pixel 3 Battery' 
+      unit_of_measurement: '%'
+      icon_template: >
+       {% set battery_level = states.device_tracker.google_maps_116993081434204761650.attributes.battery_level|default(0)|int %}
+       {% set battery_round = (battery_level / 10) |int * 10 %}
+       {% if battery_round >= 100 %}
+         mdi:battery
+        {% elif battery_round > 0 %}
+         mdi:battery-{{ battery_round }}
+       {% else %}
+         mdi:battery-alert
+       {% endif %}
+
+    bora_battery:
+      value_template: '{{ states.device_tracker.google_maps_111604514484536138497.attributes.battery_level }}'  
+      friendly_name: 'Bora Galaxy S8 Battery' 
+      unit_of_measurement: '%'
+      icon_template: >
+       {% set battery_level = states.device_tracker.google_maps_111604514484536138497.attributes.battery_level|default(0)|int %}
+       {% set battery_round = (battery_level / 10) |int * 10 %}
+       {% if battery_round >= 100 %}
+         mdi:battery
+        {% elif battery_round > 0 %}
+         mdi:battery-{{ battery_round }}
+       {% else %}
+         mdi:battery-alert
+       {% endif %}
+
+# Template for Floorplan
+    bedroom_door_closed:
+      entity_id: binary_sensor.door_bedroom
+      value_template: >
+        {% if is_state('binary_sensor.door_bedroom', 'off') %}
+          on
+        {% else %}
+          off
+        {% endif %}
+
+    study_motion:
+      entity_id: binary_sensor.motion_study
+      value_template: >
+        {% if is_state('binary_sensor.motion_study_occupancy', 'on') %}
+          on
+        {% else %}
+          off
+        {% endif %}
+
+    kitchen_motion:
+      entity_id: binary_sensor.motion_kitchen
+      value_template: >
+        {% if is_state('binary_sensor.motion_kitchen', 'on') %}
+          on
+        {% else %}
+          off
+        {% endif %}
+
+    livingroom_motion:
+      entity_id: binary_sensor.motion_living
+      value_template: >
+        {% if is_state('binary_sensor.motion_living', 'on') %}
+          on
+        {% else %}
+          off
+        {% endif %}
 
 # Xiaomi Batteries
 - platform: mqtt
@@ -294,32 +323,3 @@
   value_template: '{{ value_json.confidence }}'
   unit_of_measurement: '%'
   name: 'Bora S8 Bluetooth'
-
-# Aftership
-- platform: template
-  sensors: 
-    aftership_pending:
-      value_template: '{{ states.sensor.aftership.attributes.pending }}'  
-      friendly_name: 'Pending'
-    aftership_intransit:
-      value_template: '{{ states.sensor.aftership.attributes.intransit }}'  
-      friendly_name: 'In Transit'
-    aftership_delivered:
-      value_template: '{{ states.sensor.aftership.attributes.delivered }}'  
-      friendly_name: 'Delivered'
-
-# Sun
-- platform: template
-  sensors:
-    time_sunrise:
-      value_template: '{{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%H:%M") }}'
-    time_sunset:
-      value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%H:%M") }}'
-    time_next_dawn:
-      value_template: '{{ as_timestamp(states.sun.sun.attributes.next_dawn) | timestamp_custom("%H:%M") }}'
-    time_next_dusk:
-      value_template: '{{ as_timestamp(states.sun.sun.attributes.next_dusk) | timestamp_custom("%H:%M") }}'
-    time_sun_elevation:
-      value_template: '{{ states.sun.sun.attributes.elevation }}'
-    time_sun_azimuth:
-      value_template: '{{ states.sun.sun.attributes.azimuth }}'
