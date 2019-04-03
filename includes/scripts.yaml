@@ -7,35 +7,35 @@ living_cam:
         target: "unnamed device"
         message: "Living Room Cam"
         data:
-          image: "http://192.168.1.4/cgi-bin/currentpic.cgi"
+          image: "https://root:moses40@192.168.1.55/cgi-bin/currentpic.cgi"
     - delay: 00:00:15
     - service: notify.android
       data:
         target: "unnamed device"
         message: "Living Room Cam"
         data:
-          image: "http://192.168.1.4/cgi-bin/currentpic.cgi"
+          image: "https://root:moses40@192.168.1.55/cgi-bin/currentpic.cgi"
     - delay: 00:00:15
     - service: notify.android
       data:
         target: "unnamed device"
         message: "Living Room Cam"
         data:
-          image: "http://192.168.1.4/cgi-bin/currentpic.cgi"
+          image: "https://root:moses40@192.168.1.55/cgi-bin/currentpic.cgi"
     - delay: 00:00:15
     - service: notify.android
       data:
         target: "unnamed device"
         message: "Living Room Cam"
         data:
-          image: "http://192.168.1.4/cgi-bin/currentpic.cgi"
+          image: "https://root:moses40@192.168.1.55/cgi-bin/currentpic.cgi"
     - delay: 00:00:15
     - service: notify.android
       data:
         target: "unnamed device"
         message: "Living Room Cam"
         data:
-          image: "http://192.168.1.4/cgi-bin/currentpic.cgi"
+          image: "http://root:moses40@192.168.1.55/cgi-bin/currentpic.cgi"
 
 # Google - Next Train
 speak_next_train:

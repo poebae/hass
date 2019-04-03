@@ -1,3 +1,0 @@
-  - platform: ffmpeg
-    input: -rtsp_transport tcp -i rtsp://root:ismart12@192.168.1.55:8554/unicast
-    name: Living Room

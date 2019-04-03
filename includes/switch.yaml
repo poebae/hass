@@ -16,12 +16,14 @@
   #   mode: mired
 
   - platform: circadian_lighting
+    name: all
+    min_brightness: 20
     lights_ct:
       - light.bedroom
       - light.living_room
-      - light.dining_room
       - light.kitchen
       - light.study
+      - light.dining_room
 
   - platform: broadlink
     host: 192.168.1.11

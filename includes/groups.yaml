@@ -23,21 +23,6 @@
   graham: binary_sensor.graham_bayesian
   bora: binary_sensor.bora_bayesian
 
-#########
-# LIGHTS #
-########
-  bedroom:
-    name: Bedroom Light
-    entities:
-     - light.molly_bedroom_1
-     - light.molly_bedroom_2
-
-  living_room:
-    name: Living Room Light
-    entities:
-     - light.molly_living_room_1
-     - light.molly_living_room_2
-
 # Family
   family:
     name: Family

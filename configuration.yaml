@@ -20,21 +20,15 @@ light:
   - platform: yeelight
     devices:
       192.168.1.12:
-        name: Dining Room Yeelight
-      192.168.1.16:
-        name: Study Yeelight
+        name: Dining Room Yeelight 1
+      192.168.1.13:
+        name: Dining Room Yeelight 2
 
   - platform: group
     name: Dining Room
     entities:
-      - light.molly_dining_room_2
-      - light.dining_room_yeelight
-
-  - platform: group
-    name: Study
-    entities:
-      - light.molly_study
-      - light.study_yeelight
+      - light.dining_room_yeelight_1
+      - light.dining_room_yeelight_2
 
 # Floor plan
 panel_custom:
@@ -64,19 +58,17 @@ input_select: !include includes/input_select.yaml
 input_boolean: !include includes/input_boolean.yaml
 script: !include includes/scripts.yaml
 sensor: !include includes/sensors.yaml
-
-# CONFIG
-binary_sensor: !include includes/config/binary_sensors.yaml
-camera: !include includes/config/camera.yaml
-cast: !include includes/config/cast.yaml
-cloud: !include includes/config/cloud.yaml
-device_tracker: !include includes/config/device_tracker.yaml
-history: !include includes/config/history.yaml
-logbook: !include includes/config/logbook.yaml
-mqtt: !include includes/config/mqtt.yaml
-notify: !include includes/config/notify.yaml
-switch: !include includes/config/switch.yaml
-zone: !include includes/config/zones.yaml
+binary_sensor: !include includes/binary_sensors.yaml
+camera: !include includes/camera.yaml
+cast: !include includes/cast.yaml
+cloud: !include includes/cloud.yaml
+device_tracker: !include includes/device_tracker.yaml
+history: !include includes/history.yaml
+logbook: !include includes/logbook.yaml
+mqtt: !include includes/mqtt.yaml
+notify: !include includes/notify.yaml
+switch: !include includes/switch.yaml
+zone: !include includes/zones.yaml
 
 logger:
   default: warn
@@ -102,7 +94,6 @@ tts:
   - platform: google
     cache: false
 
-circadian_lighting:
 ffmpeg:
 map:
 config:
@@ -112,3 +103,11 @@ stream:
 discovery:
   ignore:
     - netgear_router
+
+circadian_lighting:
+  min_colortemp: 1700
+  max_colortemp: 6500
+  interval: 600
+  transition: 30
+  sunrise_time: '07:09'
+  sunset_time: '18:49'
