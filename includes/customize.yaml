@@ -1,6 +1,7 @@
 # Lights
   light.bedroom:
     icon: mdi:hotel
+    friendly_name: Bedroom
   light.living_room:
     icon: mdi:sofa
     friendly_name: Living
@@ -9,11 +10,23 @@
     friendly_name: Dining
   light.kitchen:
     icon: mdi:pot-mix
+    friendly_name: Kitchen
   light.study:
     icon: mdi:desktop-classic
     friendly_name: Study
 
 # Sensors
+  binary_sensor.door_bedroom:
+    friendly_name: Bedroom Door
+  binary_sensor.motion_living_occupancy:
+    device_class: motion
+    friendly_name: Living Room Motion
+  binary_sensor.motion_kitchen_occupancy:
+    device_class: motion
+    friendly_name: Kitchen Motion
+  binary_sensor.motion_study_occupancy:
+    device_class: motion
+    friendly_name: Study Motion
   sensor.bedroomdoor_state:
     device_class: door
   sensor.studymotion_state:
@@ -21,13 +34,6 @@
   sensor.livingroommotion_state:
     device_class: motion
   sensor.kitchenmotion_state:
-    device_class: motion
-  binary_sensor.motion_living:
-    device_class: motion
-  binary_sensor.motion_study_occupancy:
-    device_class: motion
-    friendly_name: Study Motion
-  binary_sensor.motion_kitchen:
     device_class: motion
   binary_sensor.graham_bayesian:
     device_class: presence
@@ -46,7 +52,7 @@
   automation.bedroom_button_long_press_boil_kettle:
     icon: mdi:kettle  
   automation.motion_lights:
-    icon: mdi:motion-sensor
+    icon: mdi:walk
 
 # Habitica
   sensor.habitica_droidonomy_class:  
@@ -68,27 +74,26 @@
   sensor.habitica_droidonomy_gp:
     friendly_name: Gold
     unit_of_measurement: GC
+  sensor.habitica_droidonomy_health:
+    icon: mdi:heart
+  sensor.habitica_droidonomy_gold:
+    icon: mdi:coin
 
 # Floor Plan
   binary_sensor.floorplan:
     custom_ui_state_card: state-card-floorplan
     config: !include /config/floorplan.yaml
 
-# Weather Card
-  input_boolean.weather:
-    custom_ui_state_card: custom-weather-card
-    config:
-      weather: weather.yweather
-      sun: sun.sun
-
 # Trackers
   sensor.graham_geocode:
     icon: mdi:human-handsup
+    friendly_name: Graham Pixel 3
   device_tracker.google_maps_116993081434204761650:
     friendly_name: Graham Pixel 3
     icon: mdi:human-handsup
   sensor.bora_geocode:
     icon: mdi:human-female
+    friendly_name: Bora Galaxy S8
   device_tracker.google_maps_111604514484536138497:
     icon: mdi:human-female
     friendly_name: Bora Galaxy S8

@@ -49,7 +49,6 @@
   options: street_number, street,city
   api_key: !secret places_api
 
-
 # Weather
 - platform: darksky
   api_key: !secret darksky_key
@@ -135,7 +134,6 @@
     - unique_clients
     - unique_domains
 
-
 ########################################################################################################################
 #                                                 TEMPLATE SENSORS                                                     #
 ########################################################################################################################
@@ -147,11 +145,13 @@
       value_template: "{{ (states('sensor.circadian_values') | round(2)) }}"
       friendly_name: 'Circadian Value'
     habitica_droidonomy_health:
-      value_template: "{{ ( states('sensor.habitica_droidonomy_hp') | round(2)) }}"
-      friendly_name: 'Habitica Health'
+      value_template: "{{ ( states('sensor.habitica_droidonomy_hp') | round(0)) }}"
+      friendly_name: 'Health'
+      unit_of_measurement: HP
     habitica_droidonomy_gold:
-      value_template: "{{ ( states('sensor.habitica_droidonomy_gp') | round(2)) }}"
-      friendly_name: 'Habitica Gold'
+      value_template: "{{ ( states('sensor.habitica_droidonomy_gp') | round(0)) }}"
+      friendly_name: 'Gold'
+      unit_of_measurement: Gold
 
 # Aftership
     aftership_pending:

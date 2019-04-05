@@ -29,6 +29,7 @@ fitbit.conf
 .google*
 .storage/
 *.json
+tmp/
 
 # Temporary files
 *.db-journal

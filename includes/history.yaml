@@ -11,6 +11,13 @@
       - light.living_room
       - light.dining_room
       - light.study
+      - binary_sensor.motion_kitchen_occupancy
+      - binary_sensor.motion_living_occupancy
+      - binary_sensor.motion_study_occupancy
+      - binary_sensor.door_bedroom
+      - light.living_room
+      - light.dining_room
+      - light.study
       - switch.plug_kettle_switch
       - switch.plug_bedroomheater_switch
       - switch.plug_studyheater_switch

@@ -2,72 +2,170 @@
 #                                                    SENSOR LIGHTS                                                     #
 ########################################################################################################################
 
-# Motion Lights
-- alias: Motion Lights
+# Light on, dining room (motion detected)
+- alias: Light on, dining room (motion detected)
+  hide_entity: True
+  initial_state: 'on'
   trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.motion_kitchen_occupancy
-        - binary_sensor.motion_living_occupancy
-        - binary_sensor.motion_study_occupancy
-        - binary_sensor.door_bedroom
-      to: 'on'
-    - platform: state
-      entity_id:
-        - binary_sensor.motion_kitchen_occupancy
-        - binary_sensor.motion_living_occupancy
-        - binary_sensor.door_bedroom
-      to: 'off'
-    - platform: state
-      entity_id:
-        - binary_sensor.motion_study_occupancy
-      to: 'off'
-      for:
-        minutes: 10
+    platform: state
+    entity_id: binary_sensor.motion_study_occupancy
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.dining_room
+        state: 'off'
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: binary_sensor.bora_bayesian
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.graham_bayesian
+          state: 'on'
   action:
-    service_template: >
-      {% if trigger.to_state.state == 'on' %}
-        {% if trigger.entity_id == 'binary_sensor.door_bedroom' %}
-          light.turn_on
-        {% elif (state_attr('sun.sun', 'elevation')) < 12 %}
-          {% if is_state('binary_sensor.graham_bayesian', 'on') or is_state('binary_sensor.bora_bayesian', 'on') %}
-            light.turn_on
-          {% endif %}
-        {% endif %}
-      {% elif trigger.to_state.state == 'off' %}
-        {% if not trigger.entity_id == 'binary_sensor.motion_living_occupancy' %}
-          light.turn_off
-        {% elif not is_state('binary_sensor.bora_bayesian', 'on')%}
-          light.turn_off
-        {% elif is_state('binary_sensor.door_bedroom', 'on') and is_state('light.bedroom', 'off') and not is_state('media_player.molly_dongle', 'playing') %}
-          light.turn_off
-        {% endif %}
-      {% endif %}
-    data_template:
-      entity_id: >
-        {% set trigger_entity = trigger.entity_id %}
-        {% if trigger_entity == 'binary_sensor.motion_kitchen_occupancy' %}
-          light.kitchen
-        {% elif trigger_entity == 'binary_sensor.motion_living_occupancy' %}
-          light.living_room
-        {% elif trigger_entity == 'binary_sensor.motion_study_occupancy' %}
-          light.dining_room
-        {% elif trigger_entity == 'binary_sensor.door_bedroom' %}
-          light.bedroom
-        {% endif %}
+  - service: light.turn_on
+    entity_id: light.dining_room
 
-# Tell me when motion lights will start turning on
-- alias: Sun elevation below 12
+# Light off, dining room (no motion)
+- alias: Light off, dining room (no motion)
+  hide_entity: True
+  initial_state: 'on'
   trigger:
-    platform: numeric_state
-    entity_id: sun.sun
-    value_template: '{{ state.attributes.elevation }}'
-    below: 12
+    platform: state
+    entity_id: binary_sensor.motion_study_occupancy
+    from: 'on'
+    to: 'off'
+    for:
+      minutes: 10
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: light.dining_room
+      state: 'on'
   action:
-    service: tts.google_say
-    entity_id: media_player.molly_home
-    data:
-      message: 'Motion lights activated'
+    - service: light.turn_off
+      entity_id: light.dining_room
+    # - service: switch.turn_off
+    #   entity_id: switch.plug_kettle_switch
+
+# Light on, kitchen (motion detected)
+- alias: Light on, kitchen (motion detected)
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_kitchen_occupancy
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ (state_attr('sun.sun', 'elevation')) < 12 }}"
+      - condition: state
+        entity_id: light.kitchen
+        state: 'off'
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: binary_sensor.bora_bayesian
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.graham_bayesian
+          state: 'on'
+  action:
+    - service:  light.turn_on
+      entity_id: light.kitchen
+
+# Light off, kitchen (no motion)
+- alias: Light off, kitchen (no motion)
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_kitchen_occupancy
+    from: 'on'
+    to: 'off'
+    for:
+      minutes: 2
+  condition:
+      condition: state
+      entity_id: light.kitchen
+      state: 'on'
+  action:
+    service: light.turn_off
+    entity_id: light.kitchen
+
+# Light on, living room (motion detected)
+- alias: Light on, living room (motion detected)
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_living_occupancy
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: template
+      value_template: "{{ (state_attr('sun.sun', 'elevation')) < 12 }}"
+    - condition: state
+      entity_id: light.living_room
+      state: 'off'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: binary_sensor.bora_bayesian
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.graham_bayesian
+        state: 'on'
+  action:
+    - service:  light.turn_on
+      entity_id: light.living_room
+
+# Light off, living room (no motion)
+- alias: Light off, living room (no motion)
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_living_occupancy
+    from: 'on'
+    to: 'off'
+  condition:
+    condition: or
+    conditions:
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: binary_sensor.door_bedroom
+          state: 'on'
+        - condition: state
+          entity_id: light.bedroom
+          state: 'off'
+        - condition: template
+          value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
+        - condition: state
+          entity_id: light.living_room
+          state: 'on'
+      - condition: and
+        conditions:
+        - condition: template
+          value_template: "{{ not is_state('binary_sensor.bora_bayesian', 'on') }}"
+        - condition: template
+          value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
+        - condition: state
+          entity_id: light.living_room
+          state: 'on'
+  action:
+    - service: light.turn_off
+      entity_id: light.living_room
 
 ########################################################################################################################
 #                                                    ROUTINE LIGHTS                                                    #
@@ -89,6 +187,9 @@
     - condition: state
       entity_id: binary_sensor.bora_bayesian
       state: 'off'
+    - condition: state
+      entity_id: binary_sensor.graham_bayesian
+      state: 'on'
     - condition: time
       weekday:
         - mon
@@ -206,6 +307,344 @@
     - service: switch.turn_off
       entity_id: switch.plug_studyheater_switch
 
+########################################################################################################################
+#                                                           XIAOMI                                                     #
+########################################################################################################################
+
+- alias: 'Door open: bedroom light on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.door_bedroom
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: time
+    after: '06:00:00'
+    before: '22:00:00'
+  action:
+    - service:  light.turn_on
+      entity_id: light.bedroom
+
+- alias: 'Door closed: bedroom light off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.door_bedroom
+    from: 'on'
+    to: 'off'
+  action:
+    - service: light.turn_off
+      entity_id: light.bedroom
+
+- alias: 'Bedroom button: light on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.bedroom
+        state: 'off'
+  action:
+    - service:  light.turn_on
+      entity_id: light.bedroom
+
+- alias: 'Bedroom button: light off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.bedroom
+        state: 'on'
+  action:
+    service: light.turn_off
+    entity_id: light.bedroom
+
+- alias: 'Bedroom button: double click all lights off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    condition: template
+    value_template: "{{ 'double' == trigger.payload_json.click }}"
+  action:
+    - service: light.turn_off
+      entity_id: light.bedroom
+    - service: light.turn_off
+      entity_id: light.kitchen
+    - service: light.turn_off
+      entity_id: light.living_room
+    - service: light.turn_off
+      entity_id: light.dining_room
+
+- alias: 'Bedroom button: triple click heater toggle'
+  hide_entity: True
+  initial_state: 'off'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    condition: template
+    value_template: "{{ 'triple' == trigger.payload_json.click }}"
+  action:
+    - service_template: >
+        {% if is_state("switch.plug_bedroomheater_switch", "off") %}
+          switch.turn_on
+        {% else %}
+          switch.turn_off
+        {% endif %}
+      entity_id: switch.plug_bedroomheater_switch
+    - service: tts.google_say
+      entity_id: media_player.molly_mini
+      data_template:
+        message: >
+          {% if is_state("switch.plug_bedroomheater_switch", "off") %}
+            message: 'Turning on the heater'
+          {% else %}
+            message: 'Turning off the heater'
+          {% endif %}
+
+- alias: 'Bedroom switch: light on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_bedroom'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.bedroom
+        state: 'off'
+  action:
+    - service:  light.turn_on
+      entity_id: light.bedroom
+
+- alias: 'Bedroom switch: light off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_bedroom'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.bedroom
+        state: 'on'
+  action:
+    service: light.turn_off
+    entity_id: light.bedroom
+
+- alias: 'Kitchen switch: light on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_kitchen'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.kitchen
+        state: 'off'
+  action:
+    - service:  light.turn_on
+      entity_id: light.kitchen
+
+- alias: 'Kitchen switch: light off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_kitchen'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.kitchen
+        state: 'on'
+  action:
+    service: light.turn_off
+    entity_id: light.kitchen
+
+- alias: 'Study switch: light on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_study'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.study
+        state: 'off'
+  action:
+    service: light.turn_on
+    entity_id: light.study
+
+- alias: 'Study switch: light off (daytime)'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_study'
+  condition:
+    condition: and
+    conditions:
+      - condition: time
+        after: '07:00:00'
+        before: '22:00:00'
+      - condition: state
+        entity_id: light.study
+        state: 'on'
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+  action:
+    - service: light.turn_off
+      entity_id: light.study
+
+- alias: 'Study switch: light off (night)'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_study'
+  condition:
+    condition: and
+    conditions:
+      - condition: time
+        after: '22:00:00'
+        before: '07:00:00'
+      - condition: state
+        entity_id: light.study
+        state: 'on'
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+  action:
+    - service: light.turn_off
+      entity_id: light.study
+    - service:  light.turn_on
+      entity_id: light.living_room
+
+- alias: 'Left switch: living room on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_living'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'left' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.living_room
+        state: 'off'
+  action:
+    - service:  light.turn_on
+      entity_id: light.living_room
+
+- alias: 'Left switch: living room off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_living'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'left' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.living_room
+        state: 'on'
+  action:
+    service: light.turn_off
+    entity_id: light.living_room
+
+- alias: 'Right switch: dining room on'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_living'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'right' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.dining_room
+        state: 'off'
+  action:
+    service: light.turn_on
+    entity_id: light.dining_room
+
+
+- alias: 'Right switch: dining room off'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_living'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'right' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.dining_room
+        state: 'on'
+  action:
+    service: light.turn_off
+    entity_id: light.dining_room
+
+- alias: 'Both switches: living/dining room toggle'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/wall_living'
+  condition:
+    condition: template
+    value_template: "{{ 'both' == trigger.payload_json.click }}"
+  action:
+    service: light.toggle
+    entity_id: light.living_room, light.dining_room
+
+########################################################################################################################
+#                                                     NOTIFICATIONS                                                    #
+########################################################################################################################
+
 # Warning - left the house with the door open
 - alias: Warning - left the house with the door open
   hide_entity: True
@@ -226,7 +665,7 @@
       entity_id: binary_sensor.graham_bayesian
       state: 'off'
     - condition: state
-      entity_id: binary_sensor.0x00158d0002286c1d
+      entity_id: binary_sensor.door_bedroom
       state: 'on'
   action:
     - service: notify.graham_telegram
@@ -239,7 +678,7 @@
   initial_state: 'on'
   trigger:
     platform: state
-    entity_id: binary_sensor.0x00158d0002286c1d
+    entity_id: binary_sensor.door_bedroom
     from: 'off'
     to: 'on'
   condition:
@@ -339,7 +778,7 @@
         message: 'Bora is at Rhodes and will be home soon!'
 
 ########################################################################################################################
-#                                                           SWITCHES                                                   #
+#                                                          ROUTINES                                                    #
 ########################################################################################################################
 
 # Study heater off (no motion)
@@ -367,12 +806,12 @@
   initial_state: 'on'
   trigger:
     platform: state
-    entity_id: binary_sensor.0x00158d0002286c1d
+    entity_id: binary_sensor.door_bedroom
     from: 'on'
     to: 'off'
   condition:
     - condition: template
-      value_template: "{{ not is_state('binary_sensor.bora_bayesian', 'on') }}"
+      value_template: "{{ is_state('binary_sensor.bora_bayesian', 'off') }}"
     - condition: template
       value_template: "{{states('sensor.plug_kettle_power')|float > 0.6}}"
     - condition: state
@@ -395,7 +834,7 @@
     to: 'off'
   condition:
     - condition: state
-      entity_id: binary_sensor.0x00158d0002286c1d
+      entity_id: binary_sensor.door_bedroom
       state: 'off'
     - condition: template
       value_template: "{{states('sensor.plug_kettle_power')|float > 0.6}}"
@@ -405,362 +844,6 @@
       entity_id: switch.plug_kettle_switch
     - service: light.turn_off
       entity_id: light.living_room
-
-# Bedroom fan/heater back on when birdie comes home
-# - alias: Bedroom fan on - birdie arrives
-#   hide_entity: True
-#   initial_state: 'on'
-#   trigger:
-#     platform: state
-#     entity_id: binary_sensor.bora_bayesian
-#     to: 'on'
-#   condition:
-#     - condition: state
-#       entity_id: switch.plug_kettle_switch
-#       state: 'off'
-#     - condition: numeric_state
-#       entity_id: sensor.dark_sky_apparent_temperature
-#       above: '25'
-#   action:
-#     service: switch.turn_on
-#     entity_id:
-#       - switch.plug_kettle_switch
-#       - switch.plug_studyheater_switch
-
-
-########################################################################################################################
-#                                                           XIAOMI                                                     #
-########################################################################################################################
-
-- alias: 'Bedroom button: light on'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/button_bedroom'
-  condition:
-    condition: and
-    conditions:
-      - condition: template
-        value_template: "{{ 'single' == trigger.payload_json.click }}"
-      - condition: state
-        entity_id: light.bedroom
-        state: 'off'
-      - condition: time
-        after: '06:00:00'
-        before: '22:00:00'
-  action:
-    - service:  light.turn_on
-      entity_id: light.bedroom
-
-- alias: 'Bedroom button: light off'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/button_bedroom'
-  condition:
-    condition: and
-    conditions:
-      - condition: template
-        value_template: "{{ 'single' == trigger.payload_json.click }}"
-      - condition: state
-        entity_id: light.bedroom
-        state: 'on'
-  action:
-    service: light.turn_off
-    entity_id: light.bedroom
-
-- alias: 'Bedroom button: double click all lights off'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/button_bedroom'
-  condition:
-    condition: template
-    value_template: "{{ 'double' == trigger.payload_json.click }}"
-  action:
-    - service: light.turn_off
-      entity_id: light.bedroom
-    - service: light.turn_off
-      entity_id: light.kitchen
-    - service: light.turn_off
-      entity_id: light.living_room
-    - service: light.turn_off
-      entity_id: light.dining_room
-
-- alias: 'Bedroom button: triple click heater toggle'
-  hide_entity: True
-  initial_state: 'off'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/button_bedroom'
-  condition:
-    condition: template
-    value_template: "{{ 'triple' == trigger.payload_json.click }}"
-  action:
-    - service_template: >
-        {% if is_state("switch.plug_bedroomheater_switch", "off") %}
-          switch.turn_on
-        {% else %}
-          switch.turn_off
-        {% endif %}
-      entity_id: switch.plug_bedroomheater_switch
-    - service: tts.google_say
-      entity_id: media_player.molly_mini
-      data_template:
-        message: >
-          {% if is_state("switch.plug_bedroomheater_switch", "off") %}
-            message: 'Turning on the heater'
-          {% else %}
-            message: 'Turning off the heater'
-          {% endif %}
-
-- alias: 'Bedroom button: long press dim bedroom'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/button_bedroom'
-  condition:
-    condition: template
-    value_template: "{{ 'long_release' == trigger.payload_json.click }}"
-  action:
-    - service:  light.turn_on
-      data:
-        entity_id: light.bedroom
-        brightness_pct: 20
-        color_temp: 500
-
-- alias: 'Bedroom switch: light on'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_bedroom'
-  condition:
-    condition: and
-    conditions:
-      - condition: template
-        value_template: "{{ 'single' == trigger.payload_json.click }}"
-      - condition: state
-        entity_id: light.bedroom
-        state: 'off'
-  action:
-    - service:  light.turn_on
-      data:
-        entity_id: light.bedroom
-        brightness_pct: 100
-        color_temp: 153
-
-- alias: 'Bedroom switch: light off'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_bedroom'
-  condition:
-    condition: and
-    conditions:
-      - condition: template
-        value_template: "{{ 'single' == trigger.payload_json.click }}"
-      - condition: state
-        entity_id: light.bedroom
-        state: 'on'
-  action:
-    service: light.turn_off
-    entity_id: light.bedroom
-
-- alias: 'Kitchen switch: light on'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_kitchen'
-  condition:
-    condition: and
-    conditions:
-      - condition: template
-        value_template: "{{ 'single' == trigger.payload_json.click }}"
-      - condition: state
-        entity_id: light.kitchen
-        state: 'off'
-  action:
-    - service:  light.turn_on
-      data:
-        entity_id: light.kitchen
-        brightness_pct: 100
-        color_temp: 153
-
-- alias: 'Kitchen switch: light off'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_kitchen'
-  condition:
-    condition: and
-    conditions:
-      - condition: template
-        value_template: "{{ 'single' == trigger.payload_json.click }}"
-      - condition: state
-        entity_id: light.kitchen
-        state: 'on'
-  action:
-    service: light.turn_off
-    entity_id: light.kitchen
-
-- alias: 'Study switch: light on'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_study'
-  condition:
-    condition: and
-    conditions:
-      - condition: template
-        value_template: "{{ 'single' == trigger.payload_json.click }}"
-      - condition: state
-        entity_id: light.study
-        state: 'off'
-  action:
-    service: light.turn_on
-    entity_id: light.study
-
-- alias: 'Study switch: light off (daytime)'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_study'
-  condition:
-    condition: and
-    conditions:
-      - condition: time
-        after: '07:00:00'
-        before: '22:00:00'
-      - condition: state
-        entity_id: light.study
-        state: 'on'
-      - condition: template
-        value_template: "{{ 'single' == trigger.payload_json.click }}"
-  action:
-    - service: light.turn_off
-      entity_id: light.study
-
-- alias: 'Study switch: light off (night)'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_study'
-  condition:
-    condition: and
-    conditions:
-      - condition: time
-        after: '22:00:00'
-        before: '07:00:00'
-      - condition: state
-        entity_id: light.study
-        state: 'on'
-      - condition: template
-        value_template: "{{ 'single' == trigger.payload_json.click }}"
-  action:
-    - service: light.turn_off
-      entity_id: light.study
-    - service:  light.turn_on
-      data:
-        entity_id: light.living_room
-        brightness_pct: 20
-        color_temp: 500
-
-- alias: 'Left switch: living room on'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_living'
-  condition:
-    condition: and
-    conditions:
-      - condition: template
-        value_template: "{{ 'left' == trigger.payload_json.click }}"
-      - condition: state
-        entity_id: light.living_room
-        state: 'off'
-  action:
-    - service:  light.turn_on
-      entity_id: light.living_room
-
-- alias: 'Left switch: living room off'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_living'
-  condition:
-    condition: and
-    conditions:
-      - condition: template
-        value_template: "{{ 'left' == trigger.payload_json.click }}"
-      - condition: state
-        entity_id: light.living_room
-        state: 'on'
-  action:
-    service: light.turn_off
-    entity_id: light.living_room
-
-- alias: 'Right switch: dining room on'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_living'
-  condition:
-    condition: and
-    conditions:
-      - condition: template
-        value_template: "{{ 'right' == trigger.payload_json.click }}"
-      - condition: state
-        entity_id: light.dining_room
-        state: 'off'
-  action:
-    service: light.turn_on
-    entity_id: light.dining_room
-
-
-- alias: 'Right switch: dining room off'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_living'
-  condition:
-    condition: and
-    conditions:
-      - condition: template
-        value_template: "{{ 'right' == trigger.payload_json.click }}"
-      - condition: state
-        entity_id: light.dining_room
-        state: 'on'
-  action:
-    service: light.turn_off
-    entity_id: light.dining_room
-
-- alias: 'Both switches: living/dining room toggle'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/wall_living'
-  condition:
-    condition: template
-    value_template: "{{ 'both' == trigger.payload_json.click }}"
-  action:
-    service: light.toggle
-    entity_id: light.living_room, light.dining_room
 
 # Turn on heater and kettle after 9pm if temperature is below 20
 - alias: "Turn on heater and kettle at 9pm if temperature is below 20"
@@ -805,7 +888,7 @@
       - condition: template
         value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
       - condition: state
-        entity_id: binary_sensor.0x00158d0002286c1d
+        entity_id: binary_sensor.door_bedroom
         state: 'on'
       - condition: state
         entity_id: light.bedroom
@@ -814,7 +897,7 @@
     - service: switch.turn_off
       entity_id: switch.plug_studyheater_switch
 
-# Toggle receiver power - Chromecast Idle -> Playing
+# Turn on receiver - Chromecast Idle -> Playing
 - alias: "Turn on receiver - Chromecast Idle -> Playing"
   hide_entity: True
   initial_state: 'on'
@@ -830,58 +913,6 @@
   action:
     - service: switch.turn_on
       entity_id: switch.plug_studyheater_switch
-
-# # Bora S8 Bluetooth Occupancy - True
-# - alias: 'Bora S8 Bluetooth Occupancy - True'
-#   initial_state: 'on'
-#   hide_entity: true
-#   trigger:
-#     - platform: numeric_state
-#       entity_id: sensor.bora_s8_bluetooth
-#       above: 85
-#   action:
-#     - service: homeassistant.turn_on
-#       data:
-#         entity_id: input_boolean.s8_bluetooth_occupancy
-
-# # Bora S8 Bluetooth Occupancy - False
-# - alias: 'Bora S8 Bluetooth Occupancy - False'
-#   initial_state: 'on'
-#   hide_entity: true
-#   trigger:
-#     - platform: numeric_state
-#       entity_id: sensor.bora_s8_bluetooth
-#       below: 20
-#   action:
-#     - service: homeassistant.turn_off
-#       data:
-#         entity_id: input_boolean.s8_bluetooth_occupancy
-
-# # Graham Pixel Bluetooth Occupancy - True
-# - alias: 'Graham Pixel Bluetooth Occupancy - True'
-#   initial_state: 'on'
-#   hide_entity: true
-#   trigger:
-#     - platform: numeric_state
-#       entity_id: sensor.graham_pixel_bluetooth
-#       above: 85
-#   action:
-#     - service: homeassistant.turn_on
-#       data:
-#         entity_id: input_boolean.pixel_bluetooth_occupancy
-
-# # Graham Pixel Bluetooth Occupancy - False
-# - alias: 'Graham Pixel Bluetooth Occupancy - False'
-#   initial_state: 'on'
-#   hide_entity: true
-#   trigger:
-#     - platform: numeric_state
-#       entity_id: sensor.graham_pixel_bluetooth
-#       below: 20
-#   action:
-#     - service: homeassistant.turn_off
-#       data:
-#         entity_id: input_boolean.pixel_bluetooth_occupancy
 
 # Google Next Train
 - alias: 'Next Train - Google'
@@ -903,7 +934,7 @@
 # Security Camera Capture (nobody home)
 - alias: Security Camera Capture
   hide_entity: True
-  initial_state: 'off'
+  initial_state: 'on'
   trigger:
     platform: state
     entity_id: binary_sensor.motion_living_occupancy

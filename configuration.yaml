@@ -10,20 +10,22 @@ homeassistant:
     - type: trusted_networks
       trusted_networks:
         - 192.168.1.0/24
+  whitelist_external_dirs:
+    - /config/tmp
 
   customize: !include includes/customize.yaml
   customize_glob: !include customize_glob.yaml
 
 http:
 
-light:
-  - platform: yeelight
-    devices:
-      192.168.1.12:
-        name: Dining Room Yeelight 1
-      192.168.1.13:
-        name: Dining Room Yeelight 2
+yeelight:
+  devices:
+    192.168.1.12:
+      name: Dining Room Yeelight 1
+    192.168.1.13:
+      name: Dining Room Yeelight 2
 
+light:
   - platform: group
     name: Dining Room
     entities:
