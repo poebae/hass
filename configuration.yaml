@@ -12,27 +12,17 @@ homeassistant:
         - 192.168.1.0/24
   whitelist_external_dirs:
     - /config/tmp
-
   customize: !include includes/customize.yaml
   customize_glob: !include customize_glob.yaml
 
 http:
+ffmpeg:
+map:
+config:
+sun:
+system_health:
+stream:
 
-yeelight:
-  devices:
-    192.168.1.12:
-      name: Dining Room Yeelight 1
-    192.168.1.13:
-      name: Dining Room Yeelight 2
-
-light:
-  - platform: group
-    name: Dining Room
-    entities:
-      - light.dining_room_yeelight_1
-      - light.dining_room_yeelight_2
-
-# Floor plan
 panel_custom:
   - name: floorplan
     sidebar_title: Floorplan
@@ -40,74 +30,33 @@ panel_custom:
     url_path: floorplan
     config: !include floorplan.yaml
 
-# Telegram
-telegram_bot:
-  - platform: polling
-    api_key: !secret telegram_key
-    allowed_chat_ids:
-      - !secret graham_telegram_id
-      - !secret bora_telegram_id
-
-# Habitica
-habitica:
-  - api_user: !secret habitica_user
-    api_key: !secret habitica_api
-
 # INCLUDES
 automation: !include includes/automations.yaml
-group: !include includes/groups.yaml
-input_select: !include includes/input_select.yaml
-input_boolean: !include includes/input_boolean.yaml
-script: !include includes/scripts.yaml
-sensor: !include includes/sensors.yaml
 binary_sensor: !include includes/binary_sensors.yaml
 camera: !include includes/camera.yaml
 cast: !include includes/cast.yaml
+circadian_lighting: !include includes/circadian.yaml
 cloud: !include includes/cloud.yaml
 device_tracker: !include includes/device_tracker.yaml
+discovery: !include includes/discovery.yaml
+frontend: !include includes/frontend.yaml
+group: !include includes/groups.yaml
+habitica: !include includes/habitica.yaml
 history: !include includes/history.yaml
+hue: !include includes/hue.yaml
+input_boolean: !include includes/input_boolean.yaml
+input_select: !include includes/input_select.yaml
+light: !include includes/light.yaml
 logbook: !include includes/logbook.yaml
+logger: !include includes/logger.yaml
 mqtt: !include includes/mqtt.yaml
 notify: !include includes/notify.yaml
+recorder: !include includes/recorder.yaml
+script: !include includes/scripts.yaml
+sensor: !include includes/sensors.yaml
+speedtestdotnet: !include includes/speedtest.yaml
 switch: !include includes/switch.yaml
+telegram_bot: !include includes/telegram_bot.yaml
+tts: !include includes/tts.yaml
+yeelight: !include includes/yeelight.yaml
 zone: !include includes/zones.yaml
-
-logger:
-  default: warn
-
-recorder:
-  purge_keep_days: 3
-  exclude:
-    entities:
-      - sensor.date
-
-frontend:
-  extra_html_url:
-    - /local/custom_ui/state-card-floorplan.html
-
-  themes: !include_dir_merge_named themes/
-
-hue:
-  bridges:
-    - host: 192.168.1.120
-      allow_unreachable: true
-
-tts:
-  - platform: google
-    cache: false
-
-ffmpeg:
-map:
-config:
-sun:
-system_health:
-stream:
-discovery:
-  ignore:
-    - netgear_router
-
-circadian_lighting:
-  min_colortemp: 1700
-  max_colortemp: 6500
-  interval: 600
-  transition: 30

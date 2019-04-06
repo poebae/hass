@@ -4,7 +4,13 @@
     radius: 100
     icon: mdi:home
 
-  - name: Work
+  - name: ATA
+    latitude: -33.818288
+    longitude: 151.004987
+    radius: 200
+    icon: mdi:school
+
+  - name: Aje
     latitude: -33.883128
     longitude: 151.221292
     radius: 200

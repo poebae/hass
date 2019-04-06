@@ -1,0 +1,5 @@
+  devices:
+    192.168.1.12:
+      name: Dining Room Yeelight 1
+    192.168.1.13:
+      name: Dining Room Yeelight 2

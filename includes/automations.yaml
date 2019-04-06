@@ -172,7 +172,7 @@
 ########################################################################################################################
 
 # Light on: 5am (birdie away)
-- alias: Light on, bedroom (sunrise)
+- alias: Light on, 5am (birdie away)
   hide_entity: True
   initial_state: 'off'
   trigger:
@@ -303,7 +303,7 @@
     - service: light.turn_off
       entity_id: group.all_lights
     - service: switch.turn_off
-      entity_id: switch.plug_bedroomheater_switch
+      entity_id: switch.0x00158d0002495404_switch
     - service: switch.turn_off
       entity_id: switch.plug_studyheater_switch
 
@@ -319,10 +319,6 @@
     entity_id: binary_sensor.door_bedroom
     from: 'off'
     to: 'on'
-  condition:
-    condition: time
-    after: '06:00:00'
-    before: '22:00:00'
   action:
     - service:  light.turn_on
       entity_id: light.bedroom
@@ -405,17 +401,17 @@
     value_template: "{{ 'triple' == trigger.payload_json.click }}"
   action:
     - service_template: >
-        {% if is_state("switch.plug_bedroomheater_switch", "off") %}
+        {% if is_state("switch.0x00158d0002495404_switch", "off") %}
           switch.turn_on
         {% else %}
           switch.turn_off
         {% endif %}
-      entity_id: switch.plug_bedroomheater_switch
+      entity_id: switch.0x00158d0002495404_switch
     - service: tts.google_say
       entity_id: media_player.molly_mini
       data_template:
         message: >
-          {% if is_state("switch.plug_bedroomheater_switch", "off") %}
+          {% if is_state("switch.0x00158d0002495404_switch", "off") %}
             message: 'Turning on the heater'
           {% else %}
             message: 'Turning off the heater'
@@ -819,7 +815,7 @@
       state: 'on'
   action:
     - service: switch.turn_off
-    # entity_id: switch.plug_bedroomheater_switch
+    # entity_id: switch.0x00158d0002495404_switch
       entity_id: switch.plug_kettle_switch
     - service: light.turn_off
       entity_id: light.living_room
@@ -840,13 +836,13 @@
       value_template: "{{states('sensor.plug_kettle_power')|float > 0.6}}"
   action:
     - service: switch.turn_off
-      # entity_id: switch.plug_bedroomheater_switch
+      # entity_id: switch.0x00158d0002495404_switch
       entity_id: switch.plug_kettle_switch
     - service: light.turn_off
       entity_id: light.living_room
 
-# Turn on heater and kettle after 9pm if temperature is below 20
-- alias: "Turn on heater and kettle at 9pm if temperature is below 20"
+# Turn on heater at 9:30pm if temperature is below 20
+- alias: "Night, turn on heater"
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -861,13 +857,11 @@
       state: 'on'
   action:
     - service: switch.turn_on
-      entity_id: switch.plug_bedroomheater_switch
-    - service: switch.turn_on
-      entity_id: switch.plug_kettle_switch
+      entity_id: switch.0x00158d0002495404_switch
     - service: tts.google_say
       entity_id: media_player.molly_home
-      data:
-        message: 'Turning on the heater and kettle'
+      data_template:
+        message: 'The temperature is {{ states.sensor.dark_sky_apparent_temperature.state }} degrees. Turning on the heater'
 
 # Turn off receiver after 5 minutes of living room light off
 - alias: Receiver off - living room off 5 minutes
@@ -965,3 +959,56 @@
         name: midnight
     - service: switch.turn_on
       entity_id: switch.circadian_lighting_all
+    - service: speedtestdotnet.speedtest
+
+# Bora S8 Bluetooth Occupancy - True
+- alias: 'Bora S8 Bluetooth Occupancy - True'
+  initial_state: 'on'
+  hide_entity: true
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.bora_s8_bluetooth
+      above: 85
+  action:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: input_boolean.s8_bluetooth_occupancy
+
+# Bora S8 Bluetooth Occupancy - False
+- alias: 'Bora S8 Bluetooth Occupancy - False'
+  initial_state: 'on'
+  hide_entity: true
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.bora_s8_bluetooth
+      below: 20
+  action:
+    - service: homeassistant.turn_off
+      data:
+        entity_id: input_boolean.s8_bluetooth_occupancy
+
+# Graham Pixel Bluetooth Occupancy - True
+- alias: 'Graham Pixel Bluetooth Occupancy - True'
+  initial_state: 'on'
+  hide_entity: true
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.graham_pixel_bluetooth
+      above: 85
+  action:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: input_boolean.pixel_bluetooth_occupancy
+
+# Graham Pixel Bluetooth Occupancy - False
+- alias: 'Graham Pixel Bluetooth Occupancy - False'
+  initial_state: 'on'
+  hide_entity: true
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.graham_pixel_bluetooth
+      below: 20
+  action:
+    - service: homeassistant.turn_off
+      data:
+        entity_id: input_boolean.pixel_bluetooth_occupancy

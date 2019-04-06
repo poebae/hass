@@ -4,7 +4,7 @@ resources:
   - type: css
     url: /local/my-webfont.css
   - type: module
-    url: /local/custom_ui/dark-sky-weather-card.js
+    url: /local/custom_ui/dark-sky-weather-card.js?v=0.10.2
   - type: js
     url: /local/monster-card.js?v=1
 title: Molly's House
@@ -106,7 +106,7 @@ views:
         show_state: false
         type: glance
       - cards:
-          - entity: camera.living_room_snap
+          - entity: camera.living_room
             show_name: false
             show_state: false
             title: Living Room
@@ -184,28 +184,28 @@ views:
       - cards:
           - entity_current_conditions: sensor.dark_sky_icon
             entity_daily_summary: sensor.dark_sky_daily_summary
-            entity_forecast_high_temp_1: sensor.dark_sky_daytime_high_temperature_1
-            entity_forecast_high_temp_2: sensor.dark_sky_daytime_high_temperature_2
-            entity_forecast_high_temp_3: sensor.dark_sky_daytime_high_temperature_3
-            entity_forecast_high_temp_4: sensor.dark_sky_daytime_high_temperature_4
-            entity_forecast_high_temp_5: sensor.dark_sky_daytime_high_temperature_5
-            entity_forecast_icon_1: sensor.dark_sky_icon_1
-            entity_forecast_icon_2: sensor.dark_sky_icon_2
-            entity_forecast_icon_3: sensor.dark_sky_icon_3
-            entity_forecast_icon_4: sensor.dark_sky_icon_4
-            entity_forecast_icon_5: sensor.dark_sky_icon_5
-            entity_forecast_low_temp_1: sensor.dark_sky_overnight_low_temperature_0
-            entity_forecast_low_temp_2: sensor.dark_sky_overnight_low_temperature_1
-            entity_forecast_low_temp_3: sensor.dark_sky_overnight_low_temperature_2
-            entity_forecast_low_temp_4: sensor.dark_sky_overnight_low_temperature_3
-            entity_forecast_low_temp_5: sensor.dark_sky_overnight_low_temperature_4
+            entity_forecast_high_temp_1: sensor.dark_sky_daytime_high_temperature_1d
+            entity_forecast_high_temp_2: sensor.dark_sky_daytime_high_temperature_2d
+            entity_forecast_high_temp_3: sensor.dark_sky_daytime_high_temperature_3d
+            entity_forecast_high_temp_4: sensor.dark_sky_daytime_high_temperature_4d
+            entity_forecast_high_temp_5: sensor.dark_sky_daytime_high_temperature_5d
+            entity_forecast_icon_1: sensor.dark_sky_icon_1d
+            entity_forecast_icon_2: sensor.dark_sky_icon_2d
+            entity_forecast_icon_3: sensor.dark_sky_icon_3d
+            entity_forecast_icon_4: sensor.dark_sky_icon_4d
+            entity_forecast_icon_5: sensor.dark_sky_icon_5d
+            entity_forecast_low_temp_1: sensor.dark_sky_overnight_low_temperature_0d
+            entity_forecast_low_temp_2: sensor.dark_sky_overnight_low_temperature_1d
+            entity_forecast_low_temp_3: sensor.dark_sky_overnight_low_temperature_2d
+            entity_forecast_low_temp_4: sensor.dark_sky_overnight_low_temperature_3d
+            entity_forecast_low_temp_5: sensor.dark_sky_overnight_low_temperature_4d
             entity_humidity: sensor.dark_sky_humidity
             entity_pressure: sensor.dark_sky_pressure
-            entity_summary_1: sensor.dark_sky_summary_1
-            entity_summary_2: sensor.dark_sky_summary_2
-            entity_summary_3: sensor.dark_sky_summary_3
-            entity_summary_4: sensor.dark_sky_summary_4
-            entity_summary_5: sensor.dark_sky_summary_5
+            entity_summary_1: sensor.dark_sky_summary_1d
+            entity_summary_2: sensor.dark_sky_summary_2d
+            entity_summary_3: sensor.dark_sky_summary_3d
+            entity_summary_4: sensor.dark_sky_summary_4d
+            entity_summary_5: sensor.dark_sky_summary_5d
             entity_sun: sun.sun
             entity_temperature: sensor.dark_sky_temperature
             entity_visibility: sensor.dark_sky_visibility
@@ -226,13 +226,13 @@ views:
         type: vertical-stack
       - cards:
           - elements:
-              - entity: binary_sensor.0x00158d0002286c1d
+              - entity: binary_sensor.door_bedroom
                 style:
                   left: 10%
                   top: 15%
                   transform: none
                 type: state-icon
-              - entity: binary_sensor.0x00158d0002286c1d
+              - entity: binary_sensor.door_bedroom
                 prefix: 'Camera da letto: '
                 style:
                   left: 18%
@@ -320,6 +320,19 @@ views:
                 style:
                   left: 17%
                   top: 53%
+                  transform: none
+                type: state-label
+              - entity: sensor.circadian_values
+                style:
+                  left: 10%
+                  top: 73%
+                  transform: none
+                type: state-icon
+              - entity: sensor.circadian_rounded
+                prefix: 'Circadian: '
+                style:
+                  left: 17%
+                  top: 75%
                   transform: none
                 type: state-label
               - entity: sensor.time_sunrise
@@ -510,11 +523,11 @@ views:
           - entity: sensor.habitica_droidonomy_lvl
           - entity: sensor.habitica_droidonomy_exp
           - entity: sensor.habitica_droidonomy_tonextlevel
-          - entity: sensor.habitica_droidonomy_hp
+          - entity: sensor.habitica_droidonomy_health
           - entity: sensor.habitica_droidonomy_maxhealth
           - entity: sensor.habitica_droidonomy_mp
           - entity: sensor.habitica_droidonomy_maxmp
-          - entity: sensor.habitica_droidonomy_gp
+          - entity: sensor.habitica_droidonomy_gold
         show_header_toggle: false
         title: Habitica
         type: entities
@@ -567,7 +580,7 @@ views:
             image: /local/lovelace/media/av.jpg
             type: picture-elements
           - elements:
-              - entity: script.tv_power
+              - entity: switch.tv
                 image: /local/lovelace/media/powerbutton.png
                 style:
                   left: 10%
@@ -579,13 +592,12 @@ views:
         type: vertical-stack
       - cards:
           - entity: media_player.molly_dongle
-            title: Media Players
             type: media-control
           - entity: media_player.molly_home
-            title: Media Players
             type: media-control
           - entity: media_player.molly_mini
-            title: Media Players
+            type: media-control
+          - entity: media_player.telstra
             type: media-control
         type: vertical-stack
     icon: 'mdi:filmstrip'
@@ -632,11 +644,18 @@ views:
             type: entities
         type: vertical-stack
       - entities:
+          - entity: switch.circadian_lighting_all
+          - entity: sensor.circadian_values
+          - entity: script.living_cam
+        show_header_toggle: false
+        title: Switches & Scripts
+        type: entities
+      - entities:
           - entity: sensor.disk_use_percent
           - entity: sensor.memory_free
           - entity: sensor.processor_use
-          - entity: sensor.network_in_wlp8s0
-          - entity: sensor.network_out_wlp8s0
+          - entity: sensor.network_in_enp7s0
+          - entity: sensor.network_out_enp7s0
           - entity: sensor.last_boot
           - entity: sensor.ha_uptime
         show_header_toggle: false
@@ -644,12 +663,10 @@ views:
         type: entities
       - cards:
           - entities:
-              - automation.light_off_study_no_motion
+              - automation.light_off_dining_room_no_motion
               - automation.light_on_living_room_motion_detected
-              - automation.light_on_living_room_night_light
-              - automation.light_off_living_dining_room_no_motion
-              - automation.light_off_living_dining_room_no_motion_birdie_asleep
-              - automation.light_off_living_room_night_light_no_motion
+              - automation.light_off_living_room_no_motion
+              - automation.light_off_dining_room_no_motion
               - automation.light_off_kitchen_no_motion
               - automation.warning_door_open_while_nobody_home
               - automation.warning_left_the_house_with_the_door_open
@@ -669,22 +686,6 @@ views:
                     battery_level: < 25
             show_empty: false
             show_header_toggle: false
-            type: 'custom:monster-card'
-        type: vertical-stack
-      - cards:
-          - card:
-              show_header_toggle: false
-              title: Things that are broken
-              type: entities
-            filter:
-              exclude:
-                - entity_id: group.*
-                - entity_id: sensor.dark*
-                - entity_id: sensor.graham_pixel_bluetooth
-                - entity_id: sensor.bora_s8_bluetooth
-              include:
-                - state: unknown
-            show_empty: false
             type: 'custom:monster-card'
         type: vertical-stack
       - entities:
@@ -713,6 +714,22 @@ views:
             show_header_toggle: false
             title: Battery Levels
             type: entities
+        type: vertical-stack
+      - cards:
+          - card:
+              show_header_toggle: false
+              title: Things that are broken
+              type: entities
+            filter:
+              exclude:
+                - entity_id: group.*
+                - entity_id: sensor.dark*
+                - entity_id: sensor.graham_pixel_bluetooth
+                - entity_id: sensor.bora_s8_bluetooth
+              include:
+                - state: unknown
+            show_empty: false
+            type: 'custom:monster-card'
         type: vertical-stack
     icon: 'mdi:wrench'
     title: tools

@@ -53,6 +53,16 @@
     icon: mdi:kettle  
   automation.motion_lights:
     icon: mdi:walk
+  automation.light_off_dining_room_no_motion:
+    icon: mdi:silverware
+  automation.light_on_living_room_motion_detected:
+    icon: mdi:sofa
+  automation.light_off_living_room_no_motion:
+    icon: mdi:sofa
+  automation.light_off_kitchen_no_motion:
+    icon: mdi:pot-mix
+  automation.night_turn_on_heater:
+    icon: mdi:radiator
 
 # Habitica
   sensor.habitica_droidonomy_class:  
@@ -97,6 +107,18 @@
   device_tracker.google_maps_111604514484536138497:
     icon: mdi:human-female
     friendly_name: Bora Galaxy S8
+  device_tracker.b8_27_eb_92_27_a0:
+    icon: mdi:pi
+
+# Speedtest
+  sensor.speedtest_ping:
+    friendly_name: Ping
+  sensor.speedtest_download:
+    icon: mdi:download
+    friendly_name: Download
+  sensor.speedtest_upload:
+    icon: mdi:upload
+    friendly_name: Upload
 
 # Aftership
   sensor.aftership_pending:
@@ -116,12 +138,16 @@
     icon: mdi:speaker
 
   switch.0x00158d00024a7ccd_switch:
-    friendly_name: Bedroom Heater
-    icon: mdi:hotel
+    friendly_name: Kettle
+    icon: mdi:kettle
 
   switch.0x00158d0002495404_switch:
-    friendly_name: Bedroom Fan
-    icon: mdi:fan
+    friendly_name: Bedroom Heater
+    icon: mdi:radiator
+
+  # switch.0x00158d0002495404_switch:
+  #   friendly_name: Bedroom Fan
+  #   icon: mdi:fan
 
 # Transit 
   sensor.next_train_to_central:

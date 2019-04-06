@@ -116,9 +116,9 @@
   - type: memory_free
   - type: processor_use
   - type: network_in
-    arg: wlp8s0
+    arg: enp7s0
   - type: network_out
-    arg: wlp8s0
+    arg: enp7s0
   - type: last_boot
 
 # Pihole
@@ -248,72 +248,8 @@
           off
         {% endif %}
 
-# Xiaomi Batteries
 - platform: mqtt
-  name: Bedroom Door Sensor
-  state_topic: "zigbee2mqtt/door_bedroom"
-  unit_of_measurement: "%"
-  device_class: battery
-  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
-
-- platform: mqtt
-  name: Bedroom Button
-  state_topic: "zigbee2mqtt/button_bedroom"
-  unit_of_measurement: "%"
-  device_class: battery
-  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
-
-- platform: mqtt
-  name: Living Room Motion Sensor
-  state_topic: "zigbee2mqtt/motion_living"
-  unit_of_measurement: "%"
-  device_class: battery
-  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
-
-- platform: mqtt
-  name: Kitchen Motion Sensor
-  state_topic: "zigbee2mqtt/motion_kitchen"
-  unit_of_measurement: "%"
-  device_class: battery
-  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
-
-- platform: mqtt
-  name: Study Motion Sensor
-  state_topic: "zigbee2mqtt/motion_study"
-  unit_of_measurement: "%"
-  device_class: battery
-  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
-
-- platform: mqtt
-  name: Bedroom Wall Switch
-  state_topic: "zigbee2mqtt/wall_bedroom"
-  unit_of_measurement: "%"
-  device_class: battery
-  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
-
-- platform: mqtt
-  name: Living Room Wall Switch
-  state_topic: "zigbee2mqtt/wall_living"
-  unit_of_measurement: "%"
-  device_class: battery
-  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
-
-- platform: mqtt
-  name: Kitchen Wall Switch
-  state_topic: "zigbee2mqtt/wall_kitchen"
-  unit_of_measurement: "%"
-  device_class: battery
-  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
-
-- platform: mqtt
-  name: Study Wall Switch
-  state_topic: "zigbee2mqtt/wall_study"
-  unit_of_measurement: "%"
-  device_class: battery
-  value_template: "{{ ((value_json.voltage - 2700)/(3075-2700)  * 100) | int }}"
-
-- platform: mqtt
-  state_topic: 'monitor/ha-monitor/80:7a:bf:07:1c:75'
+  state_topic: 'monitor/ha-monitor/3c:28:6d:2b:f1:cd'
   value_template: '{{ value_json.confidence }}'
   unit_of_measurement: '%'
   name: 'Graham Pixel Bluetooth'
