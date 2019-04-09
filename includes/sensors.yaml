@@ -49,6 +49,11 @@
   options: street_number, street,city
   api_key: !secret places_api
 
+- platform: transport_nsw
+  name: 'Next train to Central'
+  stop_id: '2114181'
+  api_key: !secret 'transportnswkey'
+
 # Weather
 - platform: darksky
   api_key: !secret darksky_key
@@ -103,10 +108,10 @@
   options:
     mode: driving
 
-- platform: transport_nsw
-  name: 'Next train to Central'
-  stop_id: '2114181'
-  api_key: !secret 'transportnswkey'
+# - platform: transport_nsw
+#   name: 'Next train to Central'
+#   stop_id: '2114181'
+#   api_key: !secret 'transportnswkey'
 
 # System Monitor
 - platform: systemmonitor

@@ -1,5 +1,5 @@
-  - platform: polling
-    api_key: !secret telegram_key
-    allowed_chat_ids:
-      - !secret graham_telegram_id
-      - !secret bora_telegram_id
+- platform: polling
+  api_key: !secret telegram_key
+  allowed_chat_ids:
+    - !secret graham_telegram_id
+    - !secret bora_telegram_id

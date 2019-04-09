@@ -1,8 +1,5 @@
 - platform: generic
   name: Living Room
-  still_image_url: https://192.168.1.55/cgi-bin/currentpic.cgi
+  still_image_url: https://root:moses40@192.168.1.55/cgi-bin/currentpic.cgi
   stream_source: rtsp://root:moses40@poebae.ddns.net:8554/unicast
   verify_ssl: false
-  username: root
-  password:  moses40
-  authentication: basic

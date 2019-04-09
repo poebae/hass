@@ -15,13 +15,13 @@ homeassistant:
   customize: !include includes/customize.yaml
   customize_glob: !include customize_glob.yaml
 
-http:
-ffmpeg:
-map:
 config:
+ffmpeg:
+http:
+map:
+stream:
 sun:
 system_health:
-stream:
 
 panel_custom:
   - name: floorplan

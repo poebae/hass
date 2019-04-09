@@ -30,6 +30,7 @@ fitbit.conf
 .storage/
 *.json
 tmp/
+includes/camera.yaml
 
 # Temporary files
 *.db-journal
@@ -47,6 +48,5 @@ ozw_log.txt
 
 # Development files
 custom_components/
-
 
 # End of https://www.gitignore.io/api/homeassistant

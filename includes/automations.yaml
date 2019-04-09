@@ -46,6 +46,9 @@
     - condition: state
       entity_id: light.dining_room
       state: 'on'
+    - condition: state
+      entity_id: light.living_room
+      state: 'off'
   action:
     - service: light.turn_off
       entity_id: light.dining_room
@@ -65,7 +68,7 @@
     condition: and
     conditions:
       - condition: template
-        value_template: "{{ (state_attr('sun.sun', 'elevation')) < 12 }}"
+        value_template: "{{ (state_attr('sun.sun', 'elevation')) < 13.5 }}"
       - condition: state
         entity_id: light.kitchen
         state: 'off'
@@ -113,7 +116,7 @@
     condition: and
     conditions:
     - condition: template
-      value_template: "{{ (state_attr('sun.sun', 'elevation')) < 12 }}"
+      value_template: "{{ (state_attr('sun.sun', 'elevation')) < 13.5 }}"
     - condition: state
       entity_id: light.living_room
       state: 'off'
@@ -241,7 +244,7 @@
     platform: numeric_state
     entity_id: sun.sun
     value_template: '{{ state.attributes.elevation }}'
-    below: 12
+    below: 13.5
   condition:
     condition: and
     conditions:
@@ -305,7 +308,7 @@
     - service: switch.turn_off
       entity_id: switch.0x00158d0002495404_switch
     - service: switch.turn_off
-      entity_id: switch.plug_studyheater_switch
+      entity_id: switch.0x00158d00024d8cc9_switch
 
 ########################################################################################################################
 #                                                           XIAOMI                                                     #
@@ -691,14 +694,14 @@
       data:
         message: "Bedroom door was opened while nobody was home"
 
-# Flash study and living room when birdie arrives at work
+# Birdie arrives at work
 - alias: Birdie arrives at work
   hide_entity: True
   initial_state: 'on'
   trigger:
     platform: zone
     entity_id: device_tracker.google_maps_111604514484536138497
-    zone: zone.work
+    zone: zone.aje
     event: enter
   condition:
     condition: and
@@ -715,14 +718,14 @@
       data:
         message: 'Bora arrived at work'
 
-# Flash study and living room when birdie leaves work
+# Birdie leaves work
 - alias: Birdie leaves work
   hide_entity: True
   initial_state: 'on'
   trigger:
   - platform: zone
     entity_id: device_tracker.google_maps_111604514484536138497
-    zone: zone.work
+    zone: zone.aje
     event: leave
   condition:
     condition: and
@@ -742,7 +745,7 @@
       data:
         message: 'Bora left work'
 
-# Flash study  and turn living room lights on when birdie is almost home
+# Birdie almost home
 - alias: Birdie almost home
   hide_entity: True
   initial_state: 'on'
@@ -790,11 +793,11 @@
       minutes: 20
   condition:
     condition: state
-    entity_id: switch.plug_studyheater_switch
+    entity_id: switch.0x00158d00024d8cc9_switch
     state: 'on'
   action:
     - service: switch.turn_off
-      entity_id: switch.plug_studyheater_switch
+      entity_id: switch.0x00158d00024d8cc9_switch
 
 # Bedroom fan/heater off when door closes and birdie is away
 - alias: Bedroom fan/heater off - door closes, birdie away
@@ -877,7 +880,7 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: switch.plug_studyheater_switch
+        entity_id: switch.0x00158d00024d8cc9_switch
         state: 'on'
       - condition: template
         value_template: "{{ not is_state('media_player.molly_dongle', 'playing') }}"
@@ -889,7 +892,7 @@
         state: 'off'
   action:
     - service: switch.turn_off
-      entity_id: switch.plug_studyheater_switch
+      entity_id: switch.0x00158d00024d8cc9_switch
 
 # Turn on receiver - Chromecast Idle -> Playing
 - alias: "Turn on receiver - Chromecast Idle -> Playing"
@@ -902,11 +905,11 @@
     to: 'playing'
   condition:
     condition: state
-    entity_id: switch.plug_studyheater_switch
+    entity_id: switch.0x00158d00024d8cc9_switch
     state: 'off'
   action:
     - service: switch.turn_on
-      entity_id: switch.plug_studyheater_switch
+      entity_id: switch.0x00158d00024d8cc9_switch
 
 # Google Next Train
 - alias: 'Next Train - Google'

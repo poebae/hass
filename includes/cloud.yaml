@@ -10,6 +10,7 @@
         - switch.av_volume_down
         - switch.av_volume_up
         - switch.av_video
+        - camera.living_room
 
       exclude_domains:
         - automation
