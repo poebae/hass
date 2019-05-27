@@ -17,7 +17,6 @@
 
   - platform: circadian_lighting
     name: all
-    min_brightness: 20
     lights_ct:
       - light.bedroom
       - light.living_room

@@ -6,22 +6,30 @@ homeassistant:
   unit_system: metric
   time_zone: Australia/Sydney
   auth_providers:
-    - type: homeassistant
     - type: trusted_networks
       trusted_networks:
         - 192.168.1.0/24
+      allow_bypass_login: true
+    - type: homeassistant
   whitelist_external_dirs:
     - /config/tmp
   customize: !include includes/customize.yaml
   customize_glob: !include customize_glob.yaml
 
+http:
+  ssl_certificate: !secret ssl_cert
+  ssl_key: !ssl_key
+  base_url: !base_url
+
 config:
 ffmpeg:
-http:
 map:
-stream:
 sun:
 system_health:
+
+duckdns:
+  domain: !secret duckdns_domain
+  access_token: !secret duckdns_token
 
 panel_custom:
   - name: floorplan

@@ -16,7 +16,7 @@
         prob_given_false: 0.10
         platform: 'state'
         to_state: 'on'
-      - entity_id: 'device_tracker.google_maps_116993081434204761650'
+      - entity_id: 'device_tracker.pixel3'
         prob_given_true: 0.85
         prob_given_false: 0.15
         platform: 'state'
@@ -42,7 +42,7 @@
         prob_given_false: 0.10
         platform: 'state'
         to_state: 'on'
-      - entity_id: 'device_tracker.google_maps_111604514484536138497'
+      - entity_id: 'device_tracker.galaxys8'
         prob_given_true: 0.80
         prob_given_false: 0.20
         platform: 'state'

@@ -1,5 +1,9 @@
 devices:
   192.168.1.12:
     name: Dining Room Yeelight 1
+    transition: 1000
+    use_music_mode: False
   192.168.1.13:
     name: Dining Room Yeelight 2
+    transition: 1000
+    use_music_mode: False

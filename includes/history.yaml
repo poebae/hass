@@ -5,8 +5,6 @@
       - sensor.kitchenmotion_state
       - sensor.livingroommotion_state
       - sensor.bedroomdoor_state
-      - sensor.graham_geocode
-      - sensor.bora_geocode
       - light.bedroom
       - light.living_room
       - light.dining_room

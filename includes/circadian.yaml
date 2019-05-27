@@ -1,4 +1,4 @@
-min_colortemp: 1700
-max_colortemp: 6500
-interval: 600
-transition: 30
+# min_colortemp: 1700
+# max_colortemp: 6500
+# interval: 600
+# transition: 30

@@ -1,2 +1,2 @@
-- platform: google
+- platform: google_translate
   cache: false

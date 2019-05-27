@@ -52,8 +52,8 @@
   action:
     - service: light.turn_off
       entity_id: light.dining_room
-    # - service: switch.turn_off
-    #   entity_id: switch.plug_kettle_switch
+    - service: switch.turn_off
+      entity_id: switch.plug_kettle_switch
 
 # Light on, kitchen (motion detected)
 - alias: Light on, kitchen (motion detected)
@@ -274,9 +274,8 @@
       - condition: state
         entity_id: light.living_room
         state: 'off'
-      - condition: time
-        after: '17:00:00'
-        before: '07:00:00'
+      - condition: template
+        value_template: "{{ (state_attr('sun.sun', 'elevation')) < 13.5 }}"
   action:
     - service:  light.turn_on
       entity_id: light.living_room
@@ -356,7 +355,7 @@
     - service:  light.turn_on
       entity_id: light.bedroom
 
-- alias: 'Bedroom button: light off'
+- alias: 'Bedroom button: light off (all but dining)'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -370,9 +369,43 @@
       - condition: state
         entity_id: light.bedroom
         state: 'on'
+      - condition: state
+        entity_id: binary_sensor.motion_study_occupancy
+        state: 'on'
   action:
-    service: light.turn_off
-    entity_id: light.bedroom
+    - service: light.turn_off
+      entity_id: light.bedroom
+    - service: light.turn_off
+      entity_id: light.living_room
+    - service: light.turn_off
+      entity_id: light.kitchen
+
+- alias: 'Bedroom button: light off (including dining)'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: state
+        entity_id: light.bedroom
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.motion_study_occupancy
+        state: 'off'
+  action:
+    - service: light.turn_off
+      entity_id: light.bedroom
+    - service: light.turn_off
+      entity_id: light.living_room
+    - service: light.turn_off
+      entity_id: light.dining_room
+    - service: light.turn_off
+      entity_id: light.kitchen
 
 - alias: 'Bedroom button: double click all lights off'
   hide_entity: True
@@ -392,33 +425,6 @@
       entity_id: light.living_room
     - service: light.turn_off
       entity_id: light.dining_room
-
-- alias: 'Bedroom button: triple click heater toggle'
-  hide_entity: True
-  initial_state: 'off'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/button_bedroom'
-  condition:
-    condition: template
-    value_template: "{{ 'triple' == trigger.payload_json.click }}"
-  action:
-    - service_template: >
-        {% if is_state("switch.0x00158d0002495404_switch", "off") %}
-          switch.turn_on
-        {% else %}
-          switch.turn_off
-        {% endif %}
-      entity_id: switch.0x00158d0002495404_switch
-    - service: tts.google_say
-      entity_id: media_player.molly_mini
-      data_template:
-        message: >
-          {% if is_state("switch.0x00158d0002495404_switch", "off") %}
-            message: 'Turning on the heater'
-          {% else %}
-            message: 'Turning off the heater'
-          {% endif %}
 
 - alias: 'Bedroom switch: light on'
   hide_entity: True
@@ -700,7 +706,7 @@
   initial_state: 'on'
   trigger:
     platform: zone
-    entity_id: device_tracker.google_maps_111604514484536138497
+    entity_id: device_tracker.galaxys8
     zone: zone.aje
     event: enter
   condition:
@@ -713,7 +719,7 @@
       entity_id: binary_sensor.graham_bayesian
       state: 'on'
   action:
-    - service: tts.google_say
+    - service: tts.google_translate_say
       entity_id: media_player.molly_home
       data:
         message: 'Bora arrived at work'
@@ -724,7 +730,7 @@
   initial_state: 'on'
   trigger:
   - platform: zone
-    entity_id: device_tracker.google_maps_111604514484536138497
+    entity_id: device_tracker.galaxys8
     zone: zone.aje
     event: leave
   condition:
@@ -740,7 +746,7 @@
       entity_id: binary_sensor.workday_sensor
       state: 'on'
   action:
-    - service: tts.google_say
+    - service: tts.google_translate_say
       entity_id: media_player.molly_home
       data:
         message: 'Bora left work'
@@ -751,7 +757,7 @@
   initial_state: 'on'
   trigger:
   - platform: zone
-    entity_id: device_tracker.google_maps_111604514484536138497
+    entity_id: device_tracker.galaxys8
     zone: zone.rhodes
     event: enter
   condition:
@@ -771,7 +777,7 @@
       entity_id: light.dining_room
     - service:  light.turn_on
       entity_id: light.living_room
-    - service: tts.google_say
+    - service: tts.google_translate_say
       entity_id: media_player.molly_home
       data:
         message: 'Bora is at Rhodes and will be home soon!'
@@ -780,24 +786,32 @@
 #                                                          ROUTINES                                                    #
 ########################################################################################################################
 
-# Study heater off (no motion)
-- alias: Study heater off (no motion)
+# Heater on, birdie comes home
+- alias: Heater on, birdie comes home
   hide_entity: True
-  initial_state: 'off'
+  initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: binary_sensor.motion_study_occupancy
-    from: 'on'
-    to: 'off'
-    for:
-      minutes: 20
+      platform: state
+      entity_id: binary_sensor.bora_bayesian
+      to: 'on'
   condition:
-    condition: state
-    entity_id: switch.0x00158d00024d8cc9_switch
-    state: 'on'
+    condition: and
+    conditions:
+      - condition: time
+        after: '20:45:00'
+      - condition: numeric_state
+        entity_id: sensor.dark_sky_apparent_temperature
+        below: '20'
+      - condition: state
+        entity_id: switch.0x00158d0002495404_switch
+        state: 'off'
   action:
-    - service: switch.turn_off
-      entity_id: switch.0x00158d00024d8cc9_switch
+    - service:  switch.turn_on
+      entity_id: switch.0x00158d0002495404_switch
+    - service: tts.google_translate_say
+      entity_id: media_player.molly_home
+      data_template:
+        message: 'Welcome home. The temperature is {{ states.sensor.dark_sky_apparent_temperature.state }} degrees. Turning on the heater'
 
 # Bedroom fan/heater off when door closes and birdie is away
 - alias: Bedroom fan/heater off - door closes, birdie away
@@ -812,19 +826,18 @@
     - condition: template
       value_template: "{{ is_state('binary_sensor.bora_bayesian', 'off') }}"
     - condition: template
-      value_template: "{{states('sensor.plug_kettle_power')|float > 0.6}}"
+      value_template: "{{states('sensor.0x00158d0002495404_power')|float > 0.6}}"
     - condition: state
-      entity_id: switch.plug_kettle_switch
+      entity_id: switch.0x00158d0002495404_switch
       state: 'on'
   action:
     - service: switch.turn_off
-    # entity_id: switch.0x00158d0002495404_switch
-      entity_id: switch.plug_kettle_switch
+      entity_id: switch.0x00158d0002495404_switch
     - service: light.turn_off
       entity_id: light.living_room
 
-# Bedroom fan/heater off when birdie leaves and the door is cloesd
-- alias: Bedroom fan/heater off - birdie away, door closes
+# Bedroom fan/heater off when birdie leaves and the door is closed
+- alias: Bedroom fan/heater off - birdie away, door closed
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -836,11 +849,10 @@
       entity_id: binary_sensor.door_bedroom
       state: 'off'
     - condition: template
-      value_template: "{{states('sensor.plug_kettle_power')|float > 0.6}}"
+      value_template: "{{states('sensor.0x00158d0002495404_power')|float > 0.6}}"
   action:
     - service: switch.turn_off
-      # entity_id: switch.0x00158d0002495404_switch
-      entity_id: switch.plug_kettle_switch
+      entity_id: switch.0x00158d0002495404_switch
     - service: light.turn_off
       entity_id: light.living_room
 
@@ -858,10 +870,13 @@
     - condition: state
       entity_id: binary_sensor.bora_bayesian
       state: 'on'
+    - condition: state
+      entity_id: switch.0x00158d0002495404_switch
+      state: 'off'
   action:
     - service: switch.turn_on
       entity_id: switch.0x00158d0002495404_switch
-    - service: tts.google_say
+    - service: tts.google_translate_say
       entity_id: media_player.molly_home
       data_template:
         message: 'The temperature is {{ states.sensor.dark_sky_apparent_temperature.state }} degrees. Turning on the heater'
@@ -899,10 +914,8 @@
   hide_entity: True
   initial_state: 'on'
   trigger:
-    platform: state
-    entity_id: media_player.molly_dongle
-    from: 'idle'
-    to: 'playing'
+    platform: template
+    value_template: "{% if not is_state('media_player.molly_dongle', 'off') %}true{% endif %}"
   condition:
     condition: state
     entity_id: switch.0x00158d00024d8cc9_switch
@@ -960,9 +973,41 @@
     - service: frontend.set_theme
       data:
         name: midnight
-    - service: switch.turn_on
-      entity_id: switch.circadian_lighting_all
     - service: speedtestdotnet.speedtest
+
+# Turn circadian lighting on at 22:30
+- alias: Circadian on, 9:00 and
+  hide_entity: True
+  initial_state: 'off'
+  trigger:
+  - platform: time
+    at: '22:30:00'
+  action:
+    service: switch.turn_on
+    entity_id: switch.circadian_lighting_all
+
+# Turn circadian lighting off at 15:00
+- alias: Circadian off, 15:00
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: '15:00:00'
+  action:
+    service: switch.turn_off
+    entity_id: switch.circadian_lighting_all
+
+# Update notification
+- alias: 'Update notification'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: updater.updater
+  action:
+    - service: notify.graham_telegram
+      data:
+        message: 'There is a new Home Assistant release available.'
 
 # Bora S8 Bluetooth Occupancy - True
 - alias: 'Bora S8 Bluetooth Occupancy - True'

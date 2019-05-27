@@ -169,7 +169,6 @@
       - sensor.0x00158d0001b12769
       - light.dining_room_yeelight_1
       - light.dining_room_yeelight_2
-      - sensor.bora_geocode_trunc
 
     domains:
       - sun

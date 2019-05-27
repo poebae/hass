@@ -23,7 +23,6 @@ pyozw.sqlite
 secrets.yaml
 tradfri.conf
 fcm_android_registrations.conf
-fitbit.conf
 .cloud/
 .HA_VERSION
 .google*

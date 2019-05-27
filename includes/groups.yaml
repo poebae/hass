@@ -23,22 +23,6 @@
   graham: binary_sensor.graham_bayesian
   bora: binary_sensor.bora_bayesian
 
-# Family
-  family:
-    name: Family
-    entities:
-      - sensor.graham_geocode
-      - sensor.bora_geocode
-
-# Health
-  health:
-    name: Graham Health
-    entities:
-      - sensor.weight
-      - sensor.bmi
-      - sensor.body_fat
-      - sensor.charge_2_battery
-
 # Switches
   switches:
     name: Switches
@@ -100,7 +84,7 @@
       # - sensor.pihole_dns_queries_forwarded
       # - sensor.pihole_dns_queries_today
       # - sensor.pihole_dns_unique_clients
-      # - sensor.pihole_dns_unique_domains  
+      # - sensor.pihole_dns_unique_domains
 
 #################
 # MEDIA PLAYERS #

@@ -50,7 +50,7 @@
   automation.warning_left_the_house_with_the_door_open:
     icon: mdi:door
   automation.bedroom_button_long_press_boil_kettle:
-    icon: mdi:kettle  
+    icon: mdi:kettle
   automation.motion_lights:
     icon: mdi:walk
   automation.light_off_dining_room_no_motion:
@@ -65,7 +65,7 @@
     icon: mdi:radiator
 
 # Habitica
-  sensor.habitica_droidonomy_class:  
+  sensor.habitica_droidonomy_class:
     friendly_name: Class
   sensor.habitica_droidonomy_lvl:
     friendly_name: Level
@@ -95,18 +95,6 @@
     config: !include /config/floorplan.yaml
 
 # Trackers
-  sensor.graham_geocode:
-    icon: mdi:human-handsup
-    friendly_name: Graham Pixel 3
-  device_tracker.google_maps_116993081434204761650:
-    friendly_name: Graham Pixel 3
-    icon: mdi:human-handsup
-  sensor.bora_geocode:
-    icon: mdi:human-female
-    friendly_name: Bora Galaxy S8
-  device_tracker.google_maps_111604514484536138497:
-    icon: mdi:human-female
-    friendly_name: Bora Galaxy S8
   device_tracker.b8_27_eb_92_27_a0:
     icon: mdi:pi
 
@@ -149,7 +137,7 @@
   #   friendly_name: Bedroom Fan
   #   icon: mdi:fan
 
-# Transit 
+# Transit
   sensor.next_train_to_central:
     icon: mdi:train
   sensor.drive_to_ata:
@@ -212,7 +200,3 @@
   sensor.time_sun_azimuth:
     icon: mdi:angle-acute
     unit_of_measurement: °
-
-# Fitbit 
-  sensor.sleep_time_in_bed:
-    unit_of_measurement: minuti
