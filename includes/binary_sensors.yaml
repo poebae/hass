@@ -16,7 +16,7 @@
         prob_given_false: 0.10
         platform: 'state'
         to_state: 'on'
-      - entity_id: 'device_tracker.pixel3'
+      - entity_id: 'device_tracker.pixel3_2_2'
         prob_given_true: 0.85
         prob_given_false: 0.15
         platform: 'state'
@@ -24,11 +24,6 @@
       - entity_id: 'binary_sensor.motion_study_occupancy'
         prob_given_true: 0.60
         prob_given_false: 0.40
-        platform: 'state'
-        to_state: 'on'
-      - entity_id: 'device_tracker.a2_05_f2_95_8f_f2'
-        prob_given_true: 0.90
-        prob_given_false: 0.10
         platform: 'state'
         to_state: 'on'
 
@@ -42,18 +37,8 @@
         prob_given_false: 0.10
         platform: 'state'
         to_state: 'on'
-      - entity_id: 'device_tracker.galaxys8'
+      - entity_id: 'device_tracker.galaxys8_2_2'
         prob_given_true: 0.80
         prob_given_false: 0.20
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'binary_sensor.bora_s8_ping'
-        prob_given_true: 0.60
-        prob_given_false: 0.10
-        platform: 'state'
-        to_state: 'on'
-
-  - platform: ping
-    host: 192.168.1.86
-    name: bora_s8_ping
-    scan_interval: 60

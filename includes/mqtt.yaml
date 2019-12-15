@@ -11,3 +11,5 @@
     topic: 'hass/status'
     payload: 'offline'
     retain: true
+  username: !secret mqtt_user
+  password: !secret mqtt_pass

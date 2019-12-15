@@ -15,14 +15,14 @@
   #   disable_brightness_adjust: False
   #   mode: mired
 
-  - platform: circadian_lighting
-    name: all
-    lights_ct:
-      - light.bedroom
-      - light.living_room
-      - light.kitchen
-      - light.study
-      - light.dining_room
+#  - platform: circadian_lighting
+#    name: all
+#    lights_ct:
+#      - light.bedroom
+#      - light.living_room
+#      - light.kitchen
+#      - light.study
+#      - light.dining_room
 
   - platform: broadlink
     host: 192.168.1.11

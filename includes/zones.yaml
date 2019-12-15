@@ -10,12 +10,6 @@
     radius: 200
     icon: mdi:school
 
-  - name: Aje
-    latitude: -33.883128
-    longitude: 151.221292
-    radius: 200
-    icon: mdi:human-female
-
   - name: College
     latitude: -33.880061
     longitude: 151.106177
@@ -71,14 +65,15 @@
     radius: 400
     icon: mdi:train
 
-  # - name: Burwood -> Redfern
-    # latitude: -33.894017
-    # longitude: 151.150000
-    # radius: 3800
+  - name: Airport
+    latitude:  -33.939964
+    longitude: 151.175288 
+    radius: 1000
+    icon: mdi:airplane
 
 # OVERSEAS
 
   # - name: Bali
     # latitude: -8.476136
     # longitude: 115.208794
-    # radius: 30000
+    # radius: 3000

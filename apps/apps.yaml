@@ -1,0 +1,4 @@
+xiaomi:
+  module: xiaomi
+  class: xiaomi
+

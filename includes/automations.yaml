@@ -1,3 +1,7 @@
+# switch.0x00158d00024d8cc9_switch = receiver
+# switch.0x00158d00024a7ccd_switch = kettle
+# switch.0x00158d0002495404_switch = bedroom heater
+
 ########################################################################################################################
 #                                                    SENSOR LIGHTS                                                     #
 ########################################################################################################################
@@ -17,6 +21,9 @@
       - condition: state
         entity_id: light.dining_room
         state: 'off'
+      - condition: time
+        after: '06:00:00'
+        before: '22:30:00'
       - condition: or
         conditions:
         - condition: state
@@ -28,6 +35,42 @@
   action:
   - service: light.turn_on
     entity_id: light.dining_room
+    data:
+      brightness_pct: 100
+      color_temp: 153
+
+# Light on, dining room (motion detected), night light
+- alias: Light on, dining room (motion detected), night light
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_study_occupancy
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.dining_room
+        state: 'off'
+      - condition: time
+        after: '22:30:00'
+        before: '06:00:00'
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: binary_sensor.bora_bayesian
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.graham_bayesian
+          state: 'on'
+  action:
+  - service: light.turn_on
+    entity_id: light.dining_room
+    data:
+      brightness_pct: 80
+      color_temp: 400
 
 # Light off, dining room (no motion)
 - alias: Light off, dining room (no motion)
@@ -49,13 +92,17 @@
     - condition: state
       entity_id: light.living_room
       state: 'off'
+    - condition: state
+      entity_id: sensor.steam_game_graham
+      state: ''
+    - condition: state
+      entity_id: sensor.steam_game_calmdown
+      state: ''
   action:
     - service: light.turn_off
       entity_id: light.dining_room
-    - service: switch.turn_off
-      entity_id: switch.plug_kettle_switch
 
-# Light on, kitchen (motion detected)
+# Light on: kitchen (motion detected)
 - alias: Light on, kitchen (motion detected)
   hide_entity: True
   initial_state: 'on'
@@ -68,7 +115,10 @@
     condition: and
     conditions:
       - condition: template
-        value_template: "{{ (state_attr('sun.sun', 'elevation')) < 13.5 }}"
+        value_template: "{{ (state_attr('sun.sun', 'elevation')) < 12 }}"
+      - condition: time
+        after: '06:00:00'
+        before: '22:00:00'
       - condition: state
         entity_id: light.kitchen
         state: 'off'
@@ -81,8 +131,44 @@
           entity_id: binary_sensor.graham_bayesian
           state: 'on'
   action:
-    - service:  light.turn_on
+    - service: light.turn_on
+      data:
+        entity_id: light.kitchen
+        brightness_pct: 100
+        color_temp: 154
+
+# Light on: kitchen night light
+- alias: Light on, kitchen night light
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_kitchen_occupancy
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: '22:00:00'
+      before: '06:00:00'
+    - condition: state
       entity_id: light.kitchen
+      state: 'off'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: binary_sensor.bora_bayesian
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.graham_bayesian
+        state: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.kitchen
+        brightness_pct: 30
+        color_temp: 500
 
 # Light off, kitchen (no motion)
 - alias: Light off, kitchen (no motion)
@@ -103,7 +189,7 @@
     service: light.turn_off
     entity_id: light.kitchen
 
-# Light on, living room (motion detected)
+# Light on: living room (motion detected)
 - alias: Light on, living room (motion detected)
   hide_entity: True
   initial_state: 'on'
@@ -115,8 +201,11 @@
   condition:
     condition: and
     conditions:
+    - condition: time
+      after: '06:00'
+      before: '23:00'
     - condition: template
-      value_template: "{{ (state_attr('sun.sun', 'elevation')) < 13.5 }}"
+      value_template: "{{ (state_attr('sun.sun', 'elevation')) < 12 }}"
     - condition: state
       entity_id: light.living_room
       state: 'off'
@@ -129,8 +218,44 @@
         entity_id: binary_sensor.graham_bayesian
         state: 'on'
   action:
-    - service:  light.turn_on
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: 100
+        color_temp: 153
+
+# Light on: living room night light
+- alias: Light on, living room night light
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_living_occupancy
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
       entity_id: light.living_room
+      state: 'off'
+    - condition: time
+      after: '23:00:00'
+      before: '06:00:00'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: binary_sensor.bora_bayesian
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.graham_bayesian
+        state: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: 30
+        color_temp: 500
 
 # Light off, living room (no motion)
 - alias: Light off, living room (no motion)
@@ -157,6 +282,9 @@
         - condition: state
           entity_id: light.living_room
           state: 'on'
+        - condition: time
+          after: '22:30:00'
+          before: '06:00:00'
       - condition: and
         conditions:
         - condition: template
@@ -170,40 +298,87 @@
     - service: light.turn_off
       entity_id: light.living_room
 
-########################################################################################################################
-#                                                    ROUTINE LIGHTS                                                    #
-########################################################################################################################
-
-# Light on: 5am (birdie away)
-- alias: Light on, 5am (birdie away)
+# Light on: study (someone comes home, motion already detected)
+- alias: Light on study - someone comes home (motion already detected)
   hide_entity: True
-  initial_state: 'off'
+  initial_state: 'on'
   trigger:
-    platform: time
-    at: '05:00:00'
+      platform: state
+      entity_id:
+      - binary_sensor.graham_bayesian
+      - binary_sensor.bora_bayesian
+      to: 'on'
   condition:
     condition: and
     conditions:
-    - condition: state
-      entity_id: light.bedroom
-      state: 'off'
-    - condition: state
-      entity_id: binary_sensor.bora_bayesian
-      state: 'off'
-    - condition: state
-      entity_id: binary_sensor.graham_bayesian
-      state: 'on'
-    - condition: time
-      weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-        - sat
+      - condition: state
+        entity_id: light.dining_room
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.motion_study_occupancy
+        state: 'on'
   action:
     - service: light.turn_on
-      entity_id: light.bedroom
+      data:
+        entity_id: light.dining_room
+        brightness_pct: 100
+        color_temp: 153
+
+# Light on: living (someone comes home, motion already detected)
+- alias: Light on living - someone comes home (motion already detected)
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+      platform: state
+      entity_id:
+      - binary_sensor.graham_bayesian
+      - binary_sensor.bora_bayesian
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.living_room
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.motion_study_occupancy
+        state: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: 100
+        color_temp: 153
+
+# Light on: kitchen (someone comes home, motion already detected)
+- alias: Light on - kitchen (someone comes home, motion already detected)
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+      platform: state
+      entity_id:
+      - binary_sensor.graham_bayesian
+      - binary_sensor.bora_bayesian
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.dining_room
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.motion_kitchen_occupancy
+        state: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.kitchen
+        brightness_pct: 100
+        color_temp: 153
+
+########################################################################################################################
+#                                                    ROUTINE LIGHTS                                                    #
+########################################################################################################################
 
 # Light on: bedroom (sunrise)
 - alias: Light on, bedroom (sunrise)
@@ -235,11 +410,34 @@
   action:
     - service: light.turn_on
       entity_id: light.bedroom
+      data:
+        brightness_pct: 100
+        color_temp: 153
+
+# Living room, brighten in morning
+- alias: Dining room, dim at night
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: "06:30:00"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.living_room
+        state: 'on'
+  action:
+  - service: light.turn_on
+    entity_id: light.living_room
+    data:
+      brightness_pct: 100
+      color_temp: 153
 
 # Light on: living room (evening)
 - alias: 'Light on, living room (evening)'
   hide_entity: True
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
     platform: numeric_state
     entity_id: sun.sun
@@ -255,7 +453,7 @@
         entity_id: binary_sensor.bora_bayesian
         state: 'on'
   action:
-    - service:  light.turn_on
+    - service: light.turn_on
       entity_id: light.living_room
 
 # Light on: living room (someone comes home)
@@ -277,8 +475,32 @@
       - condition: template
         value_template: "{{ (state_attr('sun.sun', 'elevation')) < 13.5 }}"
   action:
-    - service:  light.turn_on
+    - service: light.turn_on
       entity_id: light.living_room
+      data:
+        brightness_pct: 100
+        color_temp: 153
+
+# Dining room, dim at night
+- alias: Dining room, dim at night
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: "22:30:00"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.dining_room
+        state: 'on'
+  action:
+  - service: light.turn_on
+    entity_id: light.dining_room
+    data:
+      brightness_pct: 70
+      color_temp: 300
+
 
 # Lights and heaters off: all (nobody home)
 - alias: Lights and heaters off - all (nobody home)
@@ -313,7 +535,8 @@
 #                                                           XIAOMI                                                     #
 ########################################################################################################################
 
-- alias: 'Door open: bedroom light on'
+
+- alias: 'Door open: bedroom light on (daytime)'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -321,9 +544,35 @@
     entity_id: binary_sensor.door_bedroom
     from: 'off'
     to: 'on'
+  condition:
+    condition: time
+    after: '06:30:00'
+    before: '01:00:00'
   action:
-    - service:  light.turn_on
-      entity_id: light.bedroom
+    - service: light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 100
+        color_temp: 153
+
+- alias: 'Door open: bedroom light on (night)'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.door_bedroom
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: time
+    after: '01:00:00'
+    before: '06:30:00'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 30
+        color_temp: 500
 
 - alias: 'Door closed: bedroom light off'
   hide_entity: True
@@ -337,7 +586,7 @@
     - service: light.turn_off
       entity_id: light.bedroom
 
-- alias: 'Bedroom button: light on'
+- alias: 'Bedroom button: light on (daytime)'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -351,9 +600,39 @@
       - condition: state
         entity_id: light.bedroom
         state: 'off'
+      - condition: time
+        after: '06:00:00'
+        before: '23:00:00'
   action:
-    - service:  light.turn_on
-      entity_id: light.bedroom
+    - service: light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 100
+        color_temp: 153
+
+- alias: 'Bedroom button: light on (night)'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: "{{ 'single' == trigger.payload_json.click }}"
+      - condition: time
+        after: '23:00:00'
+        before: '06:00:00'
+      - condition: state
+        entity_id: light.bedroom
+        state: 'off'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 30
+        color_temp: 500
 
 - alias: 'Bedroom button: light off (all but dining)'
   hide_entity: True
@@ -369,9 +648,6 @@
       - condition: state
         entity_id: light.bedroom
         state: 'on'
-      - condition: state
-        entity_id: binary_sensor.motion_study_occupancy
-        state: 'on'
   action:
     - service: light.turn_off
       entity_id: light.bedroom
@@ -380,34 +656,7 @@
     - service: light.turn_off
       entity_id: light.kitchen
 
-- alias: 'Bedroom button: light off (including dining)'
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: mqtt
-    topic: 'zigbee2mqtt/button_bedroom'
-  condition:
-    condition: and
-    conditions:
-      - condition: template
-        value_template: "{{ 'single' == trigger.payload_json.click }}"
-      - condition: state
-        entity_id: light.bedroom
-        state: 'on'
-      - condition: state
-        entity_id: binary_sensor.motion_study_occupancy
-        state: 'off'
-  action:
-    - service: light.turn_off
-      entity_id: light.bedroom
-    - service: light.turn_off
-      entity_id: light.living_room
-    - service: light.turn_off
-      entity_id: light.dining_room
-    - service: light.turn_off
-      entity_id: light.kitchen
-
-- alias: 'Bedroom button: double click all lights off'
+- alias: 'Bedroom button: double click toggle heater'
   hide_entity: True
   initial_state: 'on'
   trigger:
@@ -417,14 +666,29 @@
     condition: template
     value_template: "{{ 'double' == trigger.payload_json.click }}"
   action:
-    - service: light.turn_off
-      entity_id: light.bedroom
-    - service: light.turn_off
-      entity_id: light.kitchen
-    - service: light.turn_off
-      entity_id: light.living_room
-    - service: light.turn_off
-      entity_id: light.dining_room
+    - service_template: >
+        {% if is_state("switch.0x00158d0002495404_switch", "off") %}
+          switch.turn_on
+        {% else %}
+          switch.turn_off
+        {% endif %}
+      entity_id: switch.0x00158d0002495404_switch
+
+- alias: 'Bedroom button: long press dim bedroom'
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: mqtt
+    topic: 'zigbee2mqtt/button_bedroom'
+  condition:
+    condition: template
+    value_template: "{{ 'long_release' == trigger.payload_json.click }}"
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 30
+        color_temp: 500
 
 - alias: 'Bedroom switch: light on'
   hide_entity: True
@@ -441,8 +705,11 @@
         entity_id: light.bedroom
         state: 'off'
   action:
-    - service:  light.turn_on
-      entity_id: light.bedroom
+    - service: light.turn_on
+      data:
+        entity_id: light.bedroom
+        brightness_pct: 100
+        color_temp: 153
 
 - alias: 'Bedroom switch: light off'
   hide_entity: True
@@ -477,8 +744,11 @@
         entity_id: light.kitchen
         state: 'off'
   action:
-    - service:  light.turn_on
-      entity_id: light.kitchen
+    - service: light.turn_on
+      data:
+        entity_id: light.kitchen
+        brightness_pct: 100
+        color_temp: 153
 
 - alias: 'Kitchen switch: light off'
   hide_entity: True
@@ -513,8 +783,11 @@
         entity_id: light.study
         state: 'off'
   action:
-    service: light.turn_on
-    entity_id: light.study
+    - service: light.turn_on
+      data:
+        entity_id: light.study
+        brightness_pct: 100
+        color_temp: 153
 
 - alias: 'Study switch: light off (daytime)'
   hide_entity: True
@@ -557,7 +830,7 @@
   action:
     - service: light.turn_off
       entity_id: light.study
-    - service:  light.turn_on
+    - service: light.turn_on
       entity_id: light.living_room
 
 - alias: 'Left switch: living room on'
@@ -575,8 +848,11 @@
         entity_id: light.living_room
         state: 'off'
   action:
-    - service:  light.turn_on
-      entity_id: light.living_room
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room
+        brightness_pct: 100
+        color_temp: 153
 
 - alias: 'Left switch: living room off'
   hide_entity: True
@@ -612,8 +888,10 @@
         state: 'off'
   action:
     service: light.turn_on
-    entity_id: light.dining_room
-
+    data:
+      entity_id: light.dining_room
+      brightness_pct: 100
+      color_temp: 153
 
 - alias: 'Right switch: dining room off'
   hide_entity: True
@@ -700,64 +978,13 @@
       data:
         message: "Bedroom door was opened while nobody was home"
 
-# Birdie arrives at work
-- alias: Birdie arrives at work
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: zone
-    entity_id: device_tracker.galaxys8
-    zone: zone.aje
-    event: enter
-  condition:
-    condition: and
-    conditions:
-    - condition: time
-      after: '08:00:00'
-      before: '10:00:00'
-    - condition: state
-      entity_id: binary_sensor.graham_bayesian
-      state: 'on'
-  action:
-    - service: tts.google_translate_say
-      entity_id: media_player.molly_home
-      data:
-        message: 'Bora arrived at work'
-
-# Birdie leaves work
-- alias: Birdie leaves work
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-  - platform: zone
-    entity_id: device_tracker.galaxys8
-    zone: zone.aje
-    event: leave
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: binary_sensor.graham_bayesian
-      state: 'on'
-    - condition: time
-      after: '16:30:00'
-      before: '22:00:00'
-    - condition: state
-      entity_id: binary_sensor.workday_sensor
-      state: 'on'
-  action:
-    - service: tts.google_translate_say
-      entity_id: media_player.molly_home
-      data:
-        message: 'Bora left work'
-
 # Birdie almost home
 - alias: Birdie almost home
   hide_entity: True
   initial_state: 'on'
   trigger:
   - platform: zone
-    entity_id: device_tracker.galaxys8
+    entity_id: device_tracker.galaxys8_2_2
     zone: zone.rhodes
     event: enter
   condition:
@@ -775,12 +1002,31 @@
   action:
     - service: light.turn_on
       entity_id: light.dining_room
-    - service:  light.turn_on
+    - service: light.turn_on
       entity_id: light.living_room
     - service: tts.google_translate_say
       entity_id: media_player.molly_home
       data:
         message: 'Bora is at Rhodes and will be home soon!'
+
+# Birdie arrives at the airport
+- alias: Birdie arrives at the airport
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    platform: zone
+    entity_id: device_tracker.galaxys8_2_2
+    zone: zone.airport
+    event: enter
+  condition:
+    condition: state
+    entity_id: binary_sensor.graham_bayesian
+    state: 'on'
+  action:
+    - service: tts.google_translate_say
+      entity_id: media_player.molly_home
+      data:
+        message: 'Bora arrived at the airport'
 
 ########################################################################################################################
 #                                                          ROUTINES                                                    #
@@ -806,7 +1052,7 @@
         entity_id: switch.0x00158d0002495404_switch
         state: 'off'
   action:
-    - service:  switch.turn_on
+    - service: switch.turn_on
       entity_id: switch.0x00158d0002495404_switch
     - service: tts.google_translate_say
       entity_id: media_player.molly_home
@@ -825,8 +1071,8 @@
   condition:
     - condition: template
       value_template: "{{ is_state('binary_sensor.bora_bayesian', 'off') }}"
-    - condition: template
-      value_template: "{{states('sensor.0x00158d0002495404_power')|float > 0.6}}"
+#    - condition: template
+#      value_template: "{{states('sensor.0x00158d0002495404_power')|float > 0.6}}"
     - condition: state
       entity_id: switch.0x00158d0002495404_switch
       state: 'on'
@@ -844,25 +1090,25 @@
     platform: state
     entity_id: binary_sensor.bora_bayesian
     to: 'off'
-  condition:
-    - condition: state
-      entity_id: binary_sensor.door_bedroom
-      state: 'off'
-    - condition: template
-      value_template: "{{states('sensor.0x00158d0002495404_power')|float > 0.6}}"
+#  condition:
+#    - condition: state
+#      entity_id: binary_sensor.door_bedroom
+#      state: 'off'
+#    - condition: template
+#      value_template: "{{states('sensor.0x00158d0002495404_power')|float > 0.6}}"
   action:
     - service: switch.turn_off
       entity_id: switch.0x00158d0002495404_switch
     - service: light.turn_off
       entity_id: light.living_room
 
-# Turn on heater at 9:30pm if temperature is below 20
+# Turn on heater at 9pm if temperature is below 20
 - alias: "Night, turn on heater"
   hide_entity: True
   initial_state: 'on'
   trigger:
     platform: time
-    at: '21:30:00'
+    at: '21:00:00'
   condition:
     - condition: numeric_state
       entity_id: sensor.dark_sky_apparent_temperature
@@ -880,6 +1126,21 @@
       entity_id: media_player.molly_home
       data_template:
         message: 'The temperature is {{ states.sensor.dark_sky_apparent_temperature.state }} degrees. Turning on the heater'
+
+# Turn off heater
+- alias: "Heater off"
+  hide_entity: True
+  initial_state: 'on'
+  trigger:
+    - platform: time
+      at: '10:00:00'
+  condition:
+    - condition: state
+      entity_id: switch.0x00158d0002495404_switch
+      state: 'on'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.0x00158d0002495404_switch
 
 # Turn off receiver after 5 minutes of living room light off
 - alias: Receiver off - living room off 5 minutes
@@ -912,7 +1173,7 @@
 # Turn on receiver - Chromecast Idle -> Playing
 - alias: "Turn on receiver - Chromecast Idle -> Playing"
   hide_entity: True
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
     platform: template
     value_template: "{% if not is_state('media_player.molly_dongle', 'off') %}true{% endif %}"
@@ -923,23 +1184,6 @@
   action:
     - service: switch.turn_on
       entity_id: switch.0x00158d00024d8cc9_switch
-
-# Google Next Train
-- alias: 'Next Train - Google'
-  initial_state: 'on'
-  hide_entity: true
-  trigger:
-    - platform: state
-      entity_id: input_boolean.next_train
-      from: 'off'
-      to: 'on'
-  action:
-    - delay:
-        seconds: 2
-    - service: script.turn_on
-      entity_id: script.speak_next_train
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.next_train
 
 # Security Camera Capture (nobody home)
 - alias: Security Camera Capture
@@ -975,27 +1219,27 @@
         name: midnight
     - service: speedtestdotnet.speedtest
 
-# Turn circadian lighting on at 22:30
-- alias: Circadian on, 9:00 and
-  hide_entity: True
-  initial_state: 'off'
-  trigger:
-  - platform: time
-    at: '22:30:00'
-  action:
-    service: switch.turn_on
-    entity_id: switch.circadian_lighting_all
+## Turn circadian lighting on at 22:30
+#- alias: Circadian on, 9:00 and
+#  hide_entity: True
+#  initial_state: 'off'
+#  trigger:
+#  - platform: time
+#    at: '22:30:00'
+#  action:
+#    service: switch.turn_on
+#    entity_id: switch.circadian_lighting_all
 
-# Turn circadian lighting off at 15:00
-- alias: Circadian off, 15:00
-  hide_entity: True
-  initial_state: 'on'
-  trigger:
-    platform: time
-    at: '15:00:00'
-  action:
-    service: switch.turn_off
-    entity_id: switch.circadian_lighting_all
+## Turn circadian lighting off at 15:00
+#- alias: Circadian off, 15:00
+#  hide_entity: True
+#  initial_state: 'on'
+#  trigger:
+#    platform: time
+#    at: '15:00:00'
+#  action:
+#    service: switch.turn_off
+#    entity_id: switch.circadian_lighting_all
 
 # Update notification
 - alias: 'Update notification'

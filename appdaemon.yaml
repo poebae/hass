@@ -1,0 +1,12 @@
+log:
+  logfile: STDOUT
+  errorfile: STDERR
+appdaemon:
+  threads: 10
+  plugins:
+    HASS:
+      type: hass
+      ha_url: http://poebae.ddns.net:8123
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI5YTVlZWZjZWFhNDc0N2UzYmQxMzY1MGQzYzQ2MjEyMyIsImlhdCI6MTU1NDc2NjEzMCwiZXhwIjoxODcwMTI2MTMwfQ.1KD_t_rRPXEee7NWQUHC5Ywty_KDPHeCeNrU_dK4M8Y
+hadashboard:
+  dash_url: http://poebae.ddns.net:5050

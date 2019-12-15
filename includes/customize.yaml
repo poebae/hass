@@ -145,38 +145,6 @@
   sensor.drive_to_aje:
     icon: mdi:grease-pencil
 
-# Juve Calendar
-  sensor.juve_nextmatch:
-    icon: mdi:soccer
-  sensor.juve_nextmatchtime:
-    icon: mdi:timer
-  sensor.juve_competition:
-    icon: mdi:trophy
-  sensor.juve_location:
-    icon: mdi:soccer-field
-
-# Korea Calendar
-  sensor.korea_nextmatch:
-    icon: mdi:soccer
-  sensor.korea_nextmatchtime:
-    icon: mdi:timer
-  sensor.korea_competition:
-    icon: mdi:trophy
-  sensor.korea_location:
-    icon: mdi:soccer-field
-
-# Serie A Table
-  sensor.seriea_team1:
-    icon: mdi:soccer
-  sensor.seriea_team2:
-    icon: mdi:soccer
-  sensor.seriea_team3:
-    icon: mdi:soccer
-  sensor.seriea_team4:
-    icon: mdi:soccer
-  sensor.seriea_team5:
-    icon: mdi:soccer
-
 # Health
   sensor.weight:
     icon: mdi:scale-bathroom
@@ -200,3 +168,28 @@
   sensor.time_sun_azimuth:
     icon: mdi:angle-acute
     unit_of_measurement: °
+
+# Steam
+  sensor.steam_game_graham:
+    icon: mdi:steam
+    entity_picture: https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/91/913d775c3ef4128f5ead04db3dfbd4c486314c8c_medium.jpg
+
+  sensor.steam_game_calmdown:
+    icon: mdi:steam
+    entity_picture: https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/bf/bfc1da816a3e93f2287dde5dfe161f5e9993de1c_medium.jpg
+
+  sensor.steam_game_ww:
+    icon: mdi:steam
+    entity_picture: https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/34/340c55d0e8f87181dcdad14c03d61ce32f866271_medium.jpg
+
+  sensor.steam_game_willy:
+    icon: mdi:steam
+    entity_picture: https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/9e/9e1787522b454f832d6f3e05a6e0f5231bf13664_medium.jpg
+
+  sensor.steam_game_jono:
+    icon: mdi:steam
+    entity_picture: https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/21/21722bc02ecbd4ba1e682051033b42511900b1f8_medium.jpg
+
+  sensor.steam_game_mike:
+    icon: mdi:steam
+    entity_picture: https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/8a/8a842b1e8244d39cd2fad3baf239192966834ebf_medium.jpg

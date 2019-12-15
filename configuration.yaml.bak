@@ -28,11 +28,10 @@ ffmpeg:
 map:
 sun:
 system_health:
-pi_hole:
 
-#duckdns:
-#  domain: !secret duckdns_domain
-#  access_token: !secret duckdns_token
+duckdns:
+  domain: !secret duckdns_domain
+  access_token: !secret duckdns_token
 
 panel_custom:
   - name: floorplan
@@ -46,12 +45,13 @@ automation: !include includes/automations.yaml
 binary_sensor: !include includes/binary_sensors.yaml
 camera: !include includes/camera.yaml
 cast: !include includes/cast.yaml
-#circadian_lighting: !include includes/circadian.yaml
+circadian_lighting: !include includes/circadian.yaml
 cloud: !include includes/cloud.yaml
 device_tracker: !include includes/device_tracker.yaml
 discovery: !include includes/discovery.yaml
 frontend: !include includes/frontend.yaml
 group: !include includes/groups.yaml
+habitica: !include includes/habitica.yaml
 history: !include includes/history.yaml
 hue: !include includes/hue.yaml
 input_boolean: !include includes/input_boolean.yaml
