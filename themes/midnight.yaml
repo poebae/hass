@@ -5,7 +5,6 @@ midnight:
   accent-color: '#5294E2'                                                         # Accent color
   dark-primary-color: 'var(--accent-color)'                                       # Hyperlinks                                         
   light-primary-color: 'var(--accent-color)'                                      # Horizontal line in about
-  sidebar-icon-color: '#FFFFFF'
                                                                                
   # Text colors                                                                  
   primary-text-color: '#FFFFFF'                                                   # Primary text colour, here is referencing dark-primary-color
@@ -37,6 +36,7 @@ midnight:
   paper-item-selected_-_background-color: '#434954'                               # Popup item select                      
   paper-tabs-selection-bar-color: '#E45E65'
   paper-item-icon-active-color: '#F9C536'                                         # Icon color active
+  card-background-color: "var(--paper-card-background-color)" 
 
   # Labels 
   label-badge-red: 'var(--accent-color)'                                          # References the brand colour label badge border
@@ -64,3 +64,17 @@ midnight:
   # Google colors
   google-red-500: '#E45E65'
   google-green-500: '#39E949'
+
+  # Sidebar
+  sidebar-background-color: "var(--paper-listbox-background-color)"
+  sidebar-icon-color: "rgba(255, 255, 255, 0.70)"
+  sidebar-selected-icon-color: "var(--primary-color)"
+  sidebar-selected-text-color: "var(--primary-text-color)"
+  sidebar-text-color: "var(--primary-text-color)"
+  slider-bar-color: "var(--disabled-text-color)"
+  slider-color: "var(--primary-color)"
+  slider-secondary-color: "var(--light-primary-color)"
+
+  
+  # Data Tables
+  data-table-background-color: “var(–primary-background-color)”

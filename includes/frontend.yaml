@@ -1,3 +1,1 @@
-extra_html_url:
-  - /local/custom_ui/state-card-floorplan.html
 themes: !include_dir_merge_named /config/themes/

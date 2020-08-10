@@ -11,34 +11,29 @@
     name: 'Graham Bayesian'
     probability_threshold: 0.84
     observations:
-      - entity_id: 'input_boolean.pixel_bluetooth_occupancy'
-        prob_given_true: 0.99
-        prob_given_false: 0.10
-        platform: 'state'
-        to_state: 'on'
-      - entity_id: 'device_tracker.pixel3_2_2'
+      - entity_id: 'sensor.graham_road'
         prob_given_true: 0.85
         prob_given_false: 0.15
         platform: 'state'
-        to_state: 'home'
-      - entity_id: 'binary_sensor.motion_study_occupancy'
-        prob_given_true: 0.60
-        prob_given_false: 0.40
+        to_state: 'Anthony Road'
+      - entity_id: 'sensor.wifi_connection'
+        prob_given_true: 0.99
+        prob_given_false: 0.10
         platform: 'state'
-        to_state: 'on'
+        to_state: 'Molly Router 5GHz'
 
   - platform: 'bayesian'
     prior: 0.50
     name: 'Bora Bayesian'
     probability_threshold: 0.79
     observations:
-      - entity_id: 'input_boolean.s8_bluetooth_occupancy'
+      - entity_id: 'sensor.bora_road'
+        prob_given_true: 0.85
+        prob_given_false: 0.15
+        platform: 'state'
+        to_state: 'Anthony Road'
+      - entity_id: 'sensor.wifi_connection_2'
         prob_given_true: 0.99
         prob_given_false: 0.10
         platform: 'state'
-        to_state: 'on'
-      - entity_id: 'device_tracker.galaxys8_2_2'
-        prob_given_true: 0.80
-        prob_given_false: 0.20
-        platform: 'state'
-        to_state: 'home'
+        to_state: 'Molly Router 5GHz'

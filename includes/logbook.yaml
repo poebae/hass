@@ -16,7 +16,17 @@
       - sensor.bora_s8_battery
       - sensor.steam_76561198051415178
       - sensor.steam_76561198296910319
-      - sensor.steam_game
+      - sensor.steam_76561198302985542
+      - sensor.steam_76561198053059377
+      - sensor.steam_76561198017280281
+      - sensor.steam_76561197982549749
+      - sensor.steam_76561198078583977
+      - sensor.steam_game_calmdown
+      - sensor.steam_game_jono
+      - sensor.steam_game_mike
+      - sensor.steam_game_graham
+      - sensor.steam_game_ww
+      - sensor.steam_game_willy
       - sensor.ingame
       - binary_sensor.motion_study_occupancy
       - binary_sensor.motion_living_occupancy
@@ -157,11 +167,6 @@
       - sensor.time_sunrise
       - sensor.time_sunset
       - sensor.time
-      - sensor.circadian_rounded
-      - sensor.aftership
-      - sensor.aftership_delivered
-      - sensor.aftership_intransit
-      - sensor.aftership_pending
       - sensor.0x00158d0001712e06
       - sensor.0x00158d000183b707
       - sensor.0x00158d000183bde7

@@ -44,6 +44,32 @@
   binary_sensor.bora_s8_ping:
     friendly_name: Bora Galaxy S8 Ping
 
+# Corona
+  sensor.australia_current:
+    icon: mdi:glass-mug-variant
+  sensor.australia_deaths:
+    icon: mdi:glass-mug-variant
+  sensor.australia_recovered:
+    icon: mdi:glass-mug-variant
+  sensor.south_korea_current:
+    icon: mdi:drama-masks
+  sensor.south_korea_deaths:
+    icon: mdi:drama-masks
+  sensor.south_korea_recovered:
+    icon: mdi:drama-masks
+  sensor.hong_kong_current:
+    icon: mdi:noodles
+  sensor.hong_kong_deaths:
+    icon: mdi:noodles
+  sensor.hong_kong_recovered:
+    icon: mdi:noodles
+  sensor.italy_current:
+    icon: mdi:pizza
+  sensor.italy_deaths:
+    icon: mdi:pizza
+  sensor.italy_recovered:
+    icon: mdi:pizza
+
 # Automations
   automation.warning_door_open_while_nobody_home:
     icon: mdi:door
@@ -64,36 +90,6 @@
   automation.night_turn_on_heater:
     icon: mdi:radiator
 
-# Habitica
-  sensor.habitica_droidonomy_class:
-    friendly_name: Class
-  sensor.habitica_droidonomy_lvl:
-    friendly_name: Level
-  sensor.habitica_droidonomy_exp:
-    friendly_name: Experience
-  sensor.habitica_droidonomy_tonextlevel:
-    friendly_name: EXP to next level
-  sensor.habitica_droidonomy_hp:
-    friendly_name: Health
-  sensor.habitica_droidonomy_maxhealth:
-    friendly_name: Max Health
-  sensor.habitica_droidonomy_mp:
-    friendly_name: Mana
-  sensor.habitica_droidonomy_maxmp:
-    friendly_name: Max Mana
-  sensor.habitica_droidonomy_gp:
-    friendly_name: Gold
-    unit_of_measurement: GC
-  sensor.habitica_droidonomy_health:
-    icon: mdi:heart
-  sensor.habitica_droidonomy_gold:
-    icon: mdi:coin
-
-# Floor Plan
-  binary_sensor.floorplan:
-    custom_ui_state_card: state-card-floorplan
-    config: !include /config/floorplan.yaml
-
 # Trackers
   device_tracker.b8_27_eb_92_27_a0:
     icon: mdi:pi
@@ -107,14 +103,6 @@
   sensor.speedtest_upload:
     icon: mdi:upload
     friendly_name: Upload
-
-# Aftership
-  sensor.aftership_pending:
-    icon: mdi:timer-sand
-  sensor.aftership_intransit:
-    icon: mdi:truck-delivery
-  sensor.aftership_delivered:
-    icon: mdi:check
 
 # Scripts:
   script.living_cam:
@@ -193,3 +181,8 @@
   sensor.steam_game_mike:
     icon: mdi:steam
     entity_picture: https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/8a/8a842b1e8244d39cd2fad3baf239192966834ebf_medium.jpg
+
+# Doggy Alert Script
+  script.doggy_alert:
+    can_cancel: false
+    icon: mdi:paw

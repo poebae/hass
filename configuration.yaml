@@ -19,39 +19,33 @@ homeassistant:
 http:
   ssl_certificate: !secret ssl_cert
   ssl_key: !secret ssl_key
-  base_url: !secret base_url
   use_x_forwarded_for: true
   trusted_proxies: 127.0.0.1
 
 config:
+mobile_app:
 ffmpeg:
 map:
 sun:
 system_health:
 pi_hole:
+  host: '192.168.1.69'
+  ssl: false
+  verify_ssl: false
 
 #duckdns:
 #  domain: !secret duckdns_domain
 #  access_token: !secret duckdns_token
-
-panel_custom:
-  - name: floorplan
-    sidebar_title: Floorplan
-    sidebar_icon: mdi:floor-plan
-    url_path: floorplan
-    config: !include floorplan.yaml
 
 # INCLUDES
 automation: !include includes/automations.yaml
 binary_sensor: !include includes/binary_sensors.yaml
 camera: !include includes/camera.yaml
 cast: !include includes/cast.yaml
-#circadian_lighting: !include includes/circadian.yaml
 cloud: !include includes/cloud.yaml
 device_tracker: !include includes/device_tracker.yaml
 discovery: !include includes/discovery.yaml
 frontend: !include includes/frontend.yaml
-group: !include includes/groups.yaml
 history: !include includes/history.yaml
 hue: !include includes/hue.yaml
 input_boolean: !include includes/input_boolean.yaml
@@ -70,3 +64,4 @@ telegram_bot: !include includes/telegram_bot.yaml
 tts: !include includes/tts.yaml
 yeelight: !include includes/yeelight.yaml
 zone: !include includes/zones.yaml
+person: !include includes/person.yaml

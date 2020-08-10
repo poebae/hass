@@ -9,6 +9,7 @@
 .uuid
 icloud/
 backup/
+includes/camera.yaml
 google_calendars.yaml
 harmony_media_room.conf
 home-assistant.db

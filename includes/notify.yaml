@@ -5,3 +5,11 @@
 - name: bora_telegram
   platform: telegram
   chat_id: !secret bora_telegram_id
+
+- name: grace_telegram
+  platform: telegram
+  chat_id: !secret grace_telegram_id
+
+- name: family_telegram
+  platform: telegram
+  chat_id: !secret family_telegram_id

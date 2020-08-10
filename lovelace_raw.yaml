@@ -322,19 +322,6 @@ views:
                   top: 53%
                   transform: none
                 type: state-label
-              - entity: sensor.circadian_values
-                style:
-                  left: 10%
-                  top: 73%
-                  transform: none
-                type: state-icon
-              - entity: sensor.circadian_rounded
-                prefix: 'Circadian: '
-                style:
-                  left: 17%
-                  top: 75%
-                  transform: none
-                type: state-label
               - entity: sensor.time_sunrise
                 style:
                   left: 59%

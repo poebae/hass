@@ -19,4 +19,3 @@
       - switch.plug_kettle_switch
       - switch.plug_bedroomheater_switch
       - switch.plug_studyheater_switch
-      - sensor.circadian_values

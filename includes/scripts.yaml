@@ -16,22 +16,33 @@ living_cam:
       data:
         entity_id: camera.living_room
         filename: '/config/tmp/dafang_snapshot_3.jpg'
-    - delay: '00:00:05'
-    - service: notify.graham_telegram
+    - service: notify.family_telegram
       data:
         title: Living Room Cam
         message: Motion detected while nobody home
         data:
           photo:
-            - file: '/config/tmp/dafang_snapshot_3.jpg'
-            - file: '/config/tmp/dafang_snapshot_2.jpg'
             - file: '/config/tmp/dafang_snapshot_1.jpg'
-    - service: notify.bora_telegram
+            - file: '/config/tmp/dafang_snapshot_2.jpg'
+            - file: '/config/tmp/dafang_snapshot_3.jpg'
+
+# Doggy alert
+doggy_alert:
+  alias: "Doggy Alert"
+  sequence:
+    - service: light.turn_on
       data:
-        title: Living Room Cam
-        message: Motion detected while nobody home
-        data:
-          photo:
-            - file: '/config/tmp/dafang_snapshot_3.jpg'
-            - file: '/config/tmp/dafang_snapshot_2.jpg'
-            - file: '/config/tmp/dafang_snapshot_1.jpg'
+        entity_id: light.study
+        flash: short
+    - delay:
+        seconds: 1
+    - service: light.turn_on
+      data:
+        entity_id: light.study
+        flash: short
+    - delay:
+        seconds: 1
+    - service: light.turn_on
+      data:
+        entity_id: light.study
+        flash: short

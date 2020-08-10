@@ -3,3 +3,5 @@
   allowed_chat_ids:
     - !secret graham_telegram_id
     - !secret bora_telegram_id
+    - !secret grace_telegram_id
+    - !secret family_telegram_id
